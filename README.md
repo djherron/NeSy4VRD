@@ -1,2 +1,5 @@
 # NeSy4VRD
-A resource for neurosymbolic AI research using OWL-based knowledge graphs in visual relationship detection
+
+# A Resource for Neurosymbolic AI Research using OWL-based Knowledge Graphs in Visual Relationship Detection
+
+
