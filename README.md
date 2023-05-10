@@ -1,5 +1,7 @@
 # NeSy4VRD: A Resource for Neurosymbolic AI Research using OWL-based Knowledge Graphs in Visual Relationship Detection
 
+**ATTENTION:** This repo is currently **under construction**. Please be patient.
+
 ## NeSy4VRD
 
 NeSy4VRD is a multifaceted, multipurpose resource designed to foster neurosymbolic AI (NeSy) research, particularly NeSy research using Semantic Web technologies such as OWL ontologies, OWL-based knowledge graphs and OWL-based reasoning as symbolic components.
