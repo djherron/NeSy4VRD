@@ -17,7 +17,7 @@ Visual relationship detection is pursued as a computer vision application task i
 
 The NeSy4VRD OWL ontology, called VRD-World, is a well-aligned, companion to the NeSy4VRD dataset. It directly describes the domain of the NeSy4VRD dataset, as reflected in the NeSy4VRD visual relationship annotations.  For example, all of the object classes featuring in the visual relationship annotations have corresponding classes within the VRD-World class hierarchy, and all of the predicates featuring in the visual relationship annotations have corresponding object properties within the VRD-World object property hierarchy.
 
-# NeSy4VRD on GitHub
+## NeSy4VRD on GitHub
 
 All of the components of the NeSy4VRD research resource other than the two components (the dataset and the ontology) hosted on Zenodo are available here, on GitHub.
 
@@ -30,7 +30,7 @@ The infrastructure for extensibility of the NeSy4VRD visual relationships includ
 * an open source, custom designed NeSy4VRD protocol for specifying visual relationship annotation customisation instructions declaratively, in text files
 * an open source, custom designed NeSy4VRD workflow (implemented in Python scripts and modules) for applying visual relationship annotation customisations in a managed, automated and repeatable process.
 
-# Information pertaining to the VRD dataset
+## Information pertaining to the VRD dataset
 
 More information about the VRD dataset is available here: https://cs.stanford.edu/people/ranjaykrishna/vrd/ . The original VRD visual relationship annotations for the VRD images are still publicly available from that URL, as they have always been.  Public availability of the VRD images themselves (via information accessible from that URL), however, ceased sometime in the latter part of 2021.  We thank Dr. Ranjay Krishna, one of the principals associated with the VRD dataset, for granting us permission to re-establish the public availability of the VRD images as part of NeSy4VRD.
 
