@@ -4,7 +4,13 @@ This folder contains the NeSy4VRD OWL ontology called VRD-World.
 
 ## The VRD-World OWL ontology
 
-The VRD-World OWL ontology is a well-aligned companion ontology for the NeSy4VRD dataset. The NeSy4VRD dataset consists of: 1) the VRD images, and 2) the NeSy4VRD visual relationship annotations.  The VRD-World OWL ontology describes the domain of the NeSy4VRD dataset, as reflected in the objects, object classes and predicates referenced in the NeSy4VRD visual relationship annotations of the VRD images.
+The VRD-World OWL ontology is a well-aligned companion ontology for the NeSy4VRD dataset.
+
+The NeSy4VRD dataset consists of:
+1. the VRD images (of the original Visual Relationship Detection (VRD) dataset)
+2. the NeSy4VRD visual relationship annotations (a highly customised and quality-improved version of the original visual relationship annotations of the VRD dataset).
+
+The VRD-World OWL ontology describes the domain of the NeSy4VRD dataset, as reflected in the objects, object classes and predicates referenced in the NeSy4VRD visual relationship annotations of the VRD images.
 
 ## NeSy4VRD versions of VRD-World
 
