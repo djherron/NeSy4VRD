@@ -1,8 +1,6 @@
 # NeSy4VRD: analysis
 
-This folder contain assets relating to a core component of the NeSy4VRD infrastructure that supports extensibility of the NeSy4VRD visual relationship annotations and, thereby, of the NeSy4VRD OWL ontology, VRD-World.
-
-The component of the NeSy4VRD infrastructure supporting extensibility that lives in this folder provides comprehensive support for deep analysis of the NeSy4VRD dataset: the VRD images and their NeSy4VRD visual relationship annotations.
+This folder contains assets relating to the **annotations analysis** component of the NeSy4VRD infrastructure that supports extensibility of the NeSy4VRD visual relationship annotations and, thereby, of the NeSy4VRD OWL ontology, VRD-World. The **annotations analysis** component of the NeSy4VRD infrastructure supporting extensibility provides comprehensive functionality for deep analysis of the NeSy4VRD dataset: the NeSy4VRD visual relationship annotations and the VRD images with which they are associated.
 
 ## nesy4vrd_annotations_analysis.py
 
