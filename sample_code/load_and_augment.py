@@ -454,7 +454,7 @@ print('Extraction of triples from KG and conversion to VRs complete')
 
 #%% save augmented set of VR annotations to file on disk 
 
-filename = 'nesy4vrd_annotations_train_augmented.json'
+filename = 'nesy4vrd_augmented_annotations.json'
 anno_augmented_dir = os.path.join('..', 'data', 'annotations')
 path = os.path.join(anno_augmented_dir, filename)
 
