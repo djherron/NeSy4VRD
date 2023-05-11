@@ -18,10 +18,6 @@ import json
 from PIL import Image, ImageDraw
 import itertools
 
-#%%
-
-# set base directory where the actual VRD image (.jpg) files are stored
-image_dir = os.path.join('..', 'data')
 
 #%%
 
@@ -102,51 +98,34 @@ def load_VRD_image_annotations(path):
 
 #%%
 
-def get_image_size(imname, dataset='train'):
-    if dataset == 'train':
-        directory = 'train_images'
-    elif dataset == 'test':
-        directory = 'test_images'
-    else:
-        raise ValueError('dataset type not recognised')
+def get_image_size(imname, imagedir):
 
-    path = os.path.join(image_dir, directory, imname)
+    path = os.path.join(imagedir, imname)
     img = Image.open(path)  
          
     return img.size  # (W x H)
 
 #%%
 
-def display_image(imname, dataset='train'):
-    if dataset == 'train':
-        directory = 'train_images'
-    elif dataset == 'test':
-        directory = 'test_images'
-    else:
-        raise ValueError('dataset type not recognised')
-        
-    path = os.path.join(image_dir, directory, imname)
+def display_image(imname, imagedir):
+    
+    path = os.path.join(imagedir, imname)
     img = Image.open(path)   
 
     # display the image
     # (on macOS, PIL launches Preview to display the image)
     img.show(title='VRD Image')
     
-    print(f'image size (W x H): {img.size}\n')
+    print(f'image name: {imname}')
+    print(f'image size: (W x H) {img.size}')
     
     return None
 
 #%%
 
-def display_image_with_bboxes_for_vr(imname, vr, dataset='train'):
-    if dataset == 'train':
-        directory = 'train_images'
-    elif dataset == 'test':
-        directory = 'test_images'
-    else:
-        raise ValueError('dataset type not recognised')
+def display_image_with_bboxes_for_vr(imname, vr, imagedir):
 
-    path = os.path.join(image_dir, directory, imname)
+    path = os.path.join(imagedir, imname)
     img = Image.open(path)   
 
     draw = ImageDraw.Draw(img)
@@ -167,21 +146,13 @@ def display_image_with_bboxes_for_vr(imname, vr, dataset='train'):
     # (on macOS, PIL launches Apple's Preview to display the image)
     img.show(title='VRD Image')
     
-    #print(f'image size (W x H): {img.size}\n')
-    
     return None
 
 #%%
 
-def display_image_with_all_bboxes(imname, imanno, dataset='train'):
-    if dataset == 'train':
-        directory = 'train_images'
-    elif dataset == 'test':
-        directory = 'test_images'
-    else:
-        raise ValueError('dataset type not recognised')
+def display_image_with_all_bboxes(imname, imanno, imagedir):
 
-    path = os.path.join(image_dir, directory, imname)
+    path = os.path.join(imagedir, imname)
     img = Image.open(path)   
     
     draw = ImageDraw.Draw(img)
@@ -197,7 +168,6 @@ def display_image_with_all_bboxes(imname, imanno, dataset='train'):
     # (on macOS, PIL launches Apple's Preview to display the image)
     img.show(title='VRD Image')
     
-    print(f'image size (W x H): {img.size}')
     print(f'number of objects: {len(bboxes)}')
     
     return None
@@ -205,40 +175,35 @@ def display_image_with_all_bboxes(imname, imanno, dataset='train'):
 
 #%%
 
-def display_image_with_selected_vrs(imname, imanno, vrs, dataset='train'):
-    if dataset == 'train':
-        directory = 'train_images'
-    elif dataset == 'test':
-        directory = 'test_images'
-    else:
-        raise ValueError('dataset type not recognised')
+def display_image_with_selected_vrs(imname, imanno, vr_indices, imagedir):
 
-    path = os.path.join(image_dir, directory, imname)
+    path = os.path.join(imagedir, imname)
     img = Image.open(path)   
     
     draw = ImageDraw.Draw(img)
     
-    for vridx, vr in enumerate (imanno):
+    for vridx in vr_indices:
         
-        if vridx in vrs:
+        if not (vridx >= 0 and vridx < len(imanno)):
+            raise ValueError(f'VR index {vridx} out of range')
         
-            # draw bbox around vr subject
-            bbox = vr['subject']['bbox']
-            xy = [(bbox[2], bbox[0]), (bbox[3], bbox[1])] 
-            draw.rectangle(xy, outline=230, width=4)  
+        vr = imanno[vridx]
+        
+        # draw bbox around vr subject
+        bbox = vr['subject']['bbox']
+        xy = [(bbox[2], bbox[0]), (bbox[3], bbox[1])] 
+        draw.rectangle(xy, outline=230, width=4)  
             
-            # draw bbox around vr object
-            bbox = vr['object']['bbox']
-            xy = [(bbox[2], bbox[0]), (bbox[3], bbox[1])]   
-            draw.rectangle(xy, outline=230, width=4) 
-    
+        # draw bbox around vr object
+        bbox = vr['object']['bbox']
+        xy = [(bbox[2], bbox[0]), (bbox[3], bbox[1])]   
+        draw.rectangle(xy, outline=230, width=4) 
+        
     # display the image
     img.show(title='VRD Image')
-    
-    print(f'image size (W x H): {img.size}')
-    print(f'indices of displayed VRs: {vrs}')
-    
+       
     return None
+
 
 #%%
 
