@@ -1,0 +1,81 @@
+# VRD annotation customisation instructions file
+
+# Step 7 of the annotations customisation process: remove the (key/value)
+# entries from the VRD annotations dictionary for named images that have
+# been found to be problematic (for some reason) and not worth fixing.
+
+# The annotation customisation instruction to request removal of an image
+# name's entry from the annotations dictionary is 'rimxxx' (for 'remove image').
+# This instruction, 'rimxxx', MUST be present as the 3rd component of the
+# image name line signalled by 'imname'. The removal will not be effected unless
+# the 'rimxxx' instruction is explicitly specified along with the image name.
+
+# example:
+#
+# imname; 8374215031_063bfdfa0c_b.jpg; rimxxx
+#
+
+##############
+# start of annotation customisation instructions
+##############
+
+#
+# remove annotation dictionary entries for images found to require rotation
+#
+
+
+# none
+
+
+#
+# remove annotation dictionary entries for images found to have highly
+# problematic annotations that require extensive re-working but which
+# were deemed not worth the trouble of fixing, or images that have little
+# to work with and/or are simply unattractive and we don't want them
+#
+
+# few useful objects and very ugly image
+imname; 8263546381_40043c5d19_b.jpg; rimxxx
+
+# bad annotations, few useful objects, and very ugly image
+imname; 447938528_e5ac4e9448_b.jpg; rimxxx
+
+# ugly image; little to work with
+imname; 2218603910_84281e9592_b.jpg; rimxxx
+
+# only 1 viable object
+imname; 6705389705_78dcbcd6b2_b.jpg; rimxxx
+
+# few viable objects; person in bear costume; don't like it
+imname; 3489052815_d898c1e171_o.jpg; rimxxx
+
+# badly annotated and ugly; not worth fixing
+imname; 7091065905_f8f52946da_b.jpg; rimxxx
+
+# badly annotated, ugly and problematic image; few viable objects
+imname; 231945478_1d01e6df14_o.jpg; rimxxx
+
+# ugly image; few viable objects
+imname; 3793855385_41ae000a71_b.jpg; rimxxx
+
+# ugly; unwanted
+imname; 180202155_a86312fa71_o.jpg; rimxxx
+
+# few viable objects
+imname; 7473102164_24c8e3d030_b.jpg; rimxxx
+
+# few viable objects; ugly; unwanted
+imname; 3721780236_8ab1f1c7a0_o.jpg; rimxxx
+
+# ugly; unwanted
+imname; 3155998575_2507bd136f_o.jpg; rimxxx
+
+# ugly; few viable objects; unwanted
+imname; 105653920_281f69a5bb_b.jpg; rimxxx
+
+
+
+
+##############
+# end of annotation customisation instructions
+##############
