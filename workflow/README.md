@@ -4,7 +4,7 @@ This folder contains assets relating to the **NeSy4VRD workflow** component of t
 
 ## The NeSy4VRD workflow
 
-Here we describe the workflow in more detail ...
+Here we describe the workflow in more detail ... (coming soon) ...
 
 
 
