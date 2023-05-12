@@ -29,7 +29,7 @@ avrxxx; boat; [477,594,319,746]; carry; dog; [478,529,587,618]
 imname; 7171463996_900cb4ce33_b.jpg; rimxxx
 ```
 
-### Training vs test annotation customisations
+### Training image vs test image annotation customisations
 
 A given text file of **NeSy4VRD protocol** visual relationship annotation customisation instructions must always pertain only to customisations of either VRD training image annotations or VRD test image annotations. The two categories  cannot be mixed in the same text file. This is because the Python driver script that interprets the protocol and processes the instructions (as part of the **NeSy4VRD workflow**) operates on either training image annotations or test image annotations, not both.
 
