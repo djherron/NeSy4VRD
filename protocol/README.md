@@ -9,19 +9,19 @@ Like most protocols, the **NeSy4VRD protocol** is conceptual in nature and is de
 Here is a representative sample of the **NeSy4VRD protocol** in action that illustates all of its features:
 ```
 imname; 3223670633_7d3d72dfe8_b.jpg
-cvrsoc; 4; (`person', `on', `shelf'); speaker
-cvrsbb; 4; (`speaker', `on', `shelf'); [161,234,231,270]
+cvrsoc; 4; ('person', 'on', 'shelf'); speaker
+cvrsbb; 4; ('speaker', 'on', 'shelf'); [161,234,231,270]
 
 imname; 8934043045_251b42d19a_b.jpg
-cvrooc; 7; (`bus', `beside', `car'); truck
-cvrobb; 7; (`bus', `beside', `truck'); [334,557,99,403]
+cvrooc; 7; ('bus', 'beside', 'car'); truck
+cvrobb; 7; ('bus', 'beside', 'truck'); [334,557,99,403]
 
 imname; 1426904233_ee344879b6_b.jpg
-cvrsoc; 5; (`bear', `sit on', `basket'); teddy bear
-cvrpxx; 5; (`teddy bear', `sit on', `basket'); in
+cvrsoc; 5; ('bear', 'sit on', 'basket'); teddy bear
+cvrpxx; 5; ('teddy bear', 'sit on', 'basket'); in
 
 imname; 4929276486_ca06aedbb9_b.jpg
-rvrxxx; 4; (`person', `wear', `jacket');
+rvrxxx; 4; ('person', 'wear', 'jacket');
 avrxxx; boat; [477,594,319,746]; has; dog; [478,529,587,618]
 avrxxx; boat; [477,594,319,746]; carry; dog; [478,529,587,618]
 
