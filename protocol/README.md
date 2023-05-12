@@ -4,7 +4,7 @@ This folder contains assets relating to the **NeSy4VRD protocol** component of t
 
 ## The NeSy4VRD protocol
 
-Like most protocols, the **NeSy4VRD protocol** is conceptual in nature. Rather than define it in a formal specification document, however, it is simpler to give examples of it and explain the examples.
+Like most protocols, the **NeSy4VRD protocol** is conceptual in nature and is defined in a specification document. This README document is the specification document defining the **NeSy4VRD protocol**.  For simplicity, it is an informal specification that relies on examples and explanations of the examples.
 
 Here is a representative sample of the **NeSy4VRD protocol** in action that illustates all of its features:
 ```
