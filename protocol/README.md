@@ -33,15 +33,9 @@ A given text file of **NeSy4VRD protocol** annotation customisation instructions
 
 #### The `imname` instruction
 
-The `imname` instruction is always followed by the filename of a valid VRD image. In this case, it must be a valid VRD training image. The `imname` instruction announces a new image and declares that the visual relationship annotation instructions which follow (if any) apply to that image. The `imname` instruction, therefore, establishes context. It establishes the context for interpreting all of the other **NeSy4VRD protocol** instruction types.
+The `imname` instruction is always followed by the filename of a valid VRD image. In this case, it must be a valid VRD training image. The `imname` instruction announces a new image and declares that the visual relationship annotation instructions which follow apply to that image. The `imname` instruction, therefore, establishes context. It establishes the context for interpreting all of the other **NeSy4VRD protocol** instruction types.
 
-When a **NeSy4VRD protocol** annotation customisation instruction file is processed (as part of the **NeSy4VRD workflow**), if the image filename associated with an `imname` instruction is not recognised (i.e. is found to not have an entry in the NeSy4VRD annotations dictionary), the driver script will abort and point to the problem.  That is, VRD image filenames are *recognised* or not according to whether or not they have entries in the NeSy4VRD annotations dictionary, not according to whether they exist as physical files in the appropriate VRD image directory on disk. Further, it means that image filenames that fail to be so recognised are NOT interpreted as 'new images' to be automatically given new entries in the annotations dictionary.
-
-#### The `rimxxx` instruction
-
-The only case where an `imname` instruction is not followed by some number of visual relationship annotation instructions is when its VRD image filename is immediately followed by a `rimxxx` instruction. We see an example of this with the 5th image in the listing. The `rimxxx` instruction is an instruction to "remove the entry for this image from the NeSy4VRD visual relationship annotations dictionary".  Researchers who are customising the NeSy4VRD visual relationship annotations with the **NeSy4VRD protocol** and **NeSy4VRD workflow** are free to dislike a particular VRD image for any reason and to choose to have its entry removed from the annotations dictionary using the `rimxxx` instruction. Removal of an image's entry from the annotations dictionary has no effect on the physical VRD image file itself. These stay intact. And entries for them can be created and introduced to the NeSy4VRD annotations dictionary at a later time.
-
-Reasons why a researcher may choose to use the `rimxxx` instruction can vary. In our case, when applying our customisations and quality improvements to the original VRD visual relationship annotations in order to create the highly customised and quality-improved NeSy4VRD visual relationship annotations, we used the `rimxxx` instruction for images 1) whose annotations we found to be too highly problematic and/or the images were too weak (in terms of available objects) for the annotations to be recoverable, or 2) the images were rotated 90 degrees.
+When a **NeSy4VRD protocol** annotation customisation instruction file is processed (as part of the **NeSy4VRD workflow**), if the image filename associated with an `imname` instruction is not recognised (i.e. is found to not have an entry in the NeSy4VRD annotations dictionary), the driver script will abort and point to the problem.  That is, VRD image filenames are *recognised* or not according to whether or not they have entries in the NeSy4VRD annotations dictionary, not according to whether they exist as physical files in the appropriate VRD image directory on disk. Further, it means that image filenames that fail to be so recognised are NOT interpreted as 'new images' to be automatically given new entries within the annotations dictionary.
 
 #### The `cvrsoc` and `cvrsbb` instructions
 
@@ -62,5 +56,22 @@ For the fourth image, the \texttt{rvrxxx} instruction declares an intention to r
 #### The `avrxxx` instruction
 
 The fourth image in the listing also has two \texttt{avrxxx} instructions associated with it. These declare intentions to \textit{add} two \textit{new} visual relationships to the set of annotations for the image.
+
+#### The `rimxxx` instruction
+
+The fifth image in the listing above shows an example of the use of the only other **NeSy4VRD protocol** instruction not already mentioned: the `rimxxx` instruction (for 'remove image'). The only valid location for the `rimxxx` instruction to appear is immediately following the filename of a VRD image, as a supplementary component of an `imname` instruction.
+
+The `rimxxx` instruction is an instruction to remove the entry for the specified VRD image from the NeSy4VRD visual relationship annotations dictionary. Removal of an image's entry from the annotations dictionary has no effect on the physical VRD image file itself. That stays intact on disk . Thus, the `rimxxx` instruction is equivalent to a form of 'logical delete'.
+
+If and when a `rimxxx` instruction is used, it is invalid to have *NeSy4VRD protocol** instructions following the `imname` instruction in which the `rimxxx` instruction appears. If the driver script processing the instructions file detects any, it will abort and point out the problem.
+
+Researchers who are customising the NeSy4VRD visual relationship annotations with the **NeSy4VRD protocol** and **NeSy4VRD workflow** are free to dislike a particular VRD image for any reason and to choose to have its entry removed from the annotations dictionary using the `rimxxx` instruction. Reasons why a researcher may choose to do this can vary.
+
+In our case, when applying our customisations and quality improvements to the original VRD visual relationship annotations in order to create the highly customised and quality-improved NeSy4VRD visual relationship annotations, we used the `rimxxx` instruction in scenarios such as the following:
+* where the annotations of an image were found to be too broken and highly problematic to be recoverable with reasonable effort
+* where the image in question contained too few candidate objects for viable visual relationships to be constructed, or
+* where an image was found to be rotated by 90 degrees, meaning that its entire perspective was at odds with the rest of the images in the dataset, and retention of the image would amount to retaining unhelpful noise that could only compromise both object detection and relationship detection.
+
+Most (if not all) of such scenarios, however, have already been detected and dealt with as part of the creation of the NeSy4VRD visual relationship annotations. So further use of the `rimxxx` instruction, by researchers doing potential onward customisations and extensions of the NeSy4VRD visual relationship annotations, is unlikely to be necessary.  However, the `rimxxx` instruction is part of the **NeSy4VRD protocol** and is available for use by any researcher for any reason.
 
 
