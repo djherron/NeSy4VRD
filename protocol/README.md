@@ -6,7 +6,7 @@ This folder contains assets relating to the **NeSy4VRD protocol** component of t
 
 Like most protocols, the **NeSy4VRD protocol** is conceptual in nature and is defined in a specification document. This README document is the specification document defining the **NeSy4VRD protocol**.  For simplicity, it is an informal specification that relies on examples and explanations of the examples.
 
-The following listing shows the **NeSy4VRD protocol** in action. The examples it contains illustrate all of the features of the **NeSy4VRD protocol**. We use this listing and the examples it contains to explain what the **NeSy4VRD protocol** is and how it can be used to specify visual relationship annotation customisation instructions declaratively, in text files.
+The following listing shows the **NeSy4VRD protocol** in action. The examples it contains illustrate all of the features of the **NeSy4VRD protocol**. We use the examples in this listing to explain what the **NeSy4VRD protocol** is and how it can be used to specify visual relationship annotation customisation instructions declaratively, in text files.
 
 ```
 imname; 3223670633_7d3d72dfe8_b.jpg
@@ -28,13 +28,14 @@ avrxxx; boat; [477,594,319,746]; carry; dog; [478,529,587,618]
 
 imname; 7171463996_900cb4ce33_b.jpg; rimxxx
 ```
-This listing shows various types of **NeSy4VRD protocol** annotation customisation instructions being specified with respect to five different VRD images.
 
-A given text file of **NeSy4VRD protocol** annotation customisation instructions must always pertain only to the annotations of either VRD training images or VRD test images. They cannot be mixed because the Python driver script that interprets the protocol and processes the instructions (as part of the **NeSy4VRD workflow**) operates on either training annotations or test annotations, not both. Let us assume this listing pertains to the annotations of VRD training set images.
+### Training vs test annotation customisations
+
+A given text file of **NeSy4VRD protocol** visual relationship annotation customisation instructions must always pertain only to customisations of either VRD training image annotations or VRD test image annotations. The two categories  cannot be mixed in the same text file. This is because the Python driver script that interprets the protocol and processes the instructions (as part of the **NeSy4VRD workflow**) operates on either training image annotations or test image annotations, not both.
 
 #### The `imname` instruction
 
-The `imname` instruction announces a new image.  It is always followed by the filename of a valid VRD image. (In our supposed scenario, it must be the name of a valid VRD training image.) The `imname` instruction declares that the visual relationship annotation instructions which follow apply to the specified image. The `imname` instruction, therefore, establishes context. It establishes the context for the interpretation of all of the other **NeSy4VRD protocol** instruction types.
+The `imname` instruction announces a new image.  It is always followed by the filename of a valid VRD image. The `imname` instruction declares that the visual relationship annotation instructions which follow apply to the specified image. The `imname` instruction, therefore, establishes context. It establishes the context for the interpretation of all of the other **NeSy4VRD protocol** instruction types.
 
 When a **NeSy4VRD protocol** annotation customisation instruction file is processed (as part of the **NeSy4VRD workflow**), if the image filename associated with an `imname` instruction is not recognised (i.e. is found to not have an entry in the NeSy4VRD annotations dictionary), the driver script will abort and point to the problem.  That is, VRD image filenames are *recognised* or not according to whether or not they have entries in the NeSy4VRD annotations dictionary, not according to whether they exist as physical files in the appropriate VRD image directory on disk. Further, this means that image filenames that fail to be so recognised are NOT interpreted as 'new images' to be automatically given new entries within the annotations dictionary.
 
