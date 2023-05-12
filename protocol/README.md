@@ -47,15 +47,15 @@ For the second image, similar types of changes are being specified, but this tim
 
 #### The `cvrpxx` instruction
 
-For the third image, an improvement to the visual relationship at index 5 is being specified. After a \texttt{cvrsoc} instruction specifying that the subject's object class be changed from \texttt{bear} to \texttt{teddy bear}, a \texttt{cvrpxx} instruction declares an intention to change the predicate (\texttt{pxx}) from \texttt{sit on} to \texttt{in}.
+For the third image, an improvement to the visual relationship at index position 5 is being specified. After a `cvrsoc` instruction specifying that the subject's object class be changed from **bear** to **teddy bear**, a `cvrpxx` instruction declares an intention to change the predicate (`pxx`) from **sit on** to **in**.
 
 #### The `rvrxxx` instruction
 
-For the fourth image, the \texttt{rvrxxx} instruction declares an intention to remove the visual relationship at index 4 (because, say, it was found to be too badly broken or to be a near or exact duplicate of another annotation for the same image). 
+For the fourth image, the `rvrxxx` instruction declares an intention to remove the visual relationship at index position 4 within the image's Python list of annotated visual relationships.
 
 #### The `avrxxx` instruction
 
-The fourth image in the listing also has two \texttt{avrxxx} instructions associated with it. These declare intentions to \textit{add} two \textit{new} visual relationships to the set of annotations for the image.
+The fourth image in the listing also has two instances of the `avrxxx` instruction associated with it. These declare intentions to **add** two *new* visual relationships to the set of annotations for the image.  These will be **appended** to the end the image's Python list of annotated visual relationships.
 
 #### The `rimxxx` instruction
 
