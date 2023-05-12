@@ -6,7 +6,8 @@ This folder contains assets relating to the **NeSy4VRD protocol** component of t
 
 Like most protocols, the **NeSy4VRD protocol** is conceptual in nature and is defined in a specification document. This README document is the specification document defining the **NeSy4VRD protocol**.  For simplicity, it is an informal specification that relies on examples and explanations of the examples.
 
-Here is a representative sample of the **NeSy4VRD protocol** in action that illustates all of its features:
+The following listing shows the **NeSy4VRD protocol** in action. The examples it contains illustrate all of the features of the **NeSy4VRD protocol**. We use this listing and the examples it contains to explain what the **NeSy4VRD protocol** is and how it can be used to specify visual relationship annotation customisation instructions declaratively, in text files.
+
 ```
 imname; 3223670633_7d3d72dfe8_b.jpg
 cvrsoc; 4; ('person', 'on', 'shelf'); speaker
