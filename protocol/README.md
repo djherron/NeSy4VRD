@@ -33,17 +33,17 @@ A given text file of **NeSy4VRD protocol** annotation customisation instructions
 
 #### The `imname` instruction
 
-The `imname` instruction is always followed by the filename of a valid VRD image. In this case, it must be a valid VRD training image. The `imname` instruction announces a new image and declares that the visual relationship annotation instructions which follow apply to that image. The `imname` instruction, therefore, establishes context. It establishes the context for interpreting all of the other **NeSy4VRD protocol** instruction types.
+The `imname` instruction announces a new image.  It is always followed by the filename of a valid VRD image. (In our supposed scenario, it must be the name of a valid VRD training image.) The `imname` instruction declares that the visual relationship annotation instructions which follow apply to the specified image. The `imname` instruction, therefore, establishes context. It establishes the context for the interpretation of all of the other **NeSy4VRD protocol** instruction types.
 
-When a **NeSy4VRD protocol** annotation customisation instruction file is processed (as part of the **NeSy4VRD workflow**), if the image filename associated with an `imname` instruction is not recognised (i.e. is found to not have an entry in the NeSy4VRD annotations dictionary), the driver script will abort and point to the problem.  That is, VRD image filenames are *recognised* or not according to whether or not they have entries in the NeSy4VRD annotations dictionary, not according to whether they exist as physical files in the appropriate VRD image directory on disk. Further, it means that image filenames that fail to be so recognised are NOT interpreted as 'new images' to be automatically given new entries within the annotations dictionary.
+When a **NeSy4VRD protocol** annotation customisation instruction file is processed (as part of the **NeSy4VRD workflow**), if the image filename associated with an `imname` instruction is not recognised (i.e. is found to not have an entry in the NeSy4VRD annotations dictionary), the driver script will abort and point to the problem.  That is, VRD image filenames are *recognised* or not according to whether or not they have entries in the NeSy4VRD annotations dictionary, not according to whether they exist as physical files in the appropriate VRD image directory on disk. Further, this means that image filenames that fail to be so recognised are NOT interpreted as 'new images' to be automatically given new entries within the annotations dictionary.
 
 #### The `cvrsoc` and `cvrsbb` instructions
 
-For the first image in the listing, an improvement to the visual relationship annotation at index 4 (in the image's list of annotations) is being specified.  The \texttt{cvrsoc} instruction declares an intention to change the subject's object class (\texttt{soc}) from \texttt{person} to \texttt{speaker}, (as in `stereo speaker'). The \texttt{cvrsbb} instruction declares an intention to change the subject's bounding box (\texttt{sbb}) to a more accurate localisation of the object.
+For the first image in the listing, an improvement to the visual relationship annotation at index position 4 (in the image's Python list of annotated visual relationships) is being specified.  The `cvrsoc` instruction declares an intention to change the subject's object class (`soc`) from **person** to **speaker**, (as in 'stereo speaker'). The `cvrsbb` instruction declares an intention to change the subject's bounding box (`sbb`) to a more accurate localisation of the object.
 
 #### The `cvrooc` and `cvrobb` instructions
 
-For the second image, similar types of changes are being specified, but this time for the visual relationship at index 7 and in relation to the object's object class and bounding box (\texttt{cvrooc} and \texttt{cvrobb}).
+For the second image, similar types of changes are being specified, but this time for the visual relationship at index position 7 and in relation to the object's object class and bounding box (via instructions `cvrooc` and `cvrobb`, respectively).
 
 #### The `cvrpxx` instruction
 
