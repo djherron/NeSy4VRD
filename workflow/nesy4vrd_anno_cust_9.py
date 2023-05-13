@@ -1,46 +1,61 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun 28 14:27:24 2021
-
-@author: dave
+@author: David Herron
 """
 
 '''
-This script implements Step 9 of the VRD annotations customisation process.
+This script performs Step 9 of the NeSy4VRD workflow.
 
-Step 9 of the process deals with managing changing a target vr to a new,
-modified vr on a global basis.
+The NeSy4VRD workflow applies planned customisations to the NeSy4VRD 
+visual relationship (VR) annotations of the images of the VRD image dataset
+in a configurable, managed, automated and repeatable process.
+
+Step 9 of the NeSy4VRD workflow:
+* manages transforming specified VR types to new, modified VR types on a
+  global basis.
+
+This is a 'from' --> 'to' operation.  Restrictions apply as to the type
+of transformations that are possible to apply on a global basis. In 
+particular, only transformations that change predicates or swap the 
+positions of the 'subject' and 'object' objects are supported. See one of
+the NeSy4VRD workflow configuration modules, in the section pertaining to
+Step 9, for more specific details.
+
+Step 9 of the NeSy4VRD workflow may or may not be required. It depends on
+the nature of the annotation customisations you wish to make.
 '''
 
 #%%
 
 import os
-import vrd_utils3 as vrdu3
+import nesy4vrd_utils3 as vrdu3
 
-# Engage the correct configuration file depending on whether you are running
-# this Step 9 script to perform TRAINING set or TEST set VR annotation
-# customisations.
+# Import the appropriate NeSy4VRD workflow configuration module
+# depending on whether we are doing a 'training set' or 'test set' run
+# of the NeSy4VRD workflow.
 
-import vrd_anno_cust_config_train as vrdcfg
-#import vrd_anno_cust_config_test as vrdcfg
+import nesy4vrd_anno_cust_config_train as vrdcfg
+#import nesy4vrd_anno_cust_config_test as vrdcfg
 
-#%% get the VRD data
 
-# Set the path to the directory in which the source VRD annotations data resides.
+#%% get the NeSy4VRD annotations data
+
+# set the path to the directory in which the source NeSy4VRD annotations 
+# data files reside
 anno_dir = os.path.join('..', *vrdcfg.anno_dir)
 
-# get an ordered tuple of the VRD object class names
+# get the NeSy4VRD object class names
 path = os.path.join(anno_dir, vrdcfg.object_classes_file)
-vrd_objects = vrdu3.load_VRD_object_class_names(path)
+vrd_objects = vrdu3.load_NeSy4VRD_object_class_names(path)
 
-# get an ordered tuple of the VRD predicate names
+# get NeSy4VRD predicate names
 path = os.path.join(anno_dir, vrdcfg.predicates_file)
-vrd_predicates = vrdu3.load_VRD_predicate_names(path)
+vrd_predicates = vrdu3.load_NeSy4VRD_predicate_names(path)
 
-# get the VRD image annotations
+# get NeSy4VRD visual relationship annotations
 vrd_anno_path = os.path.join(anno_dir, vrdcfg.annotations_file)
-vrd_anno = vrdu3.load_VRD_image_annotations(vrd_anno_path)
+vrd_anno = vrdu3.load_NeSy4VRD_image_annotations(vrd_anno_path)
 
 # get a list of the VRD image names from the annotations dictionary
 vrd_img_names = list(vrd_anno.keys())

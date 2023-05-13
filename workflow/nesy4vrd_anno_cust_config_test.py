@@ -43,12 +43,16 @@ annotations_file = 'nesy4vrd_annotations_test.json'
 
 #%% Step 1 config parameters
 
-# Step 1 is NOT PERMITTED for customisation of the VRD dataset test set VR
-# annotations.  Step 1 is performed only as part of the training set VR
-# annotation customisation process because it manages amendments to the
-# .json files defining the VRD object classes and predicates. The amendments
-# applied during the training set VR annotation customisation process apply
-# equally to all test set VR annotations.
+# Step 1 of the NeSy4VRD workflow is highly unlikely to be appropriate for
+# a 'test run' of the workflow (i.e. for a run that targets customisations
+# to the annotations of test set VRD images). This is because, if you have
+# modified object class or predicate names, or introduced new object class
+# or predicate names, you will most likely have had to apply these
+# customisations in Step 1 of your 'training set' run of the workflow, in
+# which case the customisations will already be in place for your 'test run'
+# of the workflow. Trying to reapply the same customisations a 2nd time is
+# not only redundant, it will cause the Step 1 script to detect a problem
+# and abort and report an error.
 
 step_1_new_object_names = [
                             'not defined for TEST set'
