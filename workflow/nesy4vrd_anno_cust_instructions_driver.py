@@ -1,68 +1,83 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Jun 25 19:53:28 2021
-
-@author: dave
+@author: David Herron
 """
 
 '''
-This script is a driver that reads, parses, validates and executes VRD
-visual relationship annotation customisation instructions defined in 
-text files and which adhere to a protocol that was custom-designed for 
-this specific purpose.
+This script is the driver script for the NeSy4VRD protocol.
 
-This driver script is designed to execute annotation customisation
-instructions against both the VRD training set and test set visual
-relationship annotations.  
+This protocol driver script performs all steps of the NeSy4VRD workflow 
+that correspond to the processing of an annotation customisation instruction 
+text file in which annotation customisation instructions have been 
+specified declaratively using the NeSy4VRD protocol.  For such text files,
+this protocol driver script reads, parses, validates and executes the 
+annotation customisation instructions it finds specified there.
 
-In the sequence of steps defined for the VRD TRAINING SET visual 
-relationship annotation customisation process, this driver script performs
-steps 2, 7, 8 and 11.
+The NeSy4VRD workflow applies planned customisations to the NeSy4VRD 
+visual relationship (VR) annotations of the images of the VRD image dataset
+in a configurable, managed, automated and repeatable process.
 
-In the sequence of steps defined for the VRD TEST SET visual 
-relationship annotation customisation process, this driver script performs
-steps 2, 7 and 8.
+To run this driver script for a particular step of the NeSy4VRD workflow,
+the user MUST configure a particular variable that indicates the workflow
+step number.  This driver script will then access the particular
+annotation customisation instruction text file that has been configured
+for that step number in the NeSy4VRD workflow configuration module imported
+to manage the running of the workflow.
 
-For each such step, visual relationship annotation customisation 
-instructions are specified in a text file. These instructions adhere 
-to a specific, custom protocol that this driver script understands and 
-enforces.
+=======================================================================
 
-Once this driver script completes the processing of an annotation 
-customisation instruction file, it writes the modified VRD annotations 
-dictionary to disk in the user-supplied file name specified in the 
-annotation customisation configuration script.
+More details of how this protocol driver script is meant to be used
+within the context of the NeSy4VRD workflow ...
+
+Two instances of the NeSy4VRD workflow were used to transform the
+original VRD visual relationship annotations into the highly customised
+and quality-improved NeSy4VRD visual relationship instructions:
+* a 'training set' run of the workflow, which targeted customising the
+  annotations of the training set VRD images, and
+* a 'test set' run of the workflow, which targeted customising the
+  annotations of the test set VRD images.
+
+The 'training set' run of that workflow had annotation customisation 
+instruction text files associated with steps 2, 7, 8 and 11 of the
+NeSy4VRD workflow.
+
+The 'test set' run of that workflow had annotation customisation 
+instruction text files associated with steps 2, 7 and 11 of the
+NeSy4VRD workflow.  The 'test set' run did not need or have an
+annotation customisation instruction text file for step 8. Thus, in
+the 'test set' run, Step 8 was skipped.
 '''
 
 #%%
 
 import os
-import vrd_utils3 as vrdu3
+import nesy4vrd_utils3 as vrdu3
 
-# Engage the correct configuration file depending on whether you are using
-# this driver script to apply customisations to the TRAINING set VR
-# annotations or to the TEST set VR annotations.
+# Import the appropriate NeSy4VRD workflow configuration module
+# depending on whether we are doing a 'training set' or 'test set' run
+# of the NeSy4VRD workflow.
 
-import vrd_anno_cust_config_train as vrdcfg
-#import vrd_anno_cust_config_test as vrdcfg
+import nesy4vrd_anno_cust_config_train as vrdcfg
+#import nesy4vrd_anno_cust_config_test as vrdcfg
 
-#%% get the VRD data
+#%% get the NeSy4VRD annotations data
 
-# Set the path to the directory in which the source VRD annotations data resides.
+# set the path to the directory in which the source NeSy4VRD annotations 
+# data files reside
 anno_dir = os.path.join('..', *vrdcfg.anno_dir)
 
-# get an ordered tuple of the VRD object class names
+# get the NeSy4VRD object class names
 path = os.path.join(anno_dir, vrdcfg.object_classes_file)
-vrd_objects = vrdu3.load_VRD_object_class_names(path)
+vrd_objects = vrdu3.load_NeSy4VRD_object_class_names(path)
 
-# get an ordered tuple of the VRD predicate names
+# get NeSy4VRD predicate names
 path = os.path.join(anno_dir, vrdcfg.predicates_file)
-vrd_predicates = vrdu3.load_VRD_predicate_names(path)
+vrd_predicates = vrdu3.load_NeSy4VRD_predicate_names(path)
 
-# get the VRD image annotations
+# get NeSy4VRD visual relationship annotations
 vrd_anno_path = os.path.join(anno_dir, vrdcfg.annotations_file)
-vrd_anno = vrdu3.load_VRD_image_annotations(vrd_anno_path)
+vrd_anno = vrdu3.load_NeSy4VRD_image_annotations(vrd_anno_path)
 
 # get a list of the VRD image names from the annotations dictionary
 vrd_img_names = list(vrd_anno.keys())
@@ -73,29 +88,23 @@ print()
 
 #%% CAUTION: configuration here is ESSENTIAL!!!!
 
-# Set the annotation customisation process Step number you wish to run!
+# Set the NeSy4VRD workflow Step number you wish to run!
 
-# Valid TRAINING set VR annotation customisation process step numbers:
-# 2, 7, 8, 11
+workflow_step_number = 11
 
-# Valid TEST set VR annotation customisation process step numbers:
-# 2, 7, 11
-
-anno_cust_step_number = 11
-
-print(f'Step {anno_cust_step_number}: processing begins ...')
+print(f'Step {workflow_step_number}: processing begins ...')
 print()
 
 #%% get VRD annotation customisation instructions
 
 # get the name of the annotation customisation instructions file to be processed
-if anno_cust_step_number == 2:
+if workflow_step_number == 2:
     filename = vrdcfg.step_2_vrd_anno_cust_instructions_file
-elif anno_cust_step_number == 7:
+elif workflow_step_number == 7:
     filename = vrdcfg.step_7_vrd_anno_cust_instructions_file
-elif anno_cust_step_number == 8:
+elif workflow_step_number == 8:
     filename = vrdcfg.step_8_vrd_anno_cust_instructions_file
-elif anno_cust_step_number == 11:
+elif workflow_step_number == 11:
     filename = vrdcfg.step_11_vrd_anno_cust_instructions_file
 else:
     raise ValueError('invalid annotation customisation step number specified')
@@ -328,16 +337,16 @@ print('processing complete but changes not (yet) saved to disk')
 
 save_modifications_to_file = False
 
-if anno_cust_step_number == 2:
+if workflow_step_number == 2:
     if vrdcfg.step_2_save_customised_annotations:
         save_modifications_to_file = True
-elif anno_cust_step_number == 7:
+elif workflow_step_number == 7:
     if vrdcfg.step_7_save_customised_annotations:
         save_modifications_to_file = True   
-elif anno_cust_step_number == 8:
+elif workflow_step_number == 8:
     if vrdcfg.step_8_save_customised_annotations:
         save_modifications_to_file = True    
-elif anno_cust_step_number == 11:
+elif workflow_step_number == 11:
     if vrdcfg.step_11_save_customised_annotations:
         save_modifications_to_file = True    
 else:
@@ -349,5 +358,5 @@ if save_modifications_to_file:
     print(f'customised annotations saved to file: {vrd_anno_path}')
 
 print()
-print(f'Step {anno_cust_step_number}: processing complete')
+print(f'Step {workflow_step_number}: processing complete')
 

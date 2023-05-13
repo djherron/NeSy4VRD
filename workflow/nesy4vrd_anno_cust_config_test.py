@@ -1,57 +1,45 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Jun  23 18:37:23 2022
-
-@author: dave
+@author: David Herron
 """
 
 '''
-This module defines configuration parameters for the automated VRD dataset
-visual relationship annotation customisation process. 
+This module is a NeSy4VRD workflow configuration file.
 
-The configuration parameters defined in this script guide the customisation
-of the visual relationship annotations of the VRD dataset 
-TEST SET visual relationship annotations.
+The NeSy4VRD workflow applies planned customisations to the NeSy4VRD 
+visual relationship (VR) annotations of the images of the VRD image dataset
+in a configurable, managed, automated and repeatable process.
 
-The VRD annotation customisation process is an ordered, multi-step, sequential 
-process. Each step performs a particular category of annotation customisation
-under the control of a separate, dedicated Python script.  This module 
-defines the configuration parameters that control what these separate,
-dedicated Python scripts actually do in terms of modifying the visual
-relationship annotations of the VRD dataset (training or test).
+This module is an example of a NeSy4VRD workflow configuration file
+designed to manage a 'test set' run of the NeSy4VRD workflow.
+A 'test set' run of the workflow is one that targets customising the
+annotations of VRD test set images.
 
-This module reflects an annotation customisation process for the VRD
-TEST SET that consists of a subset of the 11 steps defined for the
-TRAINING SET annotation customisation process. A TEST SET annotation
-customisation step that performs the same function as a TRAINING SET
-annotation customisation step shares a common 'step number' with that
-corresponding TRAINING SET annotation customisation step. The decision was
-taken to keep the step numbers consistent in this way in order to bring
-greater clarity to the process. Thus, the task performed by a 'step number'
-is consistent across both the TRAINING SET and TEST SET annotation customisation
-processes.  The TEST SET, however, did not require the same number of 
-annotation customisation steps as the TRAINING SET (11). Hence, the sequence
-of step numbers in the TEST SET annotation customisation process contains some
-gaps between 1 and 11. 
+A NeSy4VRD workflow configuration file defines configuration parameters
+(pre-named Python variables) that are used by the Python scripts that
+perform the successive steps of the NeSy4VRD workflow. The Python script
+for each step of the workflow will import a user-designated configuration 
+module (file) such as this and access the variables it needs for its
+execution from within the configuration module.
 '''
 
 #%% directory and file config parameters
 
-# The elements of this list are directory names which, when joined,
-# form a relative path to the directory containing the customised
-# VR annotations files.
-anno_dir = ['data', 'annotations_customised']
+# List the directory names which, when joined, form a relative
+# path to the directory containing the NeSy4VRD annotations files.
+anno_dir = ['data', 'annotations']
 
-object_classes_file = 'vrd_dh_objects.json'
+# Specify the name of the JSON file holding the NeSy4VRD object class names.
+object_classes_file = 'nesy4vrd_objects.json'
 
-predicates_file = 'vrd_dh_predicates.json'
+# Specify the name of the JSON file holding the NeSy4VRD predicate names.
+predicates_file = 'nesy4vrd_predicates.json'
 
-# To begin with, the file specified here should be (contain) a copy of the
-# original VRD dataset test set VR annotations. These will be progressively
-# customised by the sequence of steps of the test set VR annotation
-# customisation process.
-annotations_file = 'vrd_dh_annotations_test.json'
+# Specify the name of the JSON file holding the NeSy4VRD visual
+# relationship annotations for the 'test set' VRD images.
+annotations_file = 'nesy4vrd_annotations_test.json'
+
 
 #%% Step 1 config parameters
 
@@ -80,7 +68,7 @@ step_1_new_predicate_names = [
 # The text file containing the VRD annotation customisation instructions
 # for Step 2 of the test set VR annotation customisation process. This file
 # must be in the current working directory, not the annotations directory.
-step_2_vrd_anno_cust_instructions_file = 'vrd_anno_cust_2_instructions_test.txt'
+step_2_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_2_instructions_test.txt'
 
 # Specify whether you want the driver script to save the customised 
 # annotations to disk (over-writing the current state of the annotations
@@ -176,7 +164,7 @@ step_5_vrs_to_remove = [
 # 'remove image' instructions for Step 7 of the annotation customisation 
 # process.  The instructions file must be in the current working directory, 
 # not the annotations data directory.
-step_7_vrd_anno_cust_instructions_file = 'vrd_anno_cust_7_instructions_test.txt'
+step_7_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_7_instructions_test.txt'
 
 # Specify whether you want the driver script to save the customised 
 # annotations to disk (over-writing the current state of the annotations
@@ -276,7 +264,7 @@ step_9_from_vr_to_vr = [
 
 # Step 11 is not required for the test set VR annotation customisation process.
 
-step_11_vrd_anno_cust_instructions_file = 'vrd_anno_cust_11_instructions_test.txt'
+step_11_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_11_instructions_test.txt'
 
 step_11_save_customised_annotations = True
 

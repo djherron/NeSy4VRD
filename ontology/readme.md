@@ -2,7 +2,7 @@
 
 This folder contains the **NeSy4VRD ontology**, an OWL ontology called VRD-World.
 
-## The VRD-World OWL ontology
+## The **NeSy4VRD ontology**, VRD-World
 
 The **NeSy4VRD ontology**, VRD-World, is a well-aligned companion ontology for the **NeSy4VRD dataset**.
 
@@ -10,11 +10,13 @@ The **NeSy4VRD dataset** consists of:
 1. the VRD images of the original VRD (Visual Relationship Detection) dataset  (information about which is available [here](https://cs.stanford.edu/people/ranjaykrishna/vrd/))
 2. the NeSy4VRD visual relationship annotations, a highly customised and quality-improved version of the original VRD visual relationship annotations of the VRD images.
 
-The **NeSy4VRD ontology**, VRD-World, describes the domain of the **NeSy4VRD dataset**, as reflected in the NeSy4VRD object classes and predicates referenced in the NeSy4VRD visual relationship annotations of the VRD images.
+The **NeSy4VRD ontology**, VRD-World, describes the domain of the **NeSy4VRD dataset**, as reflected in the object classes and predicates referenced in the NeSy4VRD visual relationship annotations of the VRD images.
+
+The primary and *official* means of publicly distributing the **NeSy4VRD ontology**, VRD-World, is via the **NeSy4VRD dataset package** published on [Zenodo](https://doi.org/10.5281/zenodo.7916355).  The **NeSy4VRD dataset package** on Zenodo packages the **NeSy4VRD dataset** and the **NeSy4VRD ontology** together in one **NeSy4VRD.zip** zip file.  This tight coupling between a version of the **NeSy4VRD dataset** and a corresponding version of the **NeSy4VRD ontology** is designed to guarantee 
 
 ## NeSy4VRD versions of VRD-World
 
-The primary and *official* means of publicly distributing the VRD-World OWL ontology is **NOT** via this folder on GitHub.  It is via the NeSy4VRD dataset package published on [Zenodo](https://doi.org/10.5281/zenodo.7916355).  That package will always contain both the NeSy4VRD dataset (VRD images and NeSy4VRD visual relationship annotations) and the NeSy4VRD VRD-World OWL ontology (the version of which is guaranteed to be perfectly aligned and compatible with the version of the NeSy4VRD dataset with which it is coupled in the package).
+  That package will always contain both the NeSy4VRD dataset (VRD images and NeSy4VRD visual relationship annotations) and the NeSy4VRD VRD-World OWL ontology (the version of which is guaranteed to be perfectly aligned and compatible with the version of the NeSy4VRD dataset with which it is coupled in the package).
 
 It is conceivable that, over time, multiple different *official* versions of the NeSy4VRD OWL ontology, VRD-World, may gradually evolve and accumulate. As and when this occurs, the files for these different versions of VRD-World will be hosted here.  We will maintain a record (on this README) of alignment relationships between the potential successive versions of the VRD-World ontology and any (potential) successive versions of the NeSy4VRD dataset.
 

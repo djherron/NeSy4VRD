@@ -53,21 +53,29 @@ apply the changes you have requested (because they are already in place).
 import os
 import nesy4vrd_utils3 as vrdu3
 
-# Import the appropriate VR annotation customisation configuration file
+# Import the appropriate NeSy4VRD workflow configuration module
 import nesy4vrd_anno_cust_config_train as vrdcfg
 
-#%% get the VRD object class names and predicate names
 
-# Set the path to the directory in which the source VRD annotations data resides.
+#%% get the NeSy4VRD object class names and predicate names
+
+# set the path to the directory in which the source NeSy4VRD annotations 
+# data files reside
 anno_dir = os.path.join('..', *vrdcfg.anno_dir)
 
-# get an ordered tuple of the current VRD object class names
+# get the NeSy4VRD object class names
 vrd_objects_path = os.path.join(anno_dir, vrdcfg.object_classes_file)
-vrd_objects = vrdu3.load_VRD_object_class_names(vrd_objects_path)
+vrd_objects = vrdu3.load_NeSy4VRD_object_class_names(vrd_objects_path)
 
-# get an ordered tuple of the current VRD predicate names
+# get NeSy4VRD predicate names
 vrd_predicates_path = os.path.join(anno_dir, vrdcfg.predicates_file)
-vrd_predicates = vrdu3.load_VRD_predicate_names(vrd_predicates_path)
+vrd_predicates = vrdu3.load_NeSy4VRD_predicate_names(vrd_predicates_path)
+
+# NOTE: This script for Step 1 of the NeSy4VRD workflow does NOT load
+# the NeSy4VRD visual relationship annotations file because it does 
+# not need it.  The visual relationship annotations are loaded and
+# updated only by subsequent steps of the NeSy4VRD workflow.
+
 
 #%%
 

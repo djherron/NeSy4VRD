@@ -6,6 +6,13 @@
 
 '''
 This module defines utility functions used by the NeSy4VRD workflow.
+
+The three functions for loading annotations files are used by every script
+that implements a step of the NeSy4VRD workflow.
+
+The rest of the functions are used by the driver script that interprets 
+the NeSy4VRD protocol and processes text files containing annotation
+customisation instructions declared using the NeSy4VRD protocol.
 '''
 
 #%%
@@ -17,19 +24,19 @@ import vrd_utils as vrdu
 
 #%%
 
-def load_VRD_object_class_names(path):
+def load_NeSy4VRD_object_class_names(path):
 
     return vrdu.load_VRD_object_class_names(path)                  
 
 #%%
 
-def load_VRD_predicate_names(path):
+def load_NeSy4VRD_predicate_names(path):
 
     return vrdu.load_VRD_predicate_names(path)
  
 #%% 
 
-def load_VRD_image_annotations(path):
+def load_NeSy4VRD_image_annotations(path):
 
     return vrdu.load_VRD_image_annotations(path)
 

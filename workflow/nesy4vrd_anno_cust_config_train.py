@@ -5,7 +5,7 @@
 """
 
 '''
-This module is a NeSy4VRD workflow configuration file.
+This module is a NeSy4VRD workflow configuration module.
 
 The NeSy4VRD workflow applies planned customisations to the NeSy4VRD 
 visual relationship (VR) annotations of the images of the VRD image dataset
@@ -31,8 +31,19 @@ annotation customisations that a given run of the NeSy4VRD workflow
 performs.  By saving the configuration module one used for a given run of
 the NeSy4VRD workflow one can, in effect, retain an historical record of the 
 annotation customisations that were applied by a given run of the NeSy4VRD
-workflow.
-
+workflow.  Saving the configuration modules one uses for the 'training set'
+and 'test set' runs of the NeSy4VRD workflow is good practice because it 
+allows one to iteratively refine and extend the customisations and
+extensions one applies to the NeSy4VRD visual relationship annotations over
+time.  By keeping a clean version of the default NeSy4VRD visual 
+relationship annotations to use as one's starting point, one can, over time,
+repeatedly re-run the NeSy4VRD workflow to re-apply one's ever-growing
+set of annotations customisations.  The benefit of this repeatability of
+the process for applying one's customisations and extensions to the NeSy4VRD
+annotations, and the ability to iteratively refine and extend the set
+of one's customisations and extensions, will become more and more apparent
+the more one uses the workflow in this manner.
+ 
 The NeSy4VRD workflow requires that configured and specified annotation
 customisations be organised for two separate runs of the workflow: a
 'training set' run that targets customising the annotations of VRD training
@@ -44,7 +55,8 @@ separate but related runs of the NeSy4VRD workflow.
 You can name your two NeSy4VRD configuration module files however you wish.
 
 To perform a 'training set' run, you do the following:
-* define your 'training set' configuration module 
+* establish your 'training set' configuration module by defining the content
+  of the pre-named variables in the manner you wish
 * adapt the scripts for the various steps of the workflow to import your 
   'training set' configuration module
 * run the successive steps of the workflow.
@@ -54,42 +66,65 @@ To perform a 'test set' run, you do the following:
 * adapt the scripts for the various steps of the workflow to import your 
   'test set' configuration module
 * run the successive steps of the workflow.
+
+Each succesive step of the workflow will:
+* import the configuration module file you tell it to import
+* load the visual relationship annotation files you designate in your 
+  configuration module file
+* access the pre-named variables it needs from your configuration module
+* apply the category of annotation customisations the script is designed to 
+  perform, according to the content you have defined in your configuration
+  module for the pre-named variables used by the script that performs that
+  step of the workflow
+* abort and report, should any issues or problems be detected
+* save the updated visual relationship annotations to a file on disk, 
+  using the same filename as the one from which the annotations were loaded
+  in the first place; (note: saving or not saving to disk is controllable
+  within your configuration module file; not saving to disk can facilitate 
+  testing, to allow you to verify that all your planned customisations that
+  are processed by a given step of the workflow are clean and executable,
+  without making a mistake and the updated annotations to disk before you
+  are ready to do so)
+
+It is because each step of the workflow 1) loads the annotations, 2) applies
+customisations, and 3) saves the updated annotations to disk that the 
+steps of the workflow should always be run, one after the other, in a fixed
+sequence. Many forms of dependency can arise within your cumulative set
+of annotation customisations across the different steps of the workflow.
+So, to ensure that these dependencies are always satisfied and prevent 
+workflow steps aborting unexpectedly, always run your workflow steps in the
+same fixed sequence.
+
+One scenario where dependencies can arise is if you have created multiple
+annotation customisation instruction text files in which you specify 
+annotation customiation instructions using the NeSy4VRD protocol. It can
+sometimes occur that you specify some customisations to the annotations of
+image X in instructions text file A, and then specify some more customisations
+to the annotations of image X in instructions text file B. For the
+customisation instructions in text file B to be interpreted as being valid,
+it may well be that customisations specified in text files A must already be
+in place.  For this reason, it can be advantageous to try to ensure that
+all customisation instructions affecting a given image are gathered together
+in one place, in one customisation instructions text file.
 '''
+
 
 #%% directory and file config parameters
 
-# Here we list the directory names which, when joined, form a relative
-# path to the directory containing the customised VR annotations.
+# List the directory names which, when joined, form a relative
+# path to the directory containing the NeSy4VRD annotations files.
 anno_dir = ['data', 'annotations']
 
-# Here we specify the name of the file containing the ordered list of
-# VRD object class names. This file should initially be an exact copy
-# of the file of VRD object class names for the VRD image VR annotations
-# you wish to customise.  If you run Step 1 of the VR annotation
-# customisation process to extend this list of object class names, Step
-# 1 will read and write this file and it will become your customised
-# list of object class names.  All subsequent steps of the VR annotation
-# customisation process then read this file only.
+# Specify the name of the JSON file holding the NeSy4VRD object class names.
 object_classes_file = 'nesy4vrd_objects.json'
 
-# Here we specify the name of the file containing the ordered list of
-# VRD predicate names. This file should initially be an exact copy
-# of the file of VRD predicate names for the VRD image VR annotations
-# you wish to customise.  If you run Step 1 of the VR annotation
-# customisation process to amend this list of predicate names, Step
-# 1 will read and write this file and it will become your customised
-# list of predicate names.  All subsequent steps of the VR annotation
-# customisation process then read this file only.
+# Specify the name of the JSON file holding the NeSy4VRD predicate names.
 predicates_file = 'nesy4vrd_predicates.json'
 
-# Here we specify the name of the file containing the VRD image VR
-# annotations we wish to customise. This file should initially be an
-# exact copy of the file of VR annotations you wish to customise.
-# Step 1 of the VR annotation customisation process does not use this
-# file, but all subsequent steps will read and write this file, 
-# applying a series of customisations that progressively transform the
-# VR annotations in the way you specify. 
+# Specify the name of the JSON file holding the NeSy4VRD visual
+# relationship annotations for the 'trainging set' VRD images.
 annotations_file = 'nesy4vrd_annotations_train.json'
+
 
 #%% Step 1 config parameters
 
@@ -150,7 +185,7 @@ step_1_new_predicate_names = [
 # The text file containing the VRD annotation customisation instructions
 # for Step 2 of the annotation customisation process. This file must be
 # in the current working directory, not the annotations directory.
-step_2_vrd_anno_cust_instructions_file = 'vrd_anno_cust_2_instructions_train.txt'
+step_2_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_2_instructions_train.txt'
 
 # Specify whether you want the driver script to save the customised 
 # annotations to disk (over-writing the current state of the annotations
@@ -357,7 +392,7 @@ step_5_vrs_to_remove = [
 # 'remove image' instructions for Step 7 of the annotation customisation 
 # process.  The instructions file must be in the current working directory, 
 # not the annotations data directory.
-step_7_vrd_anno_cust_instructions_file = 'vrd_anno_cust_7_instructions_train.txt'
+step_7_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_7_instructions_train.txt'
 
 # Specify whether you want the driver script to save the customised 
 # annotations to disk (over-writing the current state of the annotations
@@ -387,7 +422,7 @@ step_7_save_customised_annotations = True
 # Specify the text file containing the VRD annotation customisation instructions
 # for Step 8 of the annotation customisation process. This file must be
 # in the current working directory, not the annotations directory.
-step_8_vrd_anno_cust_instructions_file = 'vrd_anno_cust_8_instructions_train.txt'
+step_8_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_8_instructions_train.txt'
 
 # Specify whether you want the driver script to save the customised 
 # annotations to disk (over-writing the current state of the annotations
@@ -464,7 +499,7 @@ step_9_from_vr_to_vr = [
 # Specify the text file containing the VRD annotation customisation instructions
 # for Step 11 of the annotation customisation process. This file must be
 # in the current working directory, not the annotations directory.
-step_11_vrd_anno_cust_instructions_file = 'vrd_anno_cust_11_instructions_train.txt'
+step_11_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_11_instructions_train.txt'
 
 # Specify whether you want the driver script to save the customised 
 # annotations to disk (over-writing the current state of the annotations
