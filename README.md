@@ -23,7 +23,7 @@ The NeSy4VRD OWL ontology, called VRD-World, is a well-aligned, companion to the
 All of the components of the NeSy4VRD research resource other than the two components (the dataset and the ontology) hosted on Zenodo are available here, on GitHub.
 
 The components of NeSy4VRD available here on GitHub include:
-1. comprehensive NeSy4VRD extensibility support infrastructure that makes it easy to customise and extend the NeSy4VRD visual relationship annotations and, thereby, easy to customise and extend the **NeSy4VRD ontology**, VRD-World, ontology as well
+1. comprehensive **NeSy4VRD extensibility support infrastructure** that makes it easy to customise and extend the NeSy4VRD visual relationship annotations and, thereby, easy to customise and extend the **NeSy4VRD ontology**, VRD-World, ontology as well
 2. open source Python **NeSy4VRD sample code** for both loading the NeSy4VRD visual relationship annotations into a knowledge graph hosting the VRD-World ontology, and for extracting the same and reconstituting the visual relationship annotations in their native format, without loss of information.
 
 
