@@ -19,56 +19,39 @@
 ##################################################################
 
 
+#
+# NOTE:
+#
+# The following are examples illustrating the use of the NeSy4VRD
+# protocol for specifying visual relationship annotation 
+# customisation instructions. Use them for guidance only. They are
+# all meant to be replaced with your own particular annotation
+# customisation instructions. 
+#
+
+
+
+
 imname; 363795503_b2ebed42bf_o.jpg
 avrxxx; laptop; [198, 352, 574, 744]; next to; monitor; [135, 334, 754, 973]
 avrxxx; chair; [344, 850, 836, 1279]; next to; desk; [314, 847, 1, 1276]
 avrxxx; mouse; [443, 488, 499, 579]; next to; keyboard; [370, 464, 563, 836]
 
-imname; 4710743976_3f221f7800_b.jpg
-avrxxx; refrigerator; [206, 995, 164, 560]; beside; stove; [386, 879, 554, 767]
-
-imname; 3854901527_946e863e0c_b.jpg
-avrxxx; waste bin; [622, 789, 338, 434]; near; sink; [717, 895, 2, 227]
-
-imname; 3514773404_45c9b089b6_b.jpg
-avrxxx; box; [536, 602, 414, 537]; beside; sink; [524, 644, 703, 1023]
 
 imname; 487238866_a3ae169439_b.jpg
 avrxxx; computer; [398, 706, 955, 1023]; on; desk; [430, 734, 36, 1023]
 avrxxx; phone; [457, 533, 728, 916]; near; computer; [398, 706, 955, 1023]
 
+
 imname; 323177126_80c60c6704_o.jpg
 avrxxx; monitor; [198, 414, 494, 796]; beside; laptop; [336, 593, 810, 1123]
+
 
 imname; 6047104855_45f379262a_b.jpg
 avrxxx; pot; [447, 491, 733, 765]; on; table; [451, 635, 614, 891]
 avrxxx; plant; [395, 448, 718, 788]; in; pot; [447, 491, 733, 765]
 avrxxx; pillow; [326, 394, 546, 632]; on; sofa; [277, 499, 362, 759]
 
-imname; 4666685478_1282906516_b.jpg
-avrxxx; basket; [485, 542, 898, 1006]; on; table; [466, 675, 667, 1022]
-avrxxx; plant; [253, 282, 215, 244]; in; vase; [282, 328, 224, 236]
-
-imname; 8640413289_5fc6d5f4fc_b.jpg
-avrxxx; cooking pot; [353, 397, 314, 380]; behind; table; [465, 671, 166, 692]
-avrxxx; chair; [543, 682, 1, 102]; next to; table; [465, 671, 166, 692]
-avrxxx; cabinet; [139, 656, 1, 143]; behind; chair; [543, 682, 1, 102]
-avrxxx; vase; [461, 593, 891, 988]; near; table; [465, 671, 166, 692]
-
-imname; 221843432_1a0e97030f_b.jpg
-avrxxx; hand; [631, 671, 19, 62]; hold; camera; [635, 655, 4, 29]
-
-imname; 1195658643_31ff812d45_b.jpg
-avrxxx; pot; [569, 666, 54, 188]; on; table; [619, 762, 2, 1020]
-
-imname; 2590875225_1fb910d190_b.jpg
-avrxxx; pot; [314, 344, 314, 346]; on; desk; [337, 555, 5, 402]
-
-imname; 8088160845_10ca85d51b_b.jpg
-avrxxx; plant; [44, 93, 183, 267]; in; pot; [82, 117, 200, 240]
-
-imname; 3846832420_d81e084882_o.jpg
-avrxxx; plant; [270, 316, 97, 184]; in; vase; [315, 352, 129, 158]
 
 imname; 3035775096_94ac8bcfbf_b.jpg
 avrxxx; teddy bear; [68, 615, 159, 533]; in; chair; [33, 740, 2, 737]
@@ -76,180 +59,6 @@ avrxxx; teddy bear; [68, 615, 159, 533]; at; laptop; [244, 689, 481, 941]
 avrxxx; teddy bear; [68, 615, 159, 533]; has; glasses; [178, 227, 268, 380]
 avrxxx; teddy bear; [68, 615, 159, 533]; has; tie; [292, 475, 249, 419]
 
-imname; 4607601147_412c14a80d_b.jpg
-avrxxx; horse; [292, 433, 506, 666]; pull; cart; [251, 429, 314, 528]
-avrxxx; cart; [251, 429, 314, 528]; has; wheel; [379, 428, 421, 462]
-avrxxx; car; [336, 467, 202, 404]; beside; cart; [251, 429, 314, 528]
-
-imname; 3729359132_b80b1941e2_b.jpg
-avrxxx; laptop; [169, 330, 187, 412]; beside; monitor; [29, 257, 380, 650]
-avrxxx; drinking glass; [259, 343, 870, 941]; on; table; [292, 383, 52, 1003]
-
-imname; 3100391531_9452d02e51_b.jpg
-avrxxx; monitor; [159, 386, 195, 383]; above; keyboard; [361, 433, 146, 361]
-avrxxx; mouse; [383, 413, 363, 411]; next to; keyboard; [361, 433, 146, 361]
-avrxxx; bottle; [328, 459, 981, 1024]; on; desk; [327, 767, 4, 1018]
-avrxxx; paper; [428, 492, 788, 970]; beside; bottle; [328, 459, 981, 1024]
-
-imname; 9248184101_65e722577f_b.jpg
-avrxxx; laptop; [321, 886, 4, 578]; on; person; [70, 1024, 30, 644]
-avrxxx; cup; [255, 339, 333, 413]; on; desk; [199, 488, 2, 768]
-
-imname; 156836336_b576705268_b.jpg
-avrxxx; paper; [303, 591, 266, 541]; on; desk; [197, 766, 59, 978]
-avrxxx; teddy bear; [280, 367, 638, 726]; next to; monitor; [60, 328, 391, 700]
-
-imname; 2941147752_29276e883b_b.jpg
-avrxxx; paper; [798, 987, 301, 564]; on; desk; [575, 1024, 1, 767]
-avrxxx; bottle; [586, 718, 152, 201]; on; desk; [575, 1024, 1, 767]
-avrxxx; bottle; [586, 718, 152, 201]; behind; keyboard; [619, 742, 259, 424]
-
-imname; 5517114538_91f825ecdf_b.jpg
-avrxxx; paper; [686, 767, 216, 468]; next to; cup; [596, 698, 356, 424]
-
-imname; 2865884860_cbea5b34e7_b.jpg
-avrxxx; monitor; [1, 240, 411, 746]; above; desk; [404, 741, 2, 1023]
-avrxxx; paper; [468, 602, 5, 312]; on; desk; [404, 741, 2, 1023]
-avrxxx; keyboard; [474, 580, 415, 931]; below; monitor; [1, 240, 411, 746]
-
-imname; 365525501_2d701349e1_b.jpg
-avrxxx; person; [113, 290, 325, 422]; sit on; chair; [174, 290, 286, 380]
-avrxxx; mouse; [377, 400, 782, 821]; next to; keyboard; [335, 399, 625, 791]
-
-imname; 3074822002_03c5016dca_b.jpg
-avrxxx; paper; [402, 667, 584, 1005]; next to; cup; [415, 574, 409, 526]
-
-imname; 5402369803_8c559054d6_b.jpg
-avrxxx; trees; [1, 162, 2, 503]; next to; grass; [161, 176, 1, 412]
-avrxxx; trees; [1, 162, 2, 503]; behind; boat; [428, 732, 115, 386]
-
-imname; 4921738335_ef2ed4b5b6_b.jpg
-avrxxx; plant; [2, 482, 656, 1022]; behind; chair; [356, 742, 594, 973]
-avrxxx; plant; [2, 482, 656, 1022]; next to; table; [312, 537, 364, 757]
-avrxxx; lamp; [162, 304, 248, 334]; near; table; [312, 537, 364, 757]
-avrxxx; plant; [2, 482, 656, 1022]; taller than; lamp; [162, 304, 248, 334]
-
-imname; 5390530073_ef2e21499e_b.jpg
-avrxxx; vase; [281, 352, 334, 367]; on; table; [316, 494, 290, 628]
-avrxxx; plant; [160, 292, 205, 408]; in; vase; [281, 352, 334, 367]
-avrxxx; phone; [300, 332, 577, 609]; on; table; [316, 494, 290, 628]
-avrxxx; plant; [160, 292, 205, 408]; next to; monitor; [225, 339, 377, 526]
-avrxxx; phone; [300, 332, 577, 609]; near; monitor; [225, 339, 377, 526]
-
-imname; 9487308436_241f0a4a3f_b.jpg
-avrxxx; person; [13, 614, 172, 379]; has; hand; [105, 182, 268, 319]
-avrxxx; hand; [105, 182, 268, 319]; hold; phone; [91, 135, 259, 304]
-avrxxx; person; [13, 614, 172, 379]; has; face; [57, 129, 236, 303]
-avrxxx; face; [57, 129, 236, 303]; behind; phone; [91, 135, 259, 304]
-avrxxx; person; [13, 614, 172, 379]; look at; phone; [91, 135, 259, 304]
-avrxxx; bowl; [385, 413, 65, 113]; behind; person; [13, 614, 172, 379]
-
-imname; 6697656109_c46b406441_b.jpg
-avrxxx; stove top; [444, 529, 200, 529]; above; oven; [539, 737, 237, 502]
-avrxxx; stove; [397, 766, 183, 508]; has; stove top; [444, 529, 200, 529]
-avrxxx; stove; [397, 766, 183, 508]; has; oven; [539, 737, 237, 502]
-avrxxx; stove; [397, 766, 183, 508]; beside; refrigerator; [232, 766, 415, 715]
-avrxxx; counter; [580, 767, 603, 1023]; has; sink; [624, 767, 717, 1023]
-
-imname; 4088714704_e7874cc113_b.jpg
-avrxxx; monitor; [205, 486, 317, 793]; on; table; [488, 680, 387, 737]
-avrxxx; box; [520, 683, 724, 894]; next to; table; [488, 680, 387, 737]
-avrxxx; clock; [59, 135, 798, 874]; above; box; [520, 683, 724, 894]
-avrxxx; computer; [485, 674, 129, 250]; under; shelf; [55, 679, 120, 307]
-avrxxx; computer; [517, 683, 25, 136]; beside; computer; [485, 674, 129, 250]
-
-imname; 262630587_3112ef4d97_o.png
-avrxxx; computer; [139, 520, 1, 117]; beside; desk; [156, 597, 100, 799]
-
-imname; 5180178282_4e3717c82d_b.jpg
-avrxxx; table; [471, 693, 206, 430]; in front of; chair; [359, 642, 1, 232]
-avrxxx; phone; [492, 520, 244, 282]; on; table; [471, 693, 206, 430]
-avrxxx; drinking glass; [467, 534, 337, 365]; on; table; [471, 693, 206, 430]
-avrxxx; phone; [492, 520, 244, 282]; near; drinking glass; [467, 534, 337, 365]
-avrxxx; refrigerator; [224, 474, 270, 449]; behind; table; [471, 693, 206, 430]
-avrxxx; lamp; [180, 232, 359, 404]; on top of; refrigerator; [224, 474, 270, 449]
-
-imname; 8979322702_6c23642700_b.jpg
-avrxxx; counter; [483, 728, 57, 1023]; in front of; person; [108, 531, 656, 886]
-avrxxx; counter; [483, 728, 57, 1023]; has; stove top; [544, 656, 508, 1022]
-avrxxx; bowl; [449, 496, 447, 546]; on; counter; [483, 728, 57, 1023]
-avrxxx; plate; [505, 530, 430, 510]; next to; bowl; [449, 496, 447, 546]
-avrxxx; cup; [420, 464, 907, 948]; behind; person; [108, 531, 656, 886]
-
-imname; 4017611370_56bdd4116d_b.jpg
-avrxxx; person; [50, 668, 283, 787]; hit; ball; [152, 191, 595, 644]
-
-imname; 3999521438_8ba2e03213_b.jpg
-avrxxx; person; [6, 1023, 90, 765]; hold; phone; [332, 574, 314, 422]
-avrxxx; bag; [101, 211, 413, 532]; behind; person; [6, 1023, 90, 765]
-avrxxx; chair; [1, 201, 526, 609]; next to; bag; [101, 211, 413, 532]
-avrxxx; shelf; [1, 355, 1, 193]; behind; person; [6, 1023, 90, 765]
-avrxxx; person; [6, 1023, 90, 765]; wear; pants; [559, 920, 196, 716]
-avrxxx; person; [6, 1023, 90, 765]; has; face; [88, 313, 204, 415]
-avrxxx; person; [6, 1023, 90, 765]; has; hand; [415, 529, 255, 394]
-avrxxx; hand; [415, 529, 255, 394]; touch; phone; [332, 574, 314, 422]
-avrxxx; face; [88, 313, 204, 415]; look at; phone; [332, 574, 314, 422]
-
-imname; 9661679965_b31595c743_b.jpg
-avrxxx; bag; [376, 667, 554, 816]; in front of; person; [46, 534, 563, 834]
-avrxxx; bottle; [511, 593, 570, 615]; with; bag; [376, 667, 554, 816]
-avrxxx; paper; [487, 543, 827, 988]; under; bench; [197, 579, 11, 1023]
-avrxxx; post; [126, 463, 901, 953]; behind; bench; [197, 579, 11, 1023]
-avrxxx; post; [126, 463, 901, 953]; above; paper; [487, 543, 827, 988]
-avrxxx; tree; [1, 280, 187, 456]; behind; bench; [197, 579, 11, 1023]
-avrxxx; building; [1, 203, 1, 554]; behind; tree; [1, 280, 187, 456]
-avrxxx; traffic light; [101, 131, 202, 220]; near; building; [1, 203, 1, 554]
-
-imname; 4113621691_ebd79e9a83_o.jpg
-avrxxx; counter; [348, 397, 756, 999]; near; table; [363, 461, 345, 407]
-avrxxx; table; [363, 461, 345, 407]; behind; sofa; [448, 736, 76, 551]
-avrxxx; pillow; [461, 565, 181, 298]; on; sofa; [448, 736, 76, 551]
-avrxxx; clock; [130, 171, 144, 180]; above; sofa; [448, 736, 76, 551]
-avrxxx; vase; [358, 403, 540, 565]; on; table; [363, 461, 345, 407]
-avrxxx; plant; [308, 359, 518, 581]; in; vase; [358, 403, 540, 565]
-
-imname; 469812321_c62d06283f_b.jpg
-avrxxx; grass; [551, 682, 1, 1022]; in front of; bench; [464, 748, 62, 682]
-avrxxx; sky; [1, 256, 1, 1022]; over; building; [271, 310, 912, 987]
-
-imname; 4744787865_eaa2bc8c3e_b.jpg
-avrxxx; person; [259, 310, 516, 543]; stand on; grass; [258, 654, 1, 1023]
-avrxxx; person; [278, 334, 776, 810]; sit on; chair; [302, 337, 776, 813]
-avrxxx; camera; [373, 397, 2, 35]; beside; grass; [258, 654, 1, 1023]
-
-imname; 8078458652_4ba2d565b3_b.jpg
-avrxxx; person; [97, 434, 566, 940]; at; table; [380, 620, 359, 1022]
-avrxxx; table; [380, 620, 359, 1022]; in front of; person; [97, 434, 566, 940]
-avrxxx; plate; [386, 434, 532, 651]; on; table; [380, 620, 359, 1022]
-avrxxx; cup; [360, 446, 691, 769]; on; table; [380, 620, 359, 1022]
-avrxxx; plate; [386, 434, 532, 651]; next to; cup; [360, 446, 691, 769]
-
-imname; 8562620371_8823cbafc3_b.jpg
-avrxxx; person; [127, 588, 654, 797]; stand on; grass; [557, 640, 2, 959]
-avrxxx; person; [21, 552, 236, 504]; above; grass; [557, 640, 2, 959]
-avrxxx; person; [21, 552, 236, 504]; wear; shoe; [474, 548, 374, 440]
-avrxxx; post; [335, 581, 342, 367]; behind; person; [21, 552, 236, 504]
-avrxxx; post; [335, 581, 342, 367]; in; grass; [557, 640, 2, 959]
-avrxxx; person; [21, 552, 236, 504]; has; face; [60, 115, 358, 403]
-
-imname; 229743691_a54cb052a2_b.jpg
-avrxxx; can; [476, 548, 616, 656]; beside; drinking glass; [469, 558, 551, 606]
-avrxxx; paper; [543, 636, 649, 840]; next to; mouse; [554, 598, 526, 573]
-avrxxx; sand; [377, 551, 2, 952]; behind; table; [474, 766, 67, 1023]
-avrxxx; sky; [1, 223, 2, 1022]; above; sand; [377, 551, 2, 952]
-
-imname; 3548141124_8dc932f8b7_b.jpg
-avrxxx; person; [233, 494, 473, 728]; next to; baseball plate; [501, 517, 704, 800]
-avrxxx; person; [234, 516, 336, 583]; behind; baseball plate; [501, 517, 704, 800]
-avrxxx; person; [233, 494, 473, 728]; wear; helmet; [233, 276, 570, 631]
-avrxxx; grass; [181, 466, 1, 1023]; beside; person; [233, 494, 473, 728]
-
-imname; 8013060462_4cdf330e98_b.jpg
-avrxxx; clock; [118, 214, 467, 555]; on; post; [214, 527, 484, 530]
-avrxxx; post; [214, 527, 484, 530]; next to; post; [142, 585, 555, 582]
-avrxxx; traffic light; [167, 257, 576, 609]; attached to; post; [142, 585, 555, 582]
-avrxxx; trash can; [414, 489, 84, 117]; on; street; [355, 745, 6, 1021]
-avrxxx; plant; [411, 454, 7, 76]; beside; trash can; [414, 489, 84, 117]
 
 
 

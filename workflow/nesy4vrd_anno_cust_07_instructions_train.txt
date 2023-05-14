@@ -18,75 +18,33 @@
 # start of annotation customisation instructions
 ##################################################################
 
+
 #
-# remove annotation dictionary entries for images found to require rotation
+# NOTE:
 #
+# The following are examples illustrating the use of the NeSy4VRD
+# protocol for specifying visual relationship annotation 
+# customisation instructions. Use them for guidance only. They are
+# all meant to be replaced with your own particular annotation
+# customisation instructions. 
+#
+
+
 
 imname; 226108726_586a5db019_o.jpg; rimxxx
 
+
 imname; 8426918868_0387fb2e49_o.jpg; rimxxx
 
-imname; 698932855_eae2ea3d04_o.jpg; rimxxx
 
 imname; 6226063499_54f652f36b_b.jpg; rimxxx
 
-#
-# remove annotation dictionary entries for images found to have highly
-# problematic annotations that require extensive re-working but which
-# were deemed not worth the trouble of fixing, or images that have little
-# to work with and/or are simply too unattractive and we don't want them
-#
 
 imname; 6829038281_6658d844c8_b.jpg; rimxxx
-# the only relationship, (grass, on, street), is badly wrong, and the only
-# object type in the image that belongs to our predefined set of object
-# classes is 'grass'; so there's nothing to work with here! the image does
-# not belong in the VRD dataset unless we introduce the object class 'zebra'
 
-imname; 2302800161_2b20bc78fa_b.jpg; rimxxx
-# the only objects are a teddy bear and a box, but the box has no cube-like
-# qualities because it's viewed straight on, so all we can see is a flat
-# 2D something that even I struggle to infer is in fact a box; there's too
-# little to work with in this image, so it can't be rescued
 
 imname; 3038881450_e5108817ea_b.jpg; rimxxx
-# nothing in this image relates to our VRD object class set
 
-imname; 3343466938_6114c88777_o.jpg; rimxxx
-# few objects to work with in this image
-
-imname; 2892356017_0bf7fb2518_b.jpg; rimxxx
-# image has only one available object that belongs to our VRD object class set
-
-imname; 9581569794_d0fb3d7956_b.jpg; rimxxx
-# not much to work with
-
-imname; 8491899574_5b8d5f1ede_b.jpg; rimxxx
-# not much to work with
-
-imname; 7171463996_900cb4ce33_b.jpg; rimxxx
-# all VRs are flawed, and there's not much to work with to fix them
-
-imname; 6028248328_bc5eac9b5c_b.jpg; rimxxx
-# all VRs are flawed, and there's not much to work with to fix them
-
-imname; 3163848727_031222e46e_b.jpg; rimxxx
-# only 1 vr and the objects are fake not real objects
-
-imname; 3012411181_09aee28e29_b.jpg; rimxxx
-# unnattractive image and not much to work with
-
-imname; 7455753012_cff82caffb_b.jpg; rimxxx
-# unnattractive image and not much to work with
-
-imname; 122328047_225d0da4ca_b.jpg; rimxxx
-# unnattractive image and not much to work with
-
-imname; 7132744297_941322f082_b.jpg; rimxxx
-# badly flawed relationships, unnattractive, and not much to work with
-
-imname; 5111202797_c9bcba57d9_b.jpg; rimxxx
-# unnattractive image, flawed annotations and not much to work with
 
 
 
