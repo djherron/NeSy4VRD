@@ -1,23 +1,25 @@
-# VR annotations customisation instructions file
+# This is a NeSy4VRD visual relationship annotation customisation 
+# instructions text file.
 
-#
-# This file specifies visual relationship (VR) annotation customisation instructions
-# with respect to the images of the VRD dataset.  It applies to Step 2 of the
-# VR annotation customisation process.
-#
+# This text file contains instructions for customising NeSy4VRD visual 
+# relationship annotations of VRD images that have been specified
+# declaratively using the NeSy4VRD protocol.
 
-# NOTE: This file specifies VR annotation customisation instructions with respect
-# to the TEST set images of the VRD dataset.
+# This particular instance of a NeSy4VRD visual relationship annotation 
+# customisation instructions text file corresponds to Step 2 of a 
+# 'test set' run of the NeSy4VRD workflow.
+
+# All NeSy4VRD visual relationship annotation customisation instructions
+# text files such as this are processed by a special Python driver script
+# that is part of the NeSy4VRD workflow infrastructure.
 
 
 
-
-##############
+##################################################################
 # start of annotation customisation instructions
-##############
+##################################################################
 
 
-### Start of images with index 000 to 100: 68 ###
 
 imname; 8646018805_d914413321_b.jpg
 cvrpxx; 8; ('pants', 'has', 'helmet'); below
@@ -473,9 +475,6 @@ avrxxx; person; [477, 685, 627, 699]; carry; bag; [579, 648, 609, 644]
 
 imname; 141099010_e59a15d3a2_b.jpg
 cvrpxx; 1; ('bed', 'near', 'bed'); beside
-
-
-### Start of images with index 101 to 200 ###
 
 imname; 8228121387_6c712cb58a_b.jpg
 cvrobb; 0; ('person', 'has', 'plate'); [493, 532, 268, 361]
@@ -1169,12 +1168,6 @@ avrxxx; person; [148, 766, 596, 815]; beside; chair; [441, 711, 457, 618]
 avrxxx; chair; [441, 711, 457, 618]; has; jacket; [437, 583, 454, 611]
 avrxxx; jacket; [437, 583, 454, 611]; on; chair; [441, 711, 457, 618]
 
-
-
-### Start of images with index 201 to 300 ###
-
-
-
 imname; 4847012655_42e6263cfd_b.jpg
 cvrsbb; 8; ('traffic light', 'behind', 'umbrella'); [66, 223, 308, 374]
 cvrobb; 15; ('person', 'wear', 'watch'); [582, 610, 301, 318]
@@ -1724,12 +1717,6 @@ imname; 8629401883_29b34416b4_b.jpg
 cvrpxx; 3; ('person', 'on', 'bench'); sit on
 cvrpxx; 6; ('person', 'on', 'bench'); sit on
 
-
-
-### Start of images with index 301 to 400 ###
-
-
-
 imname; 469555156_ca7deb31b3_b.jpg
 rvrxxx; 0; ('ball', 'on', 'hand')
 avrxxx; bear; [295, 538, 140, 1023]; play with; ball; [218, 316, 195, 315]
@@ -2267,12 +2254,6 @@ avrxxx; shirt; [164, 782, 4, 339]; on; person; [108, 1017, 1, 589]
 avrxxx; hat; [129, 366, 323, 574]; on; person; [108, 1017, 1, 589]
 avrxxx; bottle; [666, 920, 536, 621]; on; table; [755, 1023, 275, 681]
 avrxxx; table; [755, 1023, 275, 681]; under; bottle; [666, 920, 536, 621]
-
-
-
-### Start of images with index 401 to 500 ###
-
-
 
 imname; 8658814418_1ea9561ed3_b.jpg
 cvrsbb; 6; ('clock', 'behind', 'person'); [121, 189, 728, 785]
@@ -2947,12 +2928,6 @@ cvrpxx; 0; ('person', 'in', 'grass'); on
 cvrobb; 3; ('person', 'wear', 'shorts'); [409, 454, 720, 829]
 cvrobb; 9; ('person', 'wear', 'hat'); [359, 371, 466, 485]
 cvrobb; 10; ('person', 'wear', 'hat'); [277, 295, 579, 625]
-
-
-
-### Start of images with index 501 to 600 ###
-
-
 
 imname; 9315607126_e6d24f433c_b.jpg
 cvrobb; 1; ('person', 'next to', 'traffic light'); [223, 326, 66, 109]
@@ -3797,12 +3772,6 @@ avrxxx; elephant; [41, 591, 95, 619]; beside; elephant; [295, 716, 645, 916]
 avrxxx; elephant; [295, 716, 645, 916]; stand on; street; [377, 766, 1, 1015]
 avrxxx; street; [377, 766, 1, 1015]; under; elephant; [295, 716, 645, 916]
 
-
-
-### Start of images with index 601 to 700 ###
-
-
-
 imname; 8758204121_e6d87efaa4_b.jpg
 cvrpxx; 2; ('sky', 'above', 'train'); over
 cvrsoc; 5; ('plate', 'on', 'car'); license plate
@@ -4594,12 +4563,6 @@ avrxxx; camera; [457, 508, 1010, 1074]; next to; person; [377, 528, 954, 1016]
 imname; 4213963259_59b213a0b1_b.jpg
 cvrobb; 0; ('person', 'next to', 'monitor'); [285, 433, 437, 595]
 
-
-
-### Start of images with index 701 to 800 ###
-
-
-
 imname; 6049867763_c04a10071f_b.jpg
 cvrobb; 0; ('shirt', 'on', 'person'); [239, 631, 701, 876]
 cvrpxx; 6; ('hand', 'on', 'umbrella'); by
@@ -5327,12 +5290,6 @@ avrxxx; jacket; [480, 661, 204, 370]; on; person; [405, 884, 182, 407]
 avrxxx; hat; [399, 446, 269, 330]; on; person; [405, 884, 182, 407]
 avrxxx; sunglasses; [442, 453, 277, 314]; on; person; [405, 884, 182, 407]
 avrxxx; person; [405, 884, 182, 407]; near; trees; [3, 574, 1, 1010]
-
-
-
-### Start of images with index 801 to 900 ###
-
-
 
 imname; 3568995746_d9685368b1_b.jpg
 avrxxx; basket; [591, 674, 116, 230]; on; table; [593, 679, 1, 393]
@@ -6090,12 +6047,6 @@ avrxxx; kite; [1, 93, 321, 545]; fly in; sky; [1, 723, 1, 767]
 avrxxx; sky; [1, 723, 1, 767]; over; sand; [792, 1023, 1, 767]
 avrxxx; sky; [1, 723, 1, 767]; over; person; [454, 919, 160, 484]
 
-
-
-### Start of images with index 901 to 1000 ###
-
-
-
 imname; 6378957229_e8190db64a_b.jpg
 cvrobb; 0; ('building', 'behind', 'street'); [510, 600, 1, 1023]
 cvrpxx; 0; ('building', 'behind', 'street'); next to
@@ -6796,143 +6747,8 @@ avrxxx; hat; [182, 213, 489, 528]; on; teddy bear; [193, 404, 455, 591]
 
 
 
-
-##############
+#################################################################
 # end of annotation customisation instructions
-##############
-
-
-
-######
-# start - Step 6 - images that will be removed via global trawl
-#                  due to having zero VRs
-######
-
-
-### Images with zero VRs: index 901 to 1000 ###
-
-
-# only 1 viable object
-#6343984716_425239576b_b.jpg
-
-# some kites, but unattractive
-#9492217660_c917418963_b.jpg
-
-
-
-
-
-
-
-### Images with zero VRs: index 801 to 900 ###
-
-# no viable objects
-#2484981229_5c8f09bc9d_b.jpg
-
-# no viable objects
-#2084710251_92574f8f73_b.jpg
-
-# no viable objects
-#5046517526_eaafe2ffb6_b.jpg
-
-
-
-### Images with zero VRs: index 701 to 800 ###
-
-# no viable objects
-#3903095433_6a62ea473b_b.jpg
-
-# too few viable objects
-#9590214137_e68966ca93_b.jpg
-
-# no viable objects
-#3386170394_c117fa9f15_o.jpg
-
-
-### Images with zero VRs: index 601 to 700 ###
-
-# only 1 viable object
-#9276370952_60b0d448e2_b.jpg
-
-
-
-
-### Images with zero VRs: index 501 to 600 ###
-
-# few viable objects; too busy; too ugly
-#4668514133_66126b2ce2_b.jpg
-
-# no viable objects
-#3882370446_37f2d5cbbf_b.jpg
-
-# lots of boats, but too busy
-#9434661655_c3e6b4e8f6_b.jpg
-
-
-### Images with zero VRs: index 401 to 500 ###
-
-#no viable objects
-#2304707627_0e3931b372_b.jpg
-
-
-
-### SImages with zero VRs: index 301 to 400 ###
-
-#tiny objects only, and far too many; not useful
-#7975438142_3cbd1ac2f0_b.jpg
-
-#no annotations; potential objects but not a compelling image
-#9515859651_05c67290f0_b.jpg
-
-#no viable objects
-#1497493960_38538d32e7_b.jpg
-
-#only 1 viable object
-#2421762255_e3251311a2_b.jpg
-
-
-
-### Images with zero VRs: index 201 to 300 ###
-
-#zero VRs; no viable objects
-#8169707409_06eaa858ed_b.jpg
-
-#zero VRs; only one viable object
-#4992656841_e8f3f51653_b.jpg
-
-
-
-### Images with zero VRs: index 101 to 200 ###
-
-#zero VRs; a few viable objects, but an ugly picture; don't want it 
-#35355235_8955a0569b_o.jpg
-
-
-
-### Images with zero VRs: with index 000 to 100 ### 
-
-#zero VRs; only 1 viable object (a train) in the image; no chance to make a VR
-#9055930159_9560984041_b.jpg
-
-#zero VRs; only 1 viable object (an umbrella) in the image; no chance to make a VR
-#5866509996_1c95a5c376_b.jpg
-
-#zero VRs; no viable objects in image
-#3988529173_9c88fa79cd_b.jpg
-
-#zero VRs; only 1 viable object in image
-#2393973731_1fe2908280_o.jpg
-
-#zero VRs; only 2 possible objects, both poor choices
-#319629473_aab7f52dc6_b.jpg
-
-
-######
-# end - Step 6 - images that will be removed via global trawl
-#                due to having zero VRs
-######
-
-
-
+#################################################################
 
 

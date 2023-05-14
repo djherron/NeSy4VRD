@@ -1,21 +1,23 @@
-# VRD annotation customisation instructions file
+# This is a NeSy4VRD visual relationship annotation customisation 
+# instructions text file.
 
-# Step 8 of the annotations customisation process: introduce new, fully-
-# specified visual relationships to the annotations for named images in
-# the VRD annotations dictionary
+# This text file contains instructions for customising NeSy4VRD visual 
+# relationship annotations of VRD images that have been specified
+# declaratively using the NeSy4VRD protocol.
 
-# New vrs are introduced by 'appending' them to the existing list of vr
-# annotations for a named image. These append instructions are signalled
-# by the annotations customisation vr instruction 'avrxxx'.
+# This particular instance of a NeSy4VRD visual relationship annotation 
+# customisation instructions text file corresponds to Step 8 of a 
+# 'training set' run of the NeSy4VRD workflow.
 
-# example:
-#
-# imname; 1377581705_5100bb5fa8_b.jpg
-# avrxxx; dog; [111, 222, 333, 444]; beside; cat; [222, 333, 444, 555]
+# All NeSy4VRD visual relationship annotation customisation instructions
+# text files such as this are processed by a special Python driver script
+# that is part of the NeSy4VRD workflow infrastructure.
 
-##############
+
+##################################################################
 # start of annotation customisation instructions
-##############
+##################################################################
+
 
 imname; 363795503_b2ebed42bf_o.jpg
 avrxxx; laptop; [198, 352, 574, 744]; next to; monitor; [135, 334, 754, 973]
@@ -251,7 +253,7 @@ avrxxx; plant; [411, 454, 7, 76]; beside; trash can; [414, 489, 84, 117]
 
 
 
-
-##############
+#################################################################
 # end of annotation customisation instructions
-##############
+#################################################################
+

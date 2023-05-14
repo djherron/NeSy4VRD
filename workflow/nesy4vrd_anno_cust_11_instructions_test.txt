@@ -1,18 +1,23 @@
-# VRD annotation customisation instructions file
+# This is a NeSy4VRD visual relationship annotation customisation 
+# instructions text file.
 
-# Step 11 of the annotations customisation process: apply further vr-specific
-# changes, removals and appends.
+# This text file contains instructions for customising NeSy4VRD visual 
+# relationship annotations of VRD images that have been specified
+# declaratively using the NeSy4VRD protocol.
 
-# The VR annotation customisation instructions defined here apply to 
-# images of the VRD Test set.
+# This particular instance of a NeSy4VRD visual relationship annotation 
+# customisation instructions text file corresponds to Step 11 of a 
+# 'test set' run of the NeSy4VRD workflow.
 
-# The annotation customisation instructions specified here adhere to the
-# same instruction protocol as used in all other instruction files.
+# All NeSy4VRD visual relationship annotation customisation instructions
+# text files such as this are processed by a special Python driver script
+# that is part of the NeSy4VRD workflow infrastructure.
 
 
-##############
+##################################################################
 # start of annotation customisation instructions
-##############
+##################################################################
+
 
 
 imname; 4698061679_1ae8c97b16_b.jpg
@@ -241,25 +246,7 @@ avrxxx; basket; [702, 916, 170, 385]; has; dog; [563, 747, 200, 401]
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##############
+#################################################################
 # end of annotation customisation instructions
-##############
+#################################################################
+

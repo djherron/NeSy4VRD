@@ -1,23 +1,22 @@
-# VRD annotation customisation instructions file
+# This is a NeSy4VRD visual relationship annotation customisation 
+# instructions text file.
 
-# Step 7 of the annotations customisation process: remove the (key/value)
-# entries from the VRD annotations dictionary for named images that have
-# been found to be problematic (for some reason) and not worth fixing.
+# This text file contains instructions for customising NeSy4VRD visual 
+# relationship annotations of VRD images that have been specified
+# declaratively using the NeSy4VRD protocol.
 
-# The annotation customisation instruction to request removal of an image
-# name's entry from the annotations dictionary is 'rimxxx' (for 'remove image').
-# This instruction, 'rimxxx', MUST be present as the 3rd component of the
-# image name line signalled by 'imname'. The removal will not be effected unless
-# the 'rimxxx' instruction is explicitly specified along with the image name.
+# This particular instance of a NeSy4VRD visual relationship annotation 
+# customisation instructions text file corresponds to Step 7 of a 
+# 'training set' run of the NeSy4VRD workflow.
 
-# example:
-#
-# imname; 8374215031_063bfdfa0c_b.jpg; rimxxx
-#
+# All NeSy4VRD visual relationship annotation customisation instructions
+# text files such as this are processed by a special Python driver script
+# that is part of the NeSy4VRD workflow infrastructure.
 
-##############
+
+##################################################################
 # start of annotation customisation instructions
-##############
+##################################################################
 
 #
 # remove annotation dictionary entries for images found to require rotation
@@ -35,7 +34,7 @@ imname; 6226063499_54f652f36b_b.jpg; rimxxx
 # remove annotation dictionary entries for images found to have highly
 # problematic annotations that require extensive re-working but which
 # were deemed not worth the trouble of fixing, or images that have little
-# to work with and/or are simply unattractive
+# to work with and/or are simply too unattractive and we don't want them
 #
 
 imname; 6829038281_6658d844c8_b.jpg; rimxxx
@@ -91,7 +90,7 @@ imname; 5111202797_c9bcba57d9_b.jpg; rimxxx
 
 
 
-
-##############
+#################################################################
 # end of annotation customisation instructions
-##############
+#################################################################
+

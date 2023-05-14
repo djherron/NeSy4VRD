@@ -1,28 +1,24 @@
-# VRD annotation customisation instructions file
+# This is a NeSy4VRD visual relationship annotation customisation 
+# instructions text file.
 
-# Step 11 of the annotations customisation process: apply further vr-specific
-# changes and removals.
+# This text file contains instructions for customising NeSy4VRD visual 
+# relationship annotations of VRD images that have been specified
+# declaratively using the NeSy4VRD protocol.
 
-# Step 11 was introduced because the problems being fixed here were
-# identified within the customised annotations produced after application
-# of annotation customisation steps 1 through 10.  Given that so many
-# annotation changes are applied during steps 1 through 10, it was felt it
-# would be unsafe to extend/amend the customisations applied in steps 1
-# through 10. Instead, it was deemed to be much safer to augment the
-# annotation customisation process by adding this supplementary
-# customisation step.
+# This particular instance of a NeSy4VRD visual relationship annotation 
+# customisation instructions text file corresponds to Step 11 of a 
+# 'training set' run of the NeSy4VRD workflow.
 
-# The annotation customisation instructions specified here adhere to the
-# same instruction protocol as used in all other instruction files.
+# All NeSy4VRD visual relationship annotation customisation instructions
+# text files such as this are processed by a special Python driver script
+# that is part of the NeSy4VRD workflow infrastructure.
 
 
-##############
+##################################################################
 # start of annotation customisation instructions
-##############
+##################################################################
 
-#
-# initial set of supplementary customisations 
-#
+
 
 imname; 6721496819_b7dd80e497_b.jpg
 cvrooc; 2; ('person', 'in front of', 'box'); helmet case
@@ -325,11 +321,6 @@ cvrooc; 13; ('drinking glass', 'on', 'table'); desk
 imname; 8750726399_6f14b42d73_b.jpg
 cvrsoc; 1; ('bus', 'on', 'street'); train
 cvrsoc; 2; ('bus', 'under', 'sky'); train
-
-
-#
-# further set of supplementary customisations
-#
 
 imname; 8245807429_9746319e1a_b.jpg
 cvrpxx; 5; ('person', 'wear', 'glasses'); on the right of
@@ -2687,11 +2678,6 @@ cvrpxx; 7; ('bus', 'on', 'street'); park on
 rvrxxx; 3; ('building', 'has', 'roof')
 rvrxxx; 1; ('building', 'in front of', 'building')
 
-#
-# further IoU-related customisations, where there's a high IoU
-# between bboxes of objects of the same class
-#
-
 imname; 3704257899_4ec80e9c42_b.jpg
 cvrobb; 3; ('horse', 'beside', 'building'); [1, 542, 2, 1023]
 cvrobb; 4; ('tree', 'in front of', 'building'); [1, 542, 2, 1023]
@@ -3835,13 +3821,6 @@ cvrooc; 4; ('sky', 'above', 'tree'); trees
 imname; 60544028_0af422ad23_o.jpg
 rvrxxx; 3; ('sky', 'above', 'street')
 
-
-#
-# customisations resolving remaining cases of multiple instances of 'street'
-# for a single image, often where these distinguish between the roadway
-# and the sidewalk, a distinction made by only a minority of images  
-#
-
 imname; 9757776836_aacb5138dc_b.jpg
 cvrobb; 0; ('bus', 'next to', 'street'); [383, 682, 1, 1023]
 cvrpxx; 0; ('bus', 'next to', 'street'); park on
@@ -4187,12 +4166,6 @@ imname; 3125233905_b566622f77_b.jpg
 cvrobb; 7; ('tree', 'by', 'street'); [682, 1022, 1, 767]
 cvrpxx; 8; ('trash can', 'by', 'street'); on
 
-#
-# customisations resolving remaining cases of multiple instances of 'sky'
-# for a single image, often where one of these distinguish patches of cloud  
-# or just arbitrary patches of sky  
-#
-
 imname; 9888513253_b6884c5e19_b.jpg
 cvrsbb; 3; ('sky', 'above', 'airplane'); [2, 494, 2, 1022]
 cvrpxx; 3; ('sky', 'above', 'airplane'); over
@@ -4220,11 +4193,6 @@ cvrpxx; 2; ('person', 'below', 'sky'); under
 cvrobb; 7; ('person', 'under', 'umbrella'); [280, 413, 1, 506]
 avrxxx; umbrella; [280, 413, 1, 506]; over; person; [662, 723, 165, 432]
 
-#
-# customisations resolving remaining cases of multiple instances of 'grass'
-# that are dodgy  
-#
-
 imname; 3633024802_48f99f60ed_b.jpg
 rvrxxx; 9; ('grass', 'behind', 'bench')
 rvrxxx; 5; ('bench', 'in front of', 'grass')
@@ -4242,20 +4210,11 @@ avrxxx; elephant; [38, 557, 416, 798]; taller than; elephant; [279, 547, 103, 32
 avrxxx; elephant; [38, 557, 416, 798]; on the right of; elephant; [279, 547, 103, 329]
 avrxxx; elephant; [38, 557, 416, 798]; next to; elephant; [279, 547, 103, 329]
 
-#
-# customisations resolving further cases of audio speakers labelled as 'person'  
-#
-
 imname; 2749265157_fb440a6b45_b.jpg
 cvrsoc; 8; ('person', 'on', 'desk'); speaker
 
 imname; 2227367994_25a0b62345_b.jpg
 cvrsoc; 10; ('person', 'next to', 'monitor'); speaker 
-
-
-#
-# further customisations (miscellaneous)
-#
 
 imname; 2458133617_6b7ce80527_b.jpg
 cvrooc; 0; ('person', 'hold', 'cup'); drinking glass
@@ -4369,8 +4328,6 @@ cvrobb; 6; ('shirt', 'with', 'person'); [121, 767, 260, 739]
 cvrsbb; 7; ('person', 'in', 'chair'); [35, 385, 572, 766]
 cvrpxx; 7; ('person', 'in', 'chair'); sit on
 
-######
-
 imname; 5985116777_6b814f8872_b.jpg
 cvrobb; 1; ('person', 'in', 'street'); [154, 699, 2, 1023]
 cvrobb; 4; ('person', 'on', 'street'); [154, 699, 2, 1023]
@@ -4445,8 +4402,6 @@ imname; 8057476824_8180f50d87_o.jpg
 cvrsbb; 0; ('person', 'has', 'jacket'); [68, 342, 157, 378]
 cvrsbb; 1; ('person', 'behind', 'person'); [68, 342, 157, 378]
 cvrobb; 5; ('person', 'near', 'person'); [68, 342, 157, 378]
-
-#####
 
 imname; 5327324595_17ed3f0c00_b.jpg
 cvrobb; 2; ('person', 'hold', 'ball'); [306, 339, 315, 347]
@@ -4612,15 +4567,6 @@ cvrpxx; 3; ('person', 'in', 'bowl'); on
 cvrooc; 3; ('person', 'on', 'bowl'); ramp
 rvrxxx; 10; ('person', 'on', 'skateboard')
 
-
-
-
-#
-# customisations to deal with issues where wearable things are on the
-# wrong person; eg (person, wear, shirt) but the shirt is on a different
-# person, or (hat, on, person) but the hat is on a different person
-#
-
 imname; 6121011704_2fa4c473c5_b.jpg
 cvrsbb; 0; ('person', 'wear', 'shirt'); [100, 767, 11, 339]
 
@@ -4774,8 +4720,6 @@ cvrsbb; 7; ('person', 'has', 'shoes'); [163, 765, 435, 646]
 cvrsbb; 8; ('person', 'wear', 'jeans'); [163, 765, 435, 646]
 cvrobb; 8; ('person', 'wear', 'jeans'); [430, 741, 527, 627]
 
-#####
-
 imname; 4142555389_808c2fd5e3_b.jpg
 cvrobb; 0; ('car', 'on', 'street'); [88, 295, 32, 586]
 cvrobb; 1; ('car', 'above', 'street'); [88, 295, 32, 586]
@@ -4839,8 +4783,6 @@ cvrpxx; 5; ('person', 'has', 'bottle'); near
 
 imname; 3564586273_14498513fc_o.jpg
 cvrpxx; 3; ('person', 'has', 'plate'); next to
-
-#####
 
 imname; 7191824496_f1c4a18972_b.jpg
 cvrobb; 5; ('person', 'in', 'shirt'); [290, 381, 72, 140]
@@ -4955,11 +4897,6 @@ cvrobb; 2; ('shirt', 'on', 'person'); [243, 381, 617, 671]
 
 imname; 3935351389_3ed0a86f2c_b.jpg
 cvrobb; 6; ('shorts', 'on', 'person'); [334, 638, 477, 578]
-
-
-#
-# Further customisations
-#
 
 imname; 8211124370_89f1ac26a6_b.jpg
 cvrpxx; 6; ('sky', 'by', 'bus'); behind
@@ -5084,11 +5021,6 @@ avrxxx; trees; [12, 309, 4, 277]; beside; boat; [272, 379, 224, 317]
 imname; 8525926270_0565aa4fa0_o.jpg
 rvrxxx; 2; ('trees', 'above', 'bus')
 avrxxx; trees; [159, 300, 1, 341]; behind; bus; [253, 425, 32, 574]
-
-
-#
-# Further customisations
-#
 
 imname; 8351133795_faf60933cc_b.jpg
 cvrpxx; 11; ('engine', 'on', 'airplane'); attached to
@@ -5280,8 +5212,7 @@ cvrpxx; 6; ('person', 'eat', 'pizza'); next to
 
 
 
-
-
-##############
+#################################################################
 # end of annotation customisation instructions
-##############
+#################################################################
+

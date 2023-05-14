@@ -1,56 +1,22 @@
-# VRD annotation customisation instructions file
+# This is a NeSy4VRD visual relationship annotation customisation 
+# instructions text file.
 
-# Step 2 of the annotations customisation process: apply vr-specific
-# changes, removals and appends.
+# This text file contains instructions for customising NeSy4VRD visual 
+# relationship annotations of VRD images that have been specified
+# declaratively using the NeSy4VRD protocol.
 
-# This instance of a VRD annotation customisation instructions file corresponds
-# to Step 2 of the VRD annotation customisation process.  It allows analysts
-# to precisely specify visual relationship (vr) changes and removals, as
-# well as new vrs to be introduced (appended) to the existing annotations
-# for an image.
+# This particular instance of a NeSy4VRD visual relationship annotation 
+# customisation instructions text file corresponds to Step 2 of a 
+# 'training set' run of the NeSy4VRD workflow.
 
-# There is a protocol to which one must adhere when crafting a Step 2
-# annotations customisation instructions file such as this. The basic
-# protocol is described next.  For a given image:
-#
-# 1) Specify all your vr 'change' instructions, 'cvr...', first, if any; then
-#    specify your 'remove' vr instructions, 'rvrxxx', if any; then, specify
-#    your 'append' vr instructions, 'avrxxx', if any.  (The driver doesn't
-#    enforce that 'appends' follow 'removes' because either order works, but
-#    specifying 'removes' before 'appends' is a useful convention. The
-#    essential thing is that all 'change' instructions are processed first.
-#    This rule is enforced by the driver script.)
-#
-# 2) If you have multiple 'remove' vr, 'rvrxxx', instructions, for the same
-#    image, specify them in DESCENDING order of index so that the execution
-#    of one removal cannot invalidate the index of any subsequent vr yet
-#    to be removed.
-
-# There is a more subtle aspect to the protocol which one must be aware of
-# and adhere to when specifying one's 'change' instructions for an image.
-# If you specify multiple 'change' instructions for the same vr, you MUST
-# repeat the same vr index value for that vr across your multiple
-# 'change' instructions. Equally important, you MUST also reflect the
-# sequence of changes you apply to a vr in the 'expected vr template', which
-# has the form ('subject', 'predicate', 'object'), that is an essential part
-# of every 'change', 'cvr...', instruction. If you fail to do this
-# accurately, the driver script that processes this annotations
-# customisation instructions file will detect a mismatch between the
-# actual state of the vr targetted for change (as indicated by the value of
-# the specified vr index in the 2nd component of the 'change' instruction)
-# and the 'expected vr template' specified in the 3rd component of the 'change'
-# instruction. Requiring users to specify both the index of the target vr
-# they want to change AND their expectation as to the state of that vr
-# is a SAFETY mechanism that has been built in to help prevent users from
-# inadvertently specifying changes for the wrong visual relationship.
-# Whenever the actual vr corresponding to the specified vr index value does
-# NOT match the 'expected vr template' in the instruction, the driver script
-# detects the mismatch and immediately aborts processing.
+# All NeSy4VRD visual relationship annotation customisation instructions
+# text files such as this are processed by a special Python driver script
+# that is part of the NeSy4VRD workflow infrastructure.
 
 
-##############
+##################################################################
 # start of annotation customisation instructions
-##############
+##################################################################
 
 #
 # object class: 'person'
@@ -6213,6 +6179,6 @@ avrxxx; truck; [201, 532, 342, 701]; on; road; [306, 681, 3, 1023]
 
 
 
-##############
+#################################################################
 # end of annotation customisation instructions
-##############
+#################################################################
