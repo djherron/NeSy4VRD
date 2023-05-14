@@ -12,8 +12,8 @@ visual relationship (VR) annotations of the images of the VRD image dataset
 in a configurable, managed, automated and repeatable process.
 
 Step 5 of the NeSy4VRD workflow:
-* manages the global removal of specified visual relationship types
-  from the annotations of all images
+* manages the removal of specified visual relationship types, globally, 
+  across all image entries in the annotations dictionary
 
 Step 5 of the NeSy4VRD workflow may or may not be required. It depends on
 the nature of the annotation customisations you wish to make.

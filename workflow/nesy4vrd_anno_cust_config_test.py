@@ -5,7 +5,7 @@
 """
 
 '''
-This module is a NeSy4VRD workflow configuration file.
+This module is a NeSy4VRD workflow configuration module.
 
 The NeSy4VRD workflow applies planned customisations to the NeSy4VRD 
 visual relationship (VR) annotations of the images of the VRD image dataset
@@ -14,7 +14,7 @@ in a configurable, managed, automated and repeatable process.
 This module is an example of a NeSy4VRD workflow configuration file
 designed to manage a 'test set' run of the NeSy4VRD workflow.
 A 'test set' run of the workflow is one that targets customising the
-annotations of VRD test set images.
+NeSy4VRD annotations of VRD test set images.
 
 A NeSy4VRD workflow configuration file defines configuration parameters
 (pre-named Python variables) that are used by the Python scripts that
@@ -44,15 +44,16 @@ annotations_file = 'nesy4vrd_annotations_test.json'
 #%% Step 1 config parameters
 
 # Step 1 of the NeSy4VRD workflow is highly unlikely to be appropriate for
-# a 'test run' of the workflow (i.e. for a run that targets customisations
-# to the annotations of test set VRD images). This is because, if you have
-# modified object class or predicate names, or introduced new object class
-# or predicate names, you will most likely have had to apply these
-# customisations in Step 1 of your 'training set' run of the workflow, in
-# which case the customisations will already be in place for your 'test run'
-# of the workflow. Trying to reapply the same customisations a 2nd time is
-# not only redundant, it will cause the Step 1 script to detect a problem
-# and abort and report an error.
+# a 'test set' run of the workflow (i.e. for a run that targets customising
+# the annotations of test set VRD images). This is because, if you wish to
+# modify object class or predicate names, or introduce new object class
+# or predicate names, you will most likely have had to do so in Step 1
+# of the 'training set' run of your NeSy4VRD workflow.  This is the default
+# and expected scenario, and in this scenario your customisations to the
+# master lists of object class names and/or predicate names will already
+# be in place and need not be applied a second time.  Indeed, trying to
+# apply such customisations a second time would fail, because the Step 1
+# script would detect a problem and abort and report an error.
 
 step_1_new_object_names = [
                             'not defined for TEST set'
@@ -69,48 +70,69 @@ step_1_new_predicate_names = [
 
 #%% Step 2 config parameters 
 
-# The text file containing the VRD annotation customisation instructions
-# for Step 2 of the test set VR annotation customisation process. This file
-# must be in the current working directory, not the annotations directory.
+# Here you can specify the filename of a text file containing NeSy4VRD
+# annotation customisation instructions specified declaratively using the
+# NeSy4VRD protocol.  The protocol driver script will parse, validate and
+# process all the instructions in the file.
+
 step_2_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_2_instructions_test.txt'
 
 # Specify whether you want the driver script to save the customised 
-# annotations to disk (over-writing the current state of the annotations
-# file defined above) or not. If you set this to False, you can safely run
-# the driver script on the instructions file just to validate that all of
-# your customisation instructions are interpretable and executable (given
-# the current state of the VRD annotations).  Once you are happy with your
-# instructions file, set this variable to True and the driver script will
-# save the customised annotations to disk.
+# annotations to disk or not.
+
 step_2_save_customised_annotations = True
 
 
 #%% Step 3 config parameters
 
-# Step 3 is NOT REQUIRED by the test set VR annotation customisation process.
-# This is because, in the test set VR annotation customisation process, the 
-# splitting out of instances of object class 'drinking glass' from object class 
-# 'glasses' (eyeglasses) is handled manually, in Step 2, via hand-specified VR
-# annotation customisation instructions specified in a text file, rather than
-# enmass to a list of images specified by name.
+# Here you can specify lists of image filenames within whose annotations
+# you wish to change all instances of object class A to object class B.
+#
+# You need to do thorough analysis of the images and their annotations 
+# first in order to build up the lists of image names for which it is safe
+# to use this Step 3 'batch' approach to changing object class A to B.
+
+
+# NOTE: for the 'test set' run of the NeSy4VRD workflow to which this
+# sample configuration module applies, Step 3 is not needed, so
+# the Step 3 variables are defined with empty lists. The expectation is
+# that Step 3 will be skipped and not executed. But if it is inadvertently
+# executed, since no annotation customisations have been configured here,
+# Step 3 will have nothing to do.
+
+
+# Specify an individual change: ['from_class', 'to_class']
+from_class_to_class_1 = []
+
+# Specify a list of image filenames to which the change applies
+img_names_1 = []  # Step 3 not needed for this 'test set' run
+
+
+# Aggregate your ['from_class', 'to_class'] pairs into a list
 
 step_3_from_class_to_class = [
-                              'not defined for TEST set'
+                              from_class_to_class_1
                              ]
 
+
+# Aggregate your lists of image filenames into a list
+#
+# NOTE: take care to maintain the correct positional correspondence between 
+# the entries in the two aggregate lists!!!
+
 step_3_from_class_to_class_img_names = [
-                                        'not defined for TEST set'
+                                        img_names_1
                                        ]
 
 
 #%% Step 4 config parameters
 
-# Specify pairs of object classes and pairs of predicates to be merged, globally,
-# across the VR annotations for all images within the test set of the
-# VRD dataset.
-
-# NOTE: The pairs specified here should be IDENTICAL to those specified for the 
-# training set VR annotation customisation process. 
+# Here you can specify pairs of object classes to be merged. The pairs to 
+# be merged are expressed in 2-element lists. For example, 
+# ['class_A', 'class_B'] is an instruction to merge all instances of 
+# object class A into object class B.  What actually happens is that all
+# instances of the integer category ID for object class A are changed to
+# the integer category ID of object class B.
 
 step_4_object_classes_to_merge = [
                                   ['plane', 'airplane'], # 'plane' into 'airplane'
@@ -118,20 +140,28 @@ step_4_object_classes_to_merge = [
                                   ['road', 'street']     # 'road' into 'street'
                                  ]
 
-# Define from/to pairs of predicates to merge
+# Here you can specify pairs of predicates to be merged. The pairs to 
+# be merged are expressed in 2-element lists. For example, 
+# ['predicate_A', 'predicate_B'] is an instruction to merge all instances of 
+# predicate A into predicate B.  What actually happens is that all
+# instances of the integer category ID for predicate A are changed to
+# the integer category ID of predicate B.
 
 step_4_predicates_to_merge = []
 
 
+
+# NOTE: The merge pairs specified here should normally be IDENTICAL to 
+# those specified in the configuration module for the 'training set' run of 
+# your NeSy4VRD workflow.  That is, if you decide to merge object classes,
+# you very likely you want to do the same merging in the annotations of
+# both the training set and test set images.
+
+
 #%% Step 5 config parameters
 
-# Step 5: remove instances of specific visual relationships globally
-
-# list the ('subject', 'predicate', 'object') vr instances you wish to
-# remove on a global basis (ie across the annotations for all images)
-
-# NOTE: the VR patterns specified here in Step 5 should be identical for both
-# the training set and test set VR annotation customisation processes!!!
+# Here you can specify instances of visual relationship 'types' to be
+# removed from the annotations of all images.
 
 step_5_vrs_to_remove = [
                         ('sky', 'in', 'sky'),
@@ -142,100 +172,80 @@ step_5_vrs_to_remove = [
                         ('wheel', 'on', 'wheel')
                        ]
 
+
+
+# NOTE: Whatever VR types you specify here for Step 5 of a 'test set' run
+# of your NeSy4VRD workflow should very likely be replicated exactly for 
+# Step 5 in the configuration module for the 'training set' run of your 
+# NeSy4VRD workflow. You will likely want such customisations to be applied 
+# identically across the annotations of both the training set and test set 
+# images.
+
+
 #%% Step 6 config parameters
 
-# Step 6 does a global trawl of the VRD annotations dictionary looking for 
-# keys (image names) with empty lists as values (ie zero annotations). 
-# Images with zero visual relationship annotations are removed from the
-# annotations dictionary because we cannot train on images that have no
-# targets.  Removing image entries from the annotations dictionary is
+# Step 6 does a global trawl of the NeSy4VRD annotations dictionary looking 
+# for image entries with empty lists of annotations (i.e. for images that
+# have no annotations at all). The entries for such images are removed 
+# from the annotations dictionary. 
+#
+# Removing image entries from the annotations dictionary is
 # equivalent to a 'logical delete' of the image from the dataset. The
-# physical image is not removed from the images directory.
+# physical image on disk is not affected in any way.
 
-# No annotation customisation configuration parameters are required for
-# this step.
+# No annotation customisation configuration parameters are required here in 
+# the configuration module to tell Step 6 what to do when you run it.
 
 
 #%% Step 7 config parameters
 
-# Step 7 removes unwanted/problematic images from the annotations dictionary. 
-# The images are not physically removed from the image directory. But by
-# removing their entries from the annotations dictionary, we logically remove
-# them from the dataset.  They will never participate in testing or performance
-# evaluation.
+# Here you can specify the filename of a text file containing NeSy4VRD
+# annotation customisation instructions specified declaratively using the
+# NeSy4VRD protocol.  The protocol driver script will parse, validate and
+# process all the instructions in the file.
 
-# Specify the text file containing the VRD annotation customisation 
-# 'remove image' instructions for Step 7 of the annotation customisation 
-# process.  The instructions file must be in the current working directory, 
-# not the annotations data directory.
+# When transforming the original VRD visual relationship annotations into the
+# NeSy4VRD visual relationship annotations, we used the annotation
+# customisation instruction text file associated with Step 7 to remove
+# the entries for specific images from the annotations dictionary. These
+# images had annotations, but we found them to either be highly broken and
+# problematic, and/or the images to weak in terms of available objects for
+# the situation to be reasonably recoverable. Sometimes the images were
+# rotated by 90 degrees as well. We opted to do a 'logical delete' of such
+# images and remove their entries from the annotations dictionary so they
+# would not be processed during training or inference or performance
+# evaluation. We used the annotation customisation instruction text file 
+# associated with Step 7 to gather all such removals of specific images
+# into one place, for subsequent easy reference, if and when required. 
+
 step_7_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_7_instructions_test.txt'
 
 # Specify whether you want the driver script to save the customised 
-# annotations to disk (over-writing the current state of the annotations
-# file defined above) or not. If you set this to False, you can safely run
-# the driver script on the instructions file just to validate that all of
-# your customisation instructions are interpretable and executable (given
-# the current state of the VRD annotations).  Once you are happy with your
-# instructions file, set this variable to True and the driver script will
-# save the customised annotations to disk.
+# annotations to disk or not.
+
 step_7_save_customised_annotations = True
 
 
 #%% Step 8 config parameters
 
-# Step 8 applies further customisations to test set VR annotations, supplementary
-# to those applied in Step 2.
+# Here you can specify the filename of a text file containing NeSy4VRD
+# annotation customisation instructions specified declaratively using the
+# NeSy4VRD protocol.  The protocol driver script will parse, validate and
+# process all the instructions in the file.
 
-# Specify the text file containing the VRD annotation customisation instructions
-# for Step 8 of the annotation customisation process. This file must be
-# in the current working directory, not the annotations directory.
-step_8_vrd_anno_cust_instructions_file = 'not yet required for TEST set'
+step_8_vrd_anno_cust_instructions_file = 'none for test set run'
 
 # Specify whether you want the driver script to save the customised 
-# annotations to disk (over-writing the current state of the annotations
-# file defined above) or not. If you set this to False, you can safely run
-# the driver script on the instructions file just to validate that all of
-# your customisation instructions are interpretable and executable (given
-# the current state of the VRD annotations).  Once you are happy with your
-# instructions file, set this variable to True and the driver script will
-# save the customised annotations to disk.
+# annotations to disk or not.
+
 step_8_save_customised_annotations = False
 
 
 #%% Step 9 config parameters
 
-# Step 9 transforms visual relationships on a global basis.
-
-# Specify pairs of visual relationships, [from_vr, to_vr], where from_vr
-# is to be transformed into to_vr.  Each vr transformation instruction is
-# applied globally, across the annotations for all images.
-
-# The number of supported transformations is limited to those that can be
-# accomplished on a global basis, which means those transformations that
-# can be realised without bounding boxes having to be specified (which are 
-# inherently individualistic, and hence incompatible with a global 
-# customisation approach).
-#
-# A global vr transformation instruction has a format consistent with one
-# of the following patterns:
-#
-# 1) [(a, p1, b), ((a, p2, b)], where objects 'a' and 'b' keep their 
-#    positions and predicate p1 is changed to p2; (nb: this is equivalent
-#    to a 'cvrpxx' vr annotation customisation instruction)
-#
-# 2) [(a, p1, b), (b, p2, a)], where objects 'a' and 'b' swap positions and
-#    predicate p1 is changed to p2
-#
-# 3) [(a, p, b), (b, p, a)], where objects 'a' and 'b' swap positions and
-#    predicate p is unchanged
-#
-# note: in cases (2) and (3), where the 'subject' and 'object' objects 
-# swap positions, both the integer object class labels and bboxes are 
-# swapped!
-
-# NOTE: the VR patterns specified here in Step 9 should be identical for both
-# the training set and test set VR annotation customisation processes!!! 
-
+# Here you can specify visual relationship types that you want to have
+# transformed from type A to type B, on a global basis.  Each such
+# instruction is expressed as a 2-element list: [(from_vr), (to_vr)].
 
 step_9_from_vr_to_vr = [
                         
@@ -254,39 +264,41 @@ step_9_from_vr_to_vr = [
     [('hand', 'on', 'person'), ('person', 'has', 'hand')]
                 
                         ]
+
+
+# NOTE: Whatever VR transformations you specify here for Step 9 of a 
+# 'test set' run of your NeSy4VRD workflow should very likely be 
+# replicated exactly for Step 9 in the configuration module for the 
+# 'training set' run of your NeSy4VRD workflow. You will likely want such 
+# customisations to be applied identically across the annotations of both 
+# the training set and test set images.
+
+
 #%% Step 10 config parameters
 
-# Step 10 does a global trawl of the test set VRD annotations looking for
-# duplicate visual relationships (VRs) within the set of annotations
-# for each image. It removes any such duplicate vrs.
+# Step 10 does a global trawl of the NeSy4VRD annotations looking for
+# exact duplicate visual relationships (VRs) within the annotations of images.
+# If duplicates are detected, the duplicates are removed, leaving a single
+# instance of the VR.
 
-# No annotation customisation configuration parameters are required for
-# this step.
+# No annotation customisation configuration parameters are required here in 
+# the configuration module to tell Step 10 what to do when you run it.
 
 
 #%% Step 11 config parameters
 
-# Step 11 is not required for the test set VR annotation customisation process.
+# Here you can specify the filename of a text file containing NeSy4VRD
+# annotation customisation instructions specified declaratively using the
+# NeSy4VRD protocol.  The protocol driver script will parse, validate and
+# process all the instructions in the file.
 
 step_11_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_11_instructions_test.txt'
 
+
+# Specify whether you want the driver script to save the customised 
+# annotations to disk or not.
+
 step_11_save_customised_annotations = True
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

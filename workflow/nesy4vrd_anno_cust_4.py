@@ -12,7 +12,8 @@ visual relationship (VR) annotations of the images of the VRD image dataset
 in a configurable, managed, automated and repeatable process.
 
 Step 4 of the NeSy4VRD workflow:
-* manages the merging of pairs of object classes and pairs of predicates
+* manages the merging of pairs of object classes and pairs of predicates,
+  globally, across all image entries in the annotations dictionary
 
 Step 4 of the NeSy4VRD workflow may or may not be required. It depends on
 the nature of the annotation customisations you wish to make.
