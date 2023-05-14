@@ -75,7 +75,7 @@ step_1_new_predicate_names = [
 # NeSy4VRD protocol.  The protocol driver script will parse, validate and
 # process all the instructions in the file.
 
-step_2_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_2_instructions_test.txt'
+step_2_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_02_instructions_test.txt'
 
 # Specify whether you want the driver script to save the customised 
 # annotations to disk or not.
@@ -218,7 +218,7 @@ step_5_vrs_to_remove = [
 # associated with Step 7 to gather all such removals of specific images
 # into one place, for subsequent easy reference, if and when required. 
 
-step_7_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_7_instructions_test.txt'
+step_7_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_07_instructions_test.txt'
 
 # Specify whether you want the driver script to save the customised 
 # annotations to disk or not.
