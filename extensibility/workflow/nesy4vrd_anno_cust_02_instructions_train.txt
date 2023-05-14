@@ -1,0 +1,101 @@
+# This is a NeSy4VRD visual relationship annotation customisation 
+# instructions text file.
+
+# This text file contains instructions for customising NeSy4VRD visual 
+# relationship annotations of VRD images that have been specified
+# declaratively using the NeSy4VRD protocol.
+
+# This particular instance of a NeSy4VRD visual relationship annotation 
+# customisation instructions text file corresponds to Step 2 of a 
+# 'training set' run of the NeSy4VRD workflow.
+
+# All NeSy4VRD visual relationship annotation customisation instructions
+# text files such as this are processed by a special Python driver script
+# that is part of the NeSy4VRD workflow infrastructure.
+
+
+##################################################################
+# start of annotation customisation instructions
+##################################################################
+
+
+#
+# NOTE:
+#
+# The following are examples illustrating the use of the NeSy4VRD
+# protocol for specifying visual relationship annotation 
+# customisation instructions. Use them for guidance only. They are
+# all meant to be replaced with your own particular annotation
+# customisation instructions. 
+#
+
+
+imname; 2863986510_ddfcef8045_b.jpg
+cvrsoc; 0; ('person', 'behind', 'monitor'); speaker
+
+imname; 8170684806_57365eb30e_b.jpg
+cvrsoc; 3; ('person', 'next to', 'laptop'); speaker
+
+imname; 2743474149_6484e950e2_b.jpg
+cvrsoc; 4; ('car', 'by', 'vase'); vase
+cvrsbb; 4; ('vase', 'by', 'vase'); [430, 677, 913, 1020]
+cvrpxx; 4; ('vase', 'by', 'vase'); contain
+cvrooc; 4; ('vase', 'contain', 'vase'); plant
+cvrobb; 4; ('vase', 'contain', 'plant'); [281, 457, 866, 1021]
+
+# note: the above total reconstruction of VR at index 4 could
+# have been more easily accomplished by first doing an
+# rvrxxx to remove the broken VR, followed by an avrxxx to 
+# introduce a new, correct VR
+
+imname; 5422110190_756079d6bb_b.jpg
+cvrooc; 5; ('glasses', 'by', 'glasses'); drinking glass
+cvrsoc; 7; ('pants', 'on', 'person'); jeans
+cvrsoc; 8; ('pot', 'on', 'stove'); cooking pot
+cvrooc; 8; ('cooking pot', 'on', 'stove'); stove top
+cvrsoc; 9; ('pot', 'in front of', 'person'); cooking pot
+rvrxxx; 3; ('pot', 'on', 'stove')
+rvrxxx; 2; ('pot', 'on', 'stove')
+
+imname; 9176487150_b8bf04f8f3_b.jpg
+cvrobb; 1; ('person', 'in front of', 'table'); [176, 575, 236, 1024]
+cvrsoc; 2; ('glasses', 'on', 'table'); drinking glass
+cvrobb; 2; ('drinking glass', 'on', 'table'); [176, 575, 236, 1024]
+cvrooc; 5; ('box', 'near', 'glasses'); drinking glass
+rvrxxx; 7; ('glasses', 'on', 'table')
+rvrxxx; 6; ('glasses', 'on', 'table')
+
+imname; 10256449426_a8fbfc2bbc_b.jpg
+cvrsoc; 7; ('glasses', 'on', 'table'); drinking glass
+cvrsbb; 10; ('glasses', 'on', 'face'); [142, 175, 214, 299]
+
+imname; 5465451880_49cf298b5f_b.jpg
+cvrsoc; 4; ('person', 'below', 'laptop'); speaker
+cvrsbb; 4; ('speaker', 'below', 'laptop'); [53, 161, 372, 429]
+cvrpxx; 4; ('speaker', 'below', 'laptop'); behind
+rvrxxx; 3; ('person', 'adjacent to', 'cabinet')
+rvrxxx; 2; ('glasses', 'cover', 'cabinet')
+rvrxxx; 1; ('cabinet', 'next to', 'person')
+avrxxx; bed; [123, 681, 776, 1023]; beside; table; [135, 612, 90, 902]
+avrxxx; pillow; [149, 284, 874, 1023]; on; bed; [123, 681, 776, 1023]
+avrxxx; mouse; [178, 206, 759, 828]; near; pillow; [149, 284, 874, 1023]
+
+imname; 3743759994_4d1a980068_b.jpg
+rvrxxx; 3; ('glasses', 'above', 'counter')
+rvrxxx; 2; ('glasses', 'next to', 'sink')
+
+imname; 3802818240_6cacb58749_o.jpg
+cvrsoc; 2; ('glasses', 'behind', 'table'); drinking glass
+cvrsbb; 2; ('drinking glass', 'behind', 'table'); [336, 550, 205, 293]
+cvrpxx; 2; ('drinking glass', 'behind', 'table'); on
+
+imname; 2234091337_f45b1b4803_o.jpg
+cvrpxx; 2; ('clock', 'has', 'hand'); above
+cvrooc; 2; ('clock', 'above', 'hand'); person
+cvrobb; 2; ('clock', 'above', 'person'); [620, 728, 489, 566]
+
+
+
+#################################################################
+# end of annotation customisation instructions
+#################################################################
