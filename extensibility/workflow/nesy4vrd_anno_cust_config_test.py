@@ -56,15 +56,15 @@ annotations_file = 'nesy4vrd_annotations_test.json'
 # script would detect a problem and abort and report an error.
 
 step_1_new_object_names = [
-                            'not defined for TEST set'
+                            'not defined for test set run'
                           ]
 
 step_1_predicate_name_adjustments = [
-                                      'not defined for TEST set'
+                                      'not defined for test set run'
                                     ]
 
 step_1_new_predicate_names = [
-                              'not defined for TEST set'
+                              'not defined for test set run'
                              ]
 
 
@@ -93,19 +93,18 @@ step_2_save_customised_annotations = True
 # to use this Step 3 'batch' approach to changing object class A to B.
 
 
-# NOTE: for the 'test set' run of the NeSy4VRD workflow to which this
-# sample configuration module applies, Step 3 is not needed, so
-# the Step 3 variables are defined with empty lists. The expectation is
-# that Step 3 will be skipped and not executed. But if it is inadvertently
-# executed, since no annotation customisations have been configured here,
-# Step 3 will have nothing to do.
-
-
 # Specify an individual change: ['from_class', 'to_class']
-from_class_to_class_1 = []
+from_class_to_class_1 = ['object_class_name_A', 'object_class_name_B']
 
 # Specify a list of image filenames to which the change applies
-img_names_1 = []  # Step 3 not needed for this 'test set' run
+img_names_1 = [
+
+'10218327826_907c2b49df_o.jpg',
+'8168304300_dfe595eed0_o.jpg',
+'290584551_7f219121ab_b.jpg',
+'9272614085_8744b258ba_b.jpg'
+
+]  
 
 
 # Aggregate your ['from_class', 'to_class'] pairs into a list
@@ -135,9 +134,9 @@ step_3_from_class_to_class_img_names = [
 # the integer category ID of object class B.
 
 step_4_object_classes_to_merge = [
-                                  ['plane', 'airplane'], # 'plane' into 'airplane'
-                                  ['coat', 'jacket'],    # 'coat' into 'jacket'
-                                  ['road', 'street']     # 'road' into 'street'
+                                  ['obj_cls_name_A', 'obj_cls_name_B'], 
+                                  ['obj_cls_name_C', 'obj_cls_name_D'],
+                                  ['obj_cls_name_E', 'obj_cls_name_F']  
                                  ]
 
 # Here you can specify pairs of predicates to be merged. The pairs to 
@@ -147,8 +146,10 @@ step_4_object_classes_to_merge = [
 # instances of the integer category ID for predicate A are changed to
 # the integer category ID of predicate B.
 
-step_4_predicates_to_merge = []
-
+step_4_predicates_to_merge = [
+                              ['predicate_name_A', 'predicate_name_B'],
+                              ['predicate_name_C', 'predicate_name_D']
+                             ]
 
 
 # NOTE: The merge pairs specified here should normally be IDENTICAL to 
@@ -164,14 +165,10 @@ step_4_predicates_to_merge = []
 # removed from the annotations of all images.
 
 step_5_vrs_to_remove = [
-                        ('sky', 'in', 'sky'),
-                        ('sky', 'has', 'sky'),
-                        ('sky', 'with', 'sky'),
-                        ('sky', 'behind', 'sky'),
-                        ('sky', 'contain', 'sky'),
-                        ('wheel', 'on', 'wheel')
+                        ('subject1', 'predicate1', 'object1'),
+                        ('subject2', 'predicate2', 'object2'),
+                        ('subject3', 'predicate3', 'object3')
                        ]
-
 
 
 # NOTE: Whatever VR types you specify here for Step 5 of a 'test set' run
@@ -204,20 +201,6 @@ step_5_vrs_to_remove = [
 # NeSy4VRD protocol.  The protocol driver script will parse, validate and
 # process all the instructions in the file.
 
-# When transforming the original VRD visual relationship annotations into the
-# NeSy4VRD visual relationship annotations, we used the annotation
-# customisation instruction text file associated with Step 7 to remove
-# the entries for specific images from the annotations dictionary. These
-# images had annotations, but we found them to either be highly broken and
-# problematic, and/or the images to weak in terms of available objects for
-# the situation to be reasonably recoverable. Sometimes the images were
-# rotated by 90 degrees as well. We opted to do a 'logical delete' of such
-# images and remove their entries from the annotations dictionary so they
-# would not be processed during training or inference or performance
-# evaluation. We used the annotation customisation instruction text file 
-# associated with Step 7 to gather all such removals of specific images
-# into one place, for subsequent easy reference, if and when required. 
-
 step_7_vrd_anno_cust_instructions_file = 'nesy4vrd_anno_cust_07_instructions_test.txt'
 
 # Specify whether you want the driver script to save the customised 
@@ -249,19 +232,9 @@ step_8_save_customised_annotations = False
 
 step_9_from_vr_to_vr = [
                         
-    [('wheel', 'on', 'motorcycle'), ('wheel', 'attached to', 'motorcycle')],
-    [('wheel', 'on', 'car'), ('wheel', 'attached to', 'car')],
-    [('wheel', 'on', 'truck'), ('wheel', 'attached to', 'truck')],
-    [('wheel', 'on', 'bus'), ('wheel', 'attached to', 'bus')],    
-    [('wheel', 'on', 'van'), ('wheel', 'attached to', 'van')],
-    [('wheel', 'on', 'cart'), ('wheel', 'attached to', 'cart')],
-    [('wheel', 'on', 'train'), ('wheel', 'attached to', 'train')],
-    [('wheel', 'on', 'plane'), ('wheel', 'attached to', 'plane')],
-    [('wheel', 'on', 'airplane'), ('wheel', 'attached to', 'airplane')],
-    [('wheel', 'on', 'skateboard'), ('wheel', 'attached to', 'skateboard')],
-    [('clock', 'on', 'building'), ('clock', 'attached to', 'building')],
-    [('clock', 'on', 'tower'), ('clock', 'attached to', 'tower')],
-    [('hand', 'on', 'person'), ('person', 'has', 'hand')]
+    [('classA', 'predicate1', 'classB'), ('classA', 'predicate2', 'classB')],
+    [('classC', 'predicate3', 'classD'), ('classD', 'predicate4', 'classC')],
+    [('classE', 'predicate5', 'classF'), ('classF', 'predicate5', 'classE')]
                 
                         ]
 
