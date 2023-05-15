@@ -42,6 +42,52 @@ Each step (script) of the **NeSy4VRD workflow** follows this common pattern:
 * if any problems are encountered, abort and report;
 * save the updated NeSy4VRD visual relationship annotations to disk using the same filename from which they were loaded.
 
+## Workflow functionality
+
+The following listing does two things: 1) it summarises the functionality of the various steps (scripts) of the **NeSy4VRD workflow**, and 2) it shows the particular configured instance of the **training set** *run* of the **NeSy4VRD workflow** that was used to transform the original VRD visual relationship annotations into the NeSy4VRD visual relationship annotations.  (The corresponding **test set** *run* used the same steps except for 1 and 8.) The sample workflow configuration module files that reside in this folder reflect this original 11-step workflow instance.
+
+```
+step | functionality
+ 01  - maintain the object class name and predicate name master lists
+ 02  - process NeSy4VRD protocol annotation customisation instruction file A
+ 03  - change object class A to B, for a specified set of images       
+ 04  - change object class (or predicate) C to D, globally   
+ 05  - remove specified visual relationship 'types', globally
+ 06  - remove entries from the annotations dictionary for images with zero annotations, globally   
+ 07  - process NeSy4VRD protocol annotation customisation instruction file B
+ 08  - process NeSy4VRD protocol annotation customisation instruction file C
+ 09  - transform visual relationship 'type' A to 'type' B, globally
+ 10  - check for and remove duplicate visual relationships, globally
+ 11  - process NeSy4VRD protocol annotation customisation instruction file D
+```
+
+Now that the highly customised and quality-improved NeSy4VRD visual relationship annotations already exist, researchers using the **NeSy4VRD workflow** to manage their own annotation customisation projects are highly unlikely to need anything nearly so elaborate.
+
+We anticipate that most researchers who undertake NeSy4VRD visual relationship annotation customisation projects of their own will need only simple configured **NeSy4VRD workflow** instances, such as the ones which follow.
+
+If no new object class names or predicate names are being introduced, a workflow instance might only need one step:
+```
+step | functionality
+ 02  - process NeSy4VRD protocol annotation customisation instruction file A
+```
+
+Even if new object class names and/or predicate names are being introduced to the visual relationship annotations, a workflow instance as simple as this might well suffice:
+```
+step | functionality
+ 01  - maintain the object class name and predicate name master lists
+ 02  - process NeSy4VRD protocol annotation customisation instruction file A
+```
+
+This workflow instance reflects a more substantial project:
+```
+step | functionality
+ 01  - maintain the object class name and predicate name master lists
+ 02  - process NeSy4VRD protocol annotation customisation instruction file A
+ 07  - process NeSy4VRD protocol annotation customisation instruction file B
+ 10  - check for and remove duplicate visual relationships, globally
+```
+
+
 ## More to come
 
 more documentation coming soon ...
