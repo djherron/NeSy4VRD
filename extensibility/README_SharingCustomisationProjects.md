@@ -34,4 +34,7 @@ nesy4vrd_customisation_project
     nesy4vrd_anno_cust_config_train.py
 ```
 
+The reason for recommending that both components (1) and (3) be included in packages used for sharing NeSy4VRD annotation customisation projects has to do with the differing options that these two components provide to users of shared customisation projects.  More information on this topic is discussed in the `README_UsingSharedCustomisationProjects.md`. 
+
+
 
