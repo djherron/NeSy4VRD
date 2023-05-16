@@ -20,7 +20,11 @@ To illustrate our point, and to illustrate our vision of how the NeSy4VRD extens
 * continue experimenting, now with the added benefit of the additional stuff object class 'water';
 * contribute the enriched set of NeSy4VRD visual relationship annotations, and the enriched companion VRD-World ontology, to research communities.
 
-Detailed information about each of the three components of the NeSy4VRD extensibility support infrastructure is available in a README file inside each of the respective folders:  **analysis**, **protocol** and **workflow**.
+Detailed information specifically about each of the three components of the **NeSy4VRD extensibility support infrastructure** is available in README files inside each of the respective folders:  **analysis**, **protocol** and **workflow**.
+
+More detailed information about aspects of the **NeSy4VRD extensibility support infrastructure** in general, are available in this folder in supplementary README files.
+
+
 
 
 
