@@ -103,10 +103,11 @@ Most (if not all) of such scenarios, however, have already been detected and dea
 
 
 ### Further aspects of the NeSy4VRD protocol
+---
 
 The 9 instruction types defined above constitute the core elements of the **NeSy4VRD protocol** for specifying declarative customisations to NeSy4VRD visual relationship annotations.  This section describes supplementary aspects of the **NeSy4VRD protocol**.
 
-### Comment lines and blank lines
+#### Comment lines and blank lines
 
 The **NeSy4VRD protocol** also recognises **comment** lines and **blank** lines in instruction text files. A **comment** line begins with a `#` (hash) character.  Both **comment** lines and **blank** lines are ignored by the protocol driver script of the **NeSy4VRD workflow** that processes **NeSy4VRD protocol** annotation customisation instruction text files.  You can have as many of these types of lines in your instruction text files as you wish.
 
