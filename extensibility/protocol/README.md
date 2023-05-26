@@ -33,16 +33,23 @@ imname; 7171463996_900cb4ce33_b.jpg; rimxxx
 
 ## Instruction types
 
-The **NeSy4VRD protocol** recognises 9 types of instruction for declaring customisations of the NeSy4VRD visual relationship annotations of the VRD images:
-* 2 instruction types relate to images as a whole:
-  - 1 *image name*, `imname`, instruction announces a new image
-  - 1 *remove image*, `rimxxx`, instruction declares the removal of an image's entry from the set of annotatations
-* 7 instruction types relate to visual relationship annotations:
-  - 5 *change visual relationship*, `cvr...`, instructions declare changes to one of the 5 components of an existing annotated visual relationship
-  - 1 *remove visual relationship*, `rvrxxx`, instruction declares the removal of an existing annotated visual relationship
-  - 1 *add visual relationship*, `avrxxx`, instruction declares the introduction of a *new* annotated visual relationship.
+The **NeSy4VRD protocol** recognises **9 types of instruction** for declaring customisations of the NeSy4VRD visual relationship annotations of the VRD images:
+* 2 instruction types relate to **images** as a whole:
+  - the **image name**, `imname`, instruction announces a new image
+  - the **remove image**, `rimxxx`, instruction declares the removal of an image's entry from the set of annotatations
+* 7 instruction types relate to **visual relationship annotations** associated with an image:
+  - the five **change visual relationship**, `cvr...`, instructions declare changes to one of the five components of an existing annotated visual relationship
+  - the **remove visual relationship**, `rvrxxx`, instruction declares the removal of an existing annotated visual relationship
+  - 1the **add visual relationship**, `avrxxx`, instruction declares the introduction of a *new* annotated visual relationship.
+
+Instances of annotation customisation instructions for the various **types** consist of different numbers of **components**. The components of an instruction instance are always delimited with the `;` (**semicolon**) character. The number of instruction components per instruction **type** are as follows:
+* the `imname` instruction type: usually 2, but optionally 3
+* the `cvr...` instruction types: 4
+* the `rvrxxx` instruction type: 3
+* the `avrxxx` instruction type: 6
 
 The sections that follow describe each of these 9 instruction types in detail.
+
 
 ### The `imname` instruction
 
@@ -50,15 +57,29 @@ The `imname` instruction announces a new image.  It is always followed by the fi
 
 When a **NeSy4VRD protocol** annotation customisation instruction file is processed (as part of the **NeSy4VRD workflow**), if the image filename associated with an `imname` instruction is not recognised (i.e. is found to not have an entry in the NeSy4VRD annotations dictionary), the driver script will abort and point to the problem.  That is, VRD image filenames are *recognised* or not according to whether or not they have entries in the NeSy4VRD annotations dictionary, not according to whether they exist as physical files in the appropriate VRD image directory on disk. Further, this means that image filenames that fail to be so recognised are NOT interpreted as 'new images' to be automatically given new entries within the annotations dictionary.
 
+### The `cvr...` instruction types
+
+The five **change visual relationship**, `cvr...`, instruction types consist of 4 components that conform to the following pattern:
+```
+cvr...; vr_index; vr_description; new_value
+```
+
+The particular `cvr...` instruction indicates which of the 5 components of the designated annotated visual relationship is to be changed by giving it a new value. The `vr_index` is the index position of the designated visual relationship within the Python list of annotated visual relationships for the image in question. As such, valid `vr_index` values for a given image range from 0 to `len(list) - 1`.  The `vr_description` is a 3-element, user-friendly description of the designated visual relationship at the index position specified by `vr_index`. The `vr_description` declared in an instruction must match the actual visual relationship that exists at the specified `vr_index`. If there is a mismatch, the protocol driver script of the **NeSy4VRD workflow** will abort and report the problem. The `new_value` specifies the new value to be assigned to the designated component of the designated visual relationship annotation (a new object class, a new bounding box, or a new predicate).
+
+The convention of identifying the designated visual relationship that is to be customised using dual mechanisms --- the `vr_index` and the `vr_description` --- has several important benefits:
+* it is an extremely useful **quality control mechanism** that allows the protocol driver script of the **NeSy4VRD workflow** to detect and prevent inadvertent errors in the formulation of annotation customisation instructions;
+* it helps researchers to think clearly and precisely about the changes they wish to make;
+* it ensures that the annotation customisation instructions are human-readable and can be readily interpreted in future, and refined if necessary.
+
 ### The `cvrsoc` and `cvrsbb` instructions
 
-The `cvrsoc` instruction declares a change to the **'subject' object class**, `soc`, of an existing annotated visual relationship. The `cvrsbb` instruction declares a change to the **'subject' bounding box**, `sbb`, of an existing annotated visual relationship.
+The `cvrsoc` instruction declares a change to the **'subject' object class**, `soc`, of an existing annotated visual relationship. The `cvrsbb` instruction declares a change to the **'subject' bounding box**, `sbb`, of an existing annotated visual relationship.  All bounding boxes are specified using the format: `[ymin, ymax, xmin, xmax]`.
 
 *Example*: For the first image in the listing, an improvement to the visual relationship annotation at index position 4 (in the image's Python list of annotated visual relationships) is being specified.  The `cvrsoc` instruction declares an intention to change the object class of the 'subject' from **person** to **speaker** (as in 'stereo speaker'). The `cvrsbb` instruction declares an intention to change the existing bounding box specification of the 'subject' (which, at that point, will have acquired class **speaker**) to a more accurate bounding box specification that localises the 'subject' object more precisely within the image.
 
 ### The `cvrooc` and `cvrobb` instructions
 
-The `cvrooc` instruction declares a change to the **'object' object class**, `ooc`, of an existing annotated visual relationship. The `cvrobb` instruction declares a change to the **'object' bounding box**, `obb`, of an existing annotated visual relationship.
+The `cvrooc` instruction declares a change to the **'object' object class**, `ooc`, of an existing annotated visual relationship. The `cvrobb` instruction declares a change to the **'object' bounding box**, `obb`, of an existing annotated visual relationship. All bounding boxes are specified using the format: `[ymin, ymax, xmin, xmax]`.
 
 *Example*: For the second image in the listing, an improvement to the visual relationship annotation at index position 7 (in the image's Python list of annotated visual relationships) is being specified.  The `cvrooc` instruction declares an intention to change the object class of the 'subject' from **car** to **truck**. The `cvrobb` instruction declares an intention to change the existing bounding box specification of the 'object' (which, at that point, will have acquired class **truck**) to a more accurate bounding box specification that localises the 'object' object more precisely within the image.
 
@@ -70,19 +91,34 @@ The `cvrpxx` instruction declares a change to the **predicate**, `pxx`, of an ex
 
 ### The `rvrxxx` instruction
 
-The `rvrxxx` instruction declares that an existing annotated visual relationship for a particular image be removed.
+The **remove visual relationship**, `rvrxxx`, instruction declares that an existing annotated visual relationship for a particular image be **removed**.
 
-*Example*: For the fourth image in the listing, the `rvrxxx` instruction declares an intention to remove the visual relationship at index position 4 within the image's Python list of annotated visual relationships.
+Instances of this instruction type consist of 3 components that conform to the following pattern:
+```
+rvrxxx; vr_index; vr_description
+```
+
+The `vr_index` is the index position of the designated visual relationship that is to be removed. The `vr_description` is a 3-element, user-friendly description of the designated visual relationship at the index position specified by `vr_index`. The `vr_description` must match the actual visual relationship that exists at the specified `vr_index`. If there is a mismatch, the protocol driver script of the **NeSy4VRD workflow** will abort and report the problem.
+
+*Example*: For the fourth image in the listing (above), the `rvrxxx` instruction declares an intention to remove the visual relationship at index position 4 within the image's Python list of annotated visual relationships.
 
 ### The `avrxxx` instruction
 
-The `avrxxx` instruction declares that a new annotated visual relationship be introduced for a particular image.
+The **add visual relationship**, `avrxxx`, instruction declares that a **new** annotated visual relationship be **introduced** for a particular image.
 
-*Example*: For the fourth image in the listing, two new annotated visual relationships are being introduced.  These will be **appended** to the end the image's Python list of annotated visual relationships.
+Instances of this instruction type consist of 6 components that conform to the following pattern:
+```
+avrxxx; soc; sbb; pred; ooc; obb
+```
+The `soc` component is the 'subject' object class, and `sbb` is its bounding box specification. The `pred` component is the name of the predicate describing the relationship. The `ooc` component is the 'object' object class, and `obb` is its bounding box specification. 
+
+New visual relationships introduced by the `avrxxx` instruction type are *always* **appended** to the end of the image's Python list of annotated visual relationships.  Any number of new visual relationships can be introduced for an image.
+
+*Example*: For the fourth image in the listing (above), two new annotated visual relationships are being introduced.
 
 ### The `rimxxx` instruction
 
-The `rimxxx` instruction declares an intention to remove an image's entry from the NeSy4VRD visual relationship annotations dictionary altogether, including all of its annotated visual relationships (if any). This operation is equivalent to removing any *key:value* pair entry from a Python dictionary. 
+The **remove image**, `rimxxx`, instruction declares an intention to remove an image's entry from the NeSy4VRD visual relationship annotations dictionary altogether, including all of its annotated visual relationships (if any). This operation removes a *key:value* pair entry from a Python dictionary, where the *key* is the image's filename, and the *value* is its list of annotated visual relationships. 
 
 The only valid location for the `rimxxx` (remove image) instruction to appear is immediately following the filename of a VRD image in an `imname` instruction. In effect, the `rimxxx` instruction is an optional, supplementary component of an `imname` instruction.
 
@@ -109,6 +145,10 @@ The 9 instruction types defined above constitute the core elements of the **NeSy
 ### Comment lines and blank lines
 
 The **NeSy4VRD protocol** also recognises **comment** lines and **blank** lines in instruction text files. A **comment** line begins with a `#` (hash) character.  Both **comment** lines and **blank** lines are ignored by the protocol driver script of the **NeSy4VRD workflow** that processes **NeSy4VRD protocol** annotation customisation instruction text files.  You can have as many of these types of lines in your instruction text files as you wish.
+
+### Bounding box specifications
+
+The reason that all bounding box specifications in the NeSy4VRD visual relationship annotations have the format `[ymin, ymax, xmin, xmax]` is historical. This is the format used in the original VRD visual relationship annotations of the VRD dataset and NeSy4VRD has retained this convention.  The protocol driver script of the **NeSy4VRD workflow** checks that this format is respected. It checks that all four elements are positive integers and that `ymax - ymin > 0` and `xmax - xmin > 0`. If these conditions are not met, a bounding box specification is regarded as degenerate and the protocol driver aborts and reports the problem. 
 
 
 ### Training image vs test image annotation customisations
