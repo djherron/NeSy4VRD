@@ -4,7 +4,9 @@ This folder contains assets relating to the **NeSy4VRD protocol** component of t
 
 ## The NeSy4VRD protocol specification
 
-Like most protocols, the **NeSy4VRD protocol** is conceptual in nature and is defined in a specification document. This README document is the specification document defining the **NeSy4VRD protocol**.  For simplicity, it is an informal specification that relies on examples and explanations of the examples.
+Like most protocols, the **NeSy4VRD protocol** is conceptual in nature and is defined in a specification document. This README document is the specification document defining the **NeSy4VRD protocol**.  This  specification of the **NeSy4VRD protocol** is relatively informal and relies heavily on examples and explanations of the examples.
+
+## NeSy4VRD protocol example listing
 
 The following listing shows the **NeSy4VRD protocol** in action. The examples it contains illustrate all of the features of the **NeSy4VRD protocol**. We use the examples in this listing to explain what the **NeSy4VRD protocol** is and how it can be used to specify visual relationship annotation customisation instructions declaratively, in text files.
 
@@ -33,14 +35,14 @@ imname; 7171463996_900cb4ce33_b.jpg; rimxxx
 
 ## Instruction types
 
-The **NeSy4VRD protocol** recognises **9 types of instruction** for declaring customisations of the NeSy4VRD visual relationship annotations of the VRD images:
+The **NeSy4VRD protocol** recognises **9 instruction types** for declaring customisations of the NeSy4VRD visual relationship annotations of the VRD images:
 * 2 instruction types relate to **images** as a whole:
   - the **image name**, `imname`, instruction announces a new image
   - the **remove image**, `rimxxx`, instruction declares the removal of an image's entry from the set of annotatations
 * 7 instruction types relate to **visual relationship annotations** associated with an image:
   - the five **change visual relationship**, `cvr...`, instructions declare changes to one of the five components of an existing annotated visual relationship
   - the **remove visual relationship**, `rvrxxx`, instruction declares the removal of an existing annotated visual relationship
-  - 1the **add visual relationship**, `avrxxx`, instruction declares the introduction of a *new* annotated visual relationship.
+  - the **add visual relationship**, `avrxxx`, instruction declares the introduction of a *new* annotated visual relationship.
 
 Instances of annotation customisation instructions for the various **types** consist of different numbers of **components**. The components of an instruction instance are always delimited with the `;` (**semicolon**) character. The number of instruction components per instruction **type** are as follows:
 * the `imname` instruction type: usually 2, but optionally 3
@@ -53,9 +55,25 @@ The sections that follow describe each of these 9 instruction types in detail.
 
 ### The `imname` instruction
 
-The `imname` instruction announces a new image.  It is always followed by the filename of a valid VRD image. The `imname` instruction declares that the visual relationship annotation instructions which follow apply to the specified image. The `imname` instruction, therefore, establishes context. It establishes the context for the interpretation of all of the other **NeSy4VRD protocol** instruction types.
+The **image name**, `imname`, instruction announces a new image.
 
-When a **NeSy4VRD protocol** annotation customisation instruction file is processed (as part of the **NeSy4VRD workflow**), if the image filename associated with an `imname` instruction is not recognised (i.e. is found to not have an entry in the NeSy4VRD annotations dictionary), the driver script will abort and point to the problem.  That is, VRD image filenames are *recognised* or not according to whether or not they have entries in the NeSy4VRD annotations dictionary, not according to whether they exist as physical files in the appropriate VRD image directory on disk. Further, this means that image filenames that fail to be so recognised are NOT interpreted as 'new images' to be automatically given new entries within the annotations dictionary.
+Instances of this instruction type always begin with the following two components:
+```
+imname; image_filename
+```
+where the `image_filename` component is the filename of a particular VRD image.  In the listing above, there are 5 instances of `imname` instructions, each one announcing customisations relating to a particular VRD image.
+
+The `imname` instruction declares that the visual relationship annotation instructions which follow apply to the specified image. The `imname` instruction, therefore, establishes context. It establishes the context for the interpretation of all of the other **NeSy4VRD protocol** instruction types.
+
+When a visual relationship annotation customisation instruction text file is processed by the protocol driver script of the **NeSy4VRD workflow**, if the image filename associated with an `imname` instruction is not found to have an entry in the NeSy4VRD annotations dictionary, the protocol driver script is said to *not recognise* the image and it will abort and report this problem. That is, VRD image filenames are *recognised* (or not) according to whether they have entries in the NeSy4VRD annotations dictionary, not according to whether they exist as physical files in the appropriate VRD image directory on disk. Further, this means that image filenames that fail to be recognised are NOT automatically granted new entries within the annotations dictionary, even if there are physical image files on disk with corresponding filenames.
+
+Optionally (and very rarely), an instance of the `imname` instruction type can have a 3rd component, resulting in the following pattern:
+```
+imname; image_filename; rimxxx
+```
+where the 3rd component is the **remove image**, `rimxxx`, instruction type. This special case is described separately, below, under the heading of the `rimxxx` instruction type.
+
+
 
 ### The `cvr...` instruction types
 
