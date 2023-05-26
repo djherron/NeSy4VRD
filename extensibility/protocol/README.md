@@ -116,7 +116,9 @@ Instances of this instruction type consist of 3 components that conform to the f
 rvrxxx; vr_index; vr_description
 ```
 
-The `vr_index` is the index position of the designated visual relationship that is to be removed. The `vr_description` is a 3-element, user-friendly description of the designated visual relationship at the index position specified by `vr_index`. The `vr_description` must match the actual visual relationship that exists at the specified `vr_index`. If there is a mismatch, the protocol driver script of the **NeSy4VRD workflow** will abort and report the problem.
+The `vr_index` is the index position of the designated visual relationship that is to be removed. The `vr_description` is a 3-element, user-friendly description of the designated visual relationship at the index position specified by `vr_index`.
+
+The `vr_description` must match the actual visual relationship that exists at the specified `vr_index`. If there is a mismatch, the protocol driver script of the **NeSy4VRD workflow** will abort and report the problem.  This is a useful **quality control mechanism** that prevents the removal of a visual relationship other than the one intended.
 
 *Example*: For the fourth image in the listing (above), the `rvrxxx` instruction declares an intention to remove the visual relationship at index position 4 within the image's Python list of annotated visual relationships.
 
@@ -168,6 +170,28 @@ The **NeSy4VRD protocol** also recognises **comment** lines and **blank** lines 
 
 The reason that all bounding box specifications in the NeSy4VRD visual relationship annotations have the format `[ymin, ymax, xmin, xmax]` is historical. This is the format used in the original VRD visual relationship annotations of the VRD dataset and NeSy4VRD has retained this convention.  The protocol driver script of the **NeSy4VRD workflow** checks that this format is respected. It checks that all four elements are positive integers and that `ymax - ymin > 0` and `xmax - xmin > 0`. If these conditions are not met, a bounding box specification is regarded as degenerate and the protocol driver aborts and reports the problem. 
 
+### Successive `cvr...` changes for one visual relationship
+
+As described above, the 5 `cvr...` instruction types and the `rvrxxx` instruction type all require that the designated visual relationship be identified via dual mechanisms: 1) the `vr_index` index position of the visual relationship within the Python list of visual relationships for an image, and 2) the `vr_description` of the visual relationship, that reflects the researcher's understanding of the state of the visual relationship that exists at index position `vr_index`.  The benefits of this convention have been highlighted, above.
+
+This convention has a subtle implication that needs to be recognised when multiple, successive `cvr...` instructions are specified for a single visual relationship for the same `vr_index`. This implication has already been pointed out, above. But, here, we highlight it again to help ensure it is fully taken onboard by readers, in order to avoid confusion.
+
+The protocol driver script of the **NeSy4VRD workflow** processes annotation customisation instruction text files line-by-line, from top to bottom. Thus, if multiple `cvr...` changes are specified for a single visual relationship at a given `vr_index`, the incremental changes *may* need to be reflected in the `vr_description` components of the succedding `cvr...` instructions for that `vr_index`.  Otherwise, the protocol driver script of the **NeSy4VRD workflow** *may* detect a mismatch between the `vr_description` and the actual state of the visual relationship at index `vr_index` (at that moment in time) and have no option but to abort and report a problem.
+
+For example, recall the following example from the listing (above):
+```
+imname; 8934043045_251b42d19a_b.jpg
+cvrooc; 7; ('bus', 'beside', 'car'); truck
+cvrobb; 7; ('bus', 'beside', 'truck'); [334,557,99,403]
+```
+The `cvrooc` instruction changes the 'object' object class from **car** to **truck**, and so the `vr_description` in the succeeding `cvrobb` instruction must refer to object class **truck**, because the `cvrooc` instruction will have already been executed and so (in memory) the visual relationship at index position 7 will already have been altered to refer to object class **truck**. 
+
+Notice that we could have reversed the order of these two instructions and obviated the need to reflect the change in the state of the visual relationship. If we first change the bounding box and then change the object class, the `vr_description` in the two instructions need not change:
+```
+imname; 8934043045_251b42d19a_b.jpg
+cvrobb; 7; ('bus', 'beside', 'car'); [334,557,99,403]
+cvrooc; 7; ('bus', 'beside', 'car'); truck
+```
 
 ### Training image vs test image annotation customisations
 
