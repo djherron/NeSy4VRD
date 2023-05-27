@@ -1,4 +1,4 @@
-# NeSy4VRD: protocol
+# NeSy4VRD: Protocol - Specification
 
 This folder contains assets relating to the **NeSy4VRD protocol** component of the NeSy4VRD infrastructure that supports extensibility of the NeSy4VRD visual relationship annotations and, thereby, of the NeSy4VRD OWL ontology, VRD-World. The **NeSy4VRD protocol** component of the NeSy4VRD infrastructure supporting extensibility is a custom-designed protocol that allows researchers to specify VRD / NeSy4VRD visual relationship annotation customisation instructions declaratively, in text files. Specifying annotation customisation instructions declaratively in text files enables researchers to define and apply large volumes of annotation customisations safely and responsibly, using the **NeSy4VRD workflow**. The **NeSy4VRD workflow** is the 3rd component of the NeSy4VRD infrastructure that supports extensibility of the annotations and VRD-World ontology. It is described in another folder of this GitHub repo.
 
@@ -128,9 +128,9 @@ The **add visual relationship**, `avrxxx`, instruction declares that a **new** a
 
 Instances of this instruction type consist of 6 components that conform to the following pattern:
 ```
-avrxxx; soc; sbb; pred; ooc; obb
+avrxxx; soc; sbb; pxx; ooc; obb
 ```
-The `soc` component is the 'subject' object class, and `sbb` is its bounding box specification. The `pred` component is the name of the predicate describing the relationship. The `ooc` component is the 'object' object class, and `obb` is its bounding box specification. 
+The `soc` component is the 'subject' object class, and `sbb` is its bounding box specification. The `pxx` component is the name of the predicate describing the relationship. The `ooc` component is the 'object' object class, and `obb` is its bounding box specification. 
 
 New visual relationships introduced by the `avrxxx` instruction type are *always* **appended** to the end of the image's Python list of annotated visual relationships.  Any number of new visual relationships can be introduced for an image.
 
