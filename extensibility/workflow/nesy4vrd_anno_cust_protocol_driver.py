@@ -65,7 +65,7 @@ import nesy4vrd_anno_cust_config_train as vrdcfg
 
 # set the path to the directory in which the source NeSy4VRD annotations 
 # data files reside
-anno_dir = os.path.join('..', *vrdcfg.anno_dir)
+anno_dir = os.path.join('..', '..', *vrdcfg.anno_dir)
 
 # get the NeSy4VRD object class names
 path = os.path.join(anno_dir, vrdcfg.object_classes_file)

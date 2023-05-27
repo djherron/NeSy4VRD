@@ -15,13 +15,13 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-import vrd_utils as vrdu
+import nesy4vrd_utils as vrdu
 
 
 #%% get the NeSy4VRD visual relationships annotations data
 
 # set path to directory in which the NeSy4VRD annotations files reside
-anno_dir = os.path.join('..', 'data', 'annotations')
+anno_dir = os.path.join('..', '..', 'data', 'annotations')
 
 # get the NeSy4VRD object class names
 path = os.path.join(anno_dir, 'nesy4vrd_objects.json')
@@ -49,7 +49,7 @@ vrd_img_names = list(vrd_anno.keys())
 # type of VR annotations you are loading: training or test
 
 imagedir = 'train_images'   # or 'test_images'
-imagedir = os.path.join('..', 'data', imagedir)
+imagedir = os.path.join('..', '..', 'data', imagedir)
 
 
 #%% analysis X

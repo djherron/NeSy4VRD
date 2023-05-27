@@ -61,7 +61,7 @@ import nesy4vrd_anno_cust_config_train as vrdcfg
 
 # set the path to the directory in which the source NeSy4VRD annotations 
 # data files reside
-anno_dir = os.path.join('..', *vrdcfg.anno_dir)
+anno_dir = os.path.join('..', '..', *vrdcfg.anno_dir)
 
 # get NeSy4VRD visual relationship annotations
 vrd_anno_path = os.path.join(anno_dir, vrdcfg.annotations_file)

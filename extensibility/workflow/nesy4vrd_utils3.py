@@ -13,7 +13,7 @@ This module defines utility functions used by the NeSy4VRD workflow.
 import json
 import sys
 sys.path.insert(0, '../analysis')
-import vrd_utils as vrdu
+import nesy4vrd_utils as vrdu
 
 #%%
 
