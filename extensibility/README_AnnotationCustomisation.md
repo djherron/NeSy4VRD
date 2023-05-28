@@ -66,17 +66,13 @@ Motivation **$B$** is most likely to be acted upon in scenarios where a research
 
 Motivation **$C$** pertains best to NeSy researchers interested in using OWL ontologies and OWL-based knowledge graphs as symbolic components in NeSy systems and who are using the **NeSy4VRD ontology**, VRD-World, in that context. We anticipate that, in our conceptual landscape, motivation **$C$** for undertaking a NeSy4VRD annotation customisation project is equally likely to take the same position as motivation **$A$** or to follow the same trajectory as motivation **$B$**.
 
+## Sharing NeSy4VRD annotation customisation projects
 
+The idea of **sharing** NeSy4VRD annotation customisation projects is worth emphasising.  This is not a far-fetched concept.  The **NeSy4VRD extensibility support infrastructure** makes the idea of **sharing** a NeSy4VRD annotation customisation project that one undertakes **practical** and **useful**. It does so because the infrastructure simultaneously supports flexible ways for other researchers to **reuse** the NeSy4VRD annotation customisation projects that one undertakes and shares.  The infrastructure even supports the concept of a researcher **composing** multiple NeSy4VRD annotation customisation projects shared by diverse researchers in order to create a unique instance of the NeSy4VRD visual relationship annotations that combines the annotation enhancements of a particular set of customisation projects.
 
-
-
-
-
-
-
-
-
-
-
+We call this concept of **sharing** and **reusing** and **composing** NeSy4VRD annotation customisation projects **Distributed Annotation Enhancement**. For more discussion and details concerning this concept and model of collaboration, please see the companion README files in this folder:
+* README_DistributedAnnotationEnhancement.md
+* README_SharingCustomisationProjects.md
+* README_UsingSharedCustomisationProjects.md
 
 
