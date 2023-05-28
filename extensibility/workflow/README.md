@@ -88,10 +88,4 @@ step | functionality
 ```
 
 
-## More to come
-
-more documentation coming soon ...
-
-
-
 
