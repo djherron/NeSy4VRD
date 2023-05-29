@@ -12,9 +12,9 @@ The **NeSy4VRD extensibility support infrastructure** enables the **DAE** model 
 
 A researcher might typically initially **undertake** a NeSy4VRD annotation customisation project for personal and private reasons: e.g. to advance their particular research interests. But having **undertaken** such a project, a researcher might come to feel that their annotation customisations may have value for others and opt to **share** the project. This gives other researchers the option to **reuse** the shared project, by itself, in their own research.  Further, it also gives other researchers the option to **reuse** the annotation customisation project simultaneously with other shared projects, by **composing** (or combining) several of them to create a unique, consolidated set of NeSy4VRD visual relationship annotations that aggregates the annotation enhancements of multiple, independent customisation projects.
 
-The details around using the **NeSy4VRD extensibility support infrastructure** to **undertake** a NeSy4VRD annotation customisation project are documented extensively throughout the `extensibility` folder (and its subfolders) of the NeSy4VRD repository here on GitHub.
+The details around **undertaking** NeSy4VRD visual relationship annotation customisation projects using the **NeSy4VRD extensibility support infrastructure** are documented extensively throughout this `extensibility` folder and its `analysis`, `protocol`, and `workflow` subfolders.
 
-For details around **sharing**, **reusing** and **composing** NeSy4VRD annotation customisation projects, please see the following companion README files here in the `extensibility` folder:
+For details of the **Distributed Annotation Enhancement** model of collaboration concerning **sharing**, **reusing** and **composing** NeSy4VRD annotation customisation projects, please see the following companion README files here in the `extensibility` folder:
 * README_SharingCustomisationProjects.md
 * README_UsingSharedCustomisationProjects.md
 
