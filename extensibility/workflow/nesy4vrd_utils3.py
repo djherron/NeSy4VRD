@@ -84,13 +84,19 @@ def format_bbox(bbox_spec, line_num):
         
     for idx, elem in enumerate(bbox_elem):
         bbox_elem[idx] = elem.strip()
- 
+    
+    # check that each bbox coordinate is a non-negative integer
     for elem in bbox_elem:
         if not elem.isnumeric():
             raise ValueError(f'invalid bbox specification, line {line_num}')    
     
     bbox = [int(bbox_elem[0]), int(bbox_elem[1]), 
             int(bbox_elem[2]), int(bbox_elem[3])]
+        
+    # check for degenerate bbox specifications;
+    # we want ymin < ymax and xmin < xmax
+    if (not bbox[0] < bbox[1]) or (not bbox[2] < bbox[3]):
+        raise ValueError(f'invalid bbox specification, line {line_num}')
     
     return bbox
 
