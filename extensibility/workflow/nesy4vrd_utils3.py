@@ -67,7 +67,7 @@ def format_bbox(bbox_spec, line_num):
         bbox : list (of 4 non-negative integers)
     '''
     
-    min_length_of_bbox_spec = 10
+    min_length_of_bbox_spec = 9
     if len(bbox_spec) < min_length_of_bbox_spec:
         raise ValueError(f'invalid bbox specification, line {line_num}')
     
