@@ -23,8 +23,11 @@ AI researchers who opt to use this **central repository** for one or more of the
 ### Sample shared project entry
 
 **Project archive name:** `nesy4vrd_<projectName>.zip`
+
 **Project author:** Joe Bloggs (plus optional email or personal site)
+
 **Date shared:** YYYY/MM/DD
+
 **Project archive location:** *hyperlink* or name of subfolder in this `shared_project` folder
 
 **Project description:**
