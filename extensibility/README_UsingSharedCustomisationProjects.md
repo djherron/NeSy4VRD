@@ -73,5 +73,23 @@ If we further suppose that researcher **Z** is doing NeSy AI research using OWL 
 The **composition** concepts illustrated in this simple example can, in theory, be repeated an arbitrary number of times with respect to an arbitrary number of shared NeSy4VRD annotation customisation/enhancement projects.  So the possibilities for easily constructing elaborately enhanced versions of the NeSy4VRD visual relationship annotations by **composing** multiple shared NeSy4VRD annotation enhancement projects are very real.  And hence the implications of the **Distributed Annotation Enhancement** (**DAE**) model of collaborative data annotation enabled by the **NeSy4VRD extensibility support infrastructure** are potentially profound.
 
 
+## Shared project composition and potential incompatibilities
+
+Shared NeSy4VRD annotation customisation/enhancement project **composition** makes the **Distributed Annotation Enhancement** (**DAE**) model of collaborative data annotation particularly attractive. But project **composition** may not always be pure **clear sailing**. This is because it is possible that minor **incompatibilities** may exist within the **NeSy4VRD protocol** annotation customisation instructions declared for different NeSy4VRD projects with respect to common VRD images. If any such **incompatibilities** do exist between shared NeSy4VRD projects, they will be detected by the protocol driver of the **NeSy4VRD workflow** when it is processing a **NeSy4VRD protocol** annotation customisation instruction text file.
+
+**Incompatibilities** between the NeSy4VRD annotation customisations of different shared NeSy4VRD projects are analogous to **conflicts** that can emerge in software development projects when multiple developers contribute to a common code base.  Sometimes two changes proposed for the same bit of code **conflict** with one another. The version control software (`git`, say) may detect and report a **conflict** during a `git merge` or `git pull` operation, for example. If so, the developer investigates and resolves the **conflict** manually.  The same applies to **incompatibilities** between shared NeSy4VRD projects detected by the protocol driver of the **NeSy4VRD workflow** during NeSy4VRD project **composition** exercises. If the protocol driver aborts and reports an **incompatibility**, the AI researcher needs to investigate and resolve the **incompatibility** manually (by amending the annotation customisation instruction involved in the **incompatibility** appropriately) before proceeding by re-running the protocol driver.
+
+There are several bits of good news in relation to potential **incompatiblities**:
+* The first is that, like **conflicts** in collaborative software development, **incompatibilities** in **DAE** collaborative data annotation are **highly localised**. In the case of NeSy4VRD annotation customisation/enhancement projects, an **incompatibility** will **always** be local to a particular VRD image and **usually** be local to a specific annotated visual relationship for that VRD image.
+* Second, with 4000 training images and 1000 test images, the likelihood of two shared NeSy4VRD annotation customisation/enhancement projects containing **incompatible** changes to the same visual relationship for the same image is low. So even if **incompatibilities** do sometimes arise, their volume is likely to be very small.
+* Third, if and when **incompatibilities** arise, they are easy to investigate and resolve. The **NeSy4VRD analysis** component of the **NeSy4VRD extensibility support infrastructure** provides comprehensive means for displaying and analysing the visual relationship annotations of any VRD image. The AI researcher need only review these and compare them with the **NeSy4VRD protocol** annotation customisation instruction reported as being incompatible by the protocol driver script to quickly come to a decision how best to amend the customisation instruction in question in order to resolve the incompatibility.
+ 
+
+
+
+
+
+
+
 
 
