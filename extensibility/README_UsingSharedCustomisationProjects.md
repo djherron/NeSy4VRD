@@ -131,7 +131,7 @@ For example, a sample instance of an `rvrxxx` instruction type is:
 imname; 4929276486_ca06aedbb9_b.jpg
 rvrxxx; 4; ('person', 'wear', 'jacket');
 ```
-Suppose an AI researcher has acquired two shared projects, $X$ and $Y$, and first **composes** project $X$. Suppose that project $X$ contains the sample annotation customisation instruction just given. In memory, the visual relationships for an image are maintained in a Python `List`, so once the visual relationship at `vr_index` 4 is removed, the positions of all subsequent visual relationships in that list change --- they are decremented by 1. So if project $Y$ contains an annotation customisation instruction for this image (either a `cvr...` instruction, or and `rvrxxx` instruction) that references a `vr_index` greater than 3, it is most likely that a mismatch will be detected between the `vr_description` specified in that instruction and the actual, in memory, visual relationship that exists at that specified `vr_index`.  Hence, in terms of **relative risk**, it is the *remove visual relationship*, or `rvrxxx`, instruction whose use is most likely to lead to **incompatibilities** arising between shared NeSy4VRD annotation customisation/enhancement projects during project **composition**.
+Suppose an AI researcher has acquired two shared projects, $X$ and $Y$, and first **composes** project $X$. Suppose that project $X$ contains the sample annotation customisation instruction just given. In memory, the visual relationships for an image are maintained in a Python `List`, so once the visual relationship at `vr_index` 4 is removed, the positions of all subsequent visual relationships in that list change --- they are decremented by 1. So if project $Y$ contains an annotation customisation instruction for this image (either a `cvr...` instruction, or and `rvrxxx` instruction) that references a `vr_index` greater than 3, it is most likely that a mismatch will be detected between the `vr_description` specified in that instruction and the actual, in memory, visual relationship that exists at that specified `vr_index`.  Thus, in terms of **relative risk of incompatibilities arising** between shared NeSy4VRD projects during **composition** exercises, the *remove visual relationship*, or `rvrxxx`, instruction ranks fairly high.
 
 ### The `avrxxx` instruction type and incompatibility risk
 
@@ -147,4 +147,22 @@ avrxxx; boat; [477,594,319,746]; carry; dog; [478,529,587,618]
 ```
 Notice that `avrxxx` instructions are not constructed using either `vr_index` or `vr_description` components.  New visual relationships introduced by the `avrxxx` instruction type are always simply **appended** to the end of the Python `List` holding the visual relationships for an image. This means that mismatches between a `vr_description` and the actual visual relationship that exists, in memory, at a specified `vr_index` position can never arise in relation to an `avrxxx` instruction. Thus, in terms of **relative risk of incompatibilities arising**, the `avrxxx` instruction type is the **safest** of all because its use can never lead to an **incompatibility** arising between shared NeSy4VRD annotation customisation/enhancement projects during project **composition**.
 
+### The `rimxxx` instruction type and incompatibility risk
+
+The **NeSy4VRD protocol** specification defines one **remove image**, `rimxxx`, instruction type is an optional component of an **image name**, `imname`, instruction type. An example instance of the `rimxxx` instruction is given here:
+```
+imname; 7171463996_900cb4ce33_b.jpg; rimxxx
+```
+The presence of the `rimxxx` component of the `imname` instruction declares that the `key:value` entry for the specified image is to be removed from the NeSy4VRD annotations dictionary altogether. Suppose once again that an AI researcher has acquired two shared NeSy4VRD projects, $X$ and $Y$, and first **composes** project $X$. And suppose that project $X$ contains the `imname` instruction given above, containing the optional `rimxxx` component. If project $Y$ contains an `imname` instruction specifying the same image name, the protocol driver of the **NeSy4VRD workflow** will abort and report that the specified image is **not recognised**, because it no longer exists in the NeSy4VRD annotations dictionary. So **none** of the annotation customisation instructions that project $Y$ may have declared in relation to that particular image will be able to be processed. Thus, in terms of **relative risk of incompatibilities arising** between shared NeSy4VRD projects during **composition** exercises, use of the `rimxxx` instruction type is the **riskiest** instruction of all!
+
+### Summary ranking of instructions by risk of incompatibilities
+
+For reader convenience, here we rank the various **NeSy4VRD protocol** instruction types mentioned above in terms of **relative risk of incompatibilities arising** between shared NeSy4VRD annotation customisation/enhancement projects during **composition** exercises. The ranking is in **descending** order by level of relative risk of **incompatibilities** arising:
+1. `rimxxx` - *remove image*
+2. `rvrxxx` - *remove visual relationship*
+3. `cvrsoc`, `cvspxx`, `cvrooc` - *change visual relationship*
+
+The instruction types `cvrsbb`, `cvrobb` and `avrxxx` carry **zero risk** of **incompatibilities** arising between shared NeSy4VRD projects during **composition**, so, for clarity, we exclude these from the above relative risk ranking altogether.
+
+Finally, to re-emphasise what has already been highlighted above, it is important to remember that the **incidence rate** of **incompatibilities** between shared NeSy4VRD projects during **composition** exercises is expected to be **very low**, regardless of which **NeSy4VRD protocol** instruction types AI researchers choose to use in their shared projects. And if and when **incompatibilities** do arise during **composition** they are **easy to resolve**.  
 
