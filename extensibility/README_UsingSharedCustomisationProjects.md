@@ -79,17 +79,72 @@ Shared NeSy4VRD annotation customisation/enhancement project **composition** mak
 
 **Incompatibilities** between the NeSy4VRD annotation customisations of different shared NeSy4VRD projects are analogous to **conflicts** that can emerge in software development projects when multiple developers contribute to a common code base.  Sometimes two changes proposed for the same bit of code **conflict** with one another. The version control software (`git`, say) may detect and report a **conflict** during a `git merge` or `git pull` operation, for example. If so, the developer investigates and resolves the **conflict** manually.  The same applies to **incompatibilities** between shared NeSy4VRD projects detected by the protocol driver of the **NeSy4VRD workflow** during NeSy4VRD project **composition** exercises. If the protocol driver aborts and reports an **incompatibility**, the AI researcher needs to investigate and resolve the **incompatibility** manually (by amending the annotation customisation instruction involved in the **incompatibility** appropriately) before proceeding by re-running the protocol driver.
 
-There are several bits of good news in relation to potential **incompatiblities**:
-* The first is that, like **conflicts** in collaborative software development, **incompatibilities** in **DAE** collaborative data annotation are **highly localised**. In the case of NeSy4VRD annotation customisation/enhancement projects, an **incompatibility** will **always** be local to a particular VRD image and **usually** be local to a specific annotated visual relationship for that VRD image.
-* Second, with 4000 training images and 1000 test images, the likelihood of two shared NeSy4VRD annotation customisation/enhancement projects containing **incompatible** changes to the same visual relationship for the same image is low. So even if **incompatibilities** do sometimes arise, their volume is likely to be very small.
-* Third, if and when **incompatibilities** arise, they are easy to investigate and resolve. The **NeSy4VRD analysis** component of the **NeSy4VRD extensibility support infrastructure** provides comprehensive means for displaying and analysing the visual relationship annotations of any VRD image. The AI researcher need only review these and compare them with the **NeSy4VRD protocol** annotation customisation instruction reported as being incompatible by the protocol driver script to quickly come to a decision how best to amend the customisation instruction in question in order to resolve the incompatibility.
- 
+There are several bits of **good news** in relation to potential **incompatiblities**:
+* First, like **conflicts** in collaborative software development, **incompatibilities** in **DAE** collaborative data annotation are **highly localised**. In the case of NeSy4VRD annotation customisation/enhancement projects, an **incompatibility** will **always** be local to a particular VRD image and **usually** be local to a specific annotated visual relationship for that VRD image.
+* Second, with 4000 training images and 1000 test images, the likelihood of two shared NeSy4VRD annotation customisation/enhancement projects containing **incompatible** changes to the same visual relationship for the same image is low. So even if **incompatibilities** do sometimes arise, their **overall volume is highly likely to be very small**.
+* Third, if and when **incompatibilities** do arise, they are **easy to investigate and resolve**. The **NeSy4VRD analysis** component of the **NeSy4VRD extensibility support infrastructure** provides comprehensive means for displaying and analysing the visual relationship annotations of any VRD image. The AI researcher need only review these and compare them with the **NeSy4VRD protocol** annotation customisation instruction reported as being incompatible by the protocol driver script. The researcher will  quickly come to a decision how best to amend the customisation instruction in question in order to resolve the incompatibility.
+* Finally, only some of the **NeSy4VRD protocol** instruction types carry an associated risk of leading to a potential **incompatibility** between shared NeSy4VRD projects. Hence, it is possible for AI researchers to **undertake** and **share** meaningful and valuable NeSy4VRD annotation enhancement projects, and thereby contribute to demonstrating the value of **DAE** collaborative data annotation, with **zero risk** of their shared project ever being involved in an incompatibility with another shared NeSy4VRD project.
 
 
+## NeSy4VRD protocol instructions and risk of incompatibilities
 
+Here we review the **NeSy4VRD protocol** instruction types from the perspective of the relative risk they carry of being involved in potential **incompatibilities** when multiple shared NeSy4VRD projects are **composed** with one another. The full **NeSy4VRD protocol** specification, containing full details of all of the instruction types, is in the main `README.md` file in the `extensibility/protocol` folder of this GitHub repo. 
 
+### The `cvr...` instruction types and incompatibility risk
 
+The **NeSy4VRD protocol** specification defines five **change visual relationship**, `cvr...`, instruction types that consist of 4 components conforming to the following pattern:
+```
+cvr...; vr_index; vr_description; new_value
+```
+These five instruction types relate to the five components of every NeSy4VRD annotated visual relationship:
+* `cvrsoc`: change visual relationship *'subject' object class*
+* `cvrsbb`: change visual relationship *'subject' bounding box*
+* `cvrpxx`: change visual relationship *predicate*
+* `cvrooc`: change visual relationship *'object' object class*
+* `cvrobb`: change visual relationship *'object' bounding box*
 
+For example, two sample instances of `cvr...` instruction types are:
+```
+imname; 3223670633_7d3d72dfe8_b.jpg
+cvrsoc; 4; ('person', 'on', 'shelf'); speaker
+cvrsbb; 4; ('speaker', 'on', 'shelf'); [161,234,231,270]
+```
+where the *4* is a `vr_index` and *('person', 'on', 'shelf')* is a `vr_description`. As explained in the **NeSy4VRD protocol** specification, the `vr_description` in an annotation customisation instruction must **match** the actual visual relationship held internally, in memory, at the index position corresponding to the specified `vr_index`. This is an important **quality control mechanism** and discipline that prevents inadvertent errors being made in annotation customisation instructions.
 
+If an **incompatibility** involving a `cvr...` instruction arises between shared NeSy4VRD projects that are being **composed** with one another, it will arise because of a mismatch between the `vr_description` in an instruction and the internal, in memory, visual relationship at the specified `vr_index`.  Suppose an AI researcher has acquired two shared projects, $X$ and $Y$, and first **composes** project $X$. Suppose project $X$ contains the annotation customisation instruction
+``` 
+imname; 3223670633_7d3d72dfe8_b.jpg
+cvrsoc; 4; ('person', 'on', 'shelf'); speaker
+```
+If project $Y$ also contains a `cvr...` instruction for the same image and the same visual relationship, at `vr_index` 4, if that instruction also uses the `vr_description` *('person', 'on', 'shelf')*, a mismatch will be detected by the protocol driver of the **NeSy4VRD workflow** because when project $X$ was **composed**, the visual relationship for that image at `vr_index` 4 was changed and is now *('speaker', 'on', 'shelf')*, not *('person', 'on', 'shelf')*.
+
+Notice also that the `vr_description` components of `cvr...` instructions refer only to *object class* names and *predicate* names, not to *bounding box specifications*.  This means that use of two of the five `cvr...` instruction types, `cvrsbb` and `cvrobb`, can **never** lead to **incompatibilities** between shared NeSy4VRD projects during **composition** exercises.
+
+### The `rvrxxx` instruction type and incompatibility risk
+
+The **NeSy4VRD protocol** specification defines one **remove visual relationship**, `rvrxxx`, instruction type that consists of 3 components conforming to the following pattern:
+```
+rvrxxx; vr_index; vr_description
+```
+For example, a sample instance of an `rvrxxx` instruction type is:
+```
+imname; 4929276486_ca06aedbb9_b.jpg
+rvrxxx; 4; ('person', 'wear', 'jacket');
+```
+Suppose an AI researcher has acquired two shared projects, $X$ and $Y$, and first **composes** project $X$. Suppose that project $X$ contains the sample annotation customisation instruction just given. In memory, the visual relationships for an image are maintained in a Python `List`, so once the visual relationship at `vr_index` 4 is removed, the positions of all subsequent visual relationships in that list change --- they are decremented by 1. So if project $Y$ contains an annotation customisation instruction for this image (either a `cvr...` instruction, or and `rvrxxx` instruction) that references a `vr_index` greater than 3, it is most likely that a mismatch will be detected between the `vr_description` specified in that instruction and the actual, in memory, visual relationship that exists at that specified `vr_index`.  Hence, in terms of **relative risk**, it is the *remove visual relationship*, or `rvrxxx`, instruction whose use is most likely to lead to **incompatibilities** arising between shared NeSy4VRD annotation customisation/enhancement projects during project **composition**.
+
+### The `avrxxx` instruction type and incompatibility risk
+
+The **NeSy4VRD protocol** specification defines one **add visual relationship**, `avrxxx`, instruction type that consists of 6 components conforming to the following pattern:
+```
+avrxxx; soc; sbb; pxx; ooc; obb
+```
+For example, sample instances of `avrxxx` instruction types are:
+```
+imname; 4929276486_ca06aedbb9_b.jpg
+avrxxx; boat; [477,594,319,746]; has; dog; [478,529,587,618]
+avrxxx; boat; [477,594,319,746]; carry; dog; [478,529,587,618]
+```
+Notice that `avrxxx` instructions are not constructed using either `vr_index` or `vr_description` components.  New visual relationships introduced by the `avrxxx` instruction type are always simply **appended** to the end of the Python `List` holding the visual relationships for an image. This means that mismatches between a `vr_description` and the actual visual relationship that exists, in memory, at a specified `vr_index` position can never arise in relation to an `avrxxx` instruction. Thus, in terms of **relative risk of incompatibilities arising**, the `avrxxx` instruction type is the **safest** of all because its use can never lead to an **incompatibility** arising between shared NeSy4VRD annotation customisation/enhancement projects during project **composition**.
 
 
