@@ -46,9 +46,9 @@ from rdflib.term import URIRef, Literal
 from rdflib.namespace import RDF, RDFS, OWL, XSD
 
 import sys
-sys.path.insert(0, '../analysis')
+sys.path.insert(0, '../extensibility/analysis')
 
-import vrd_utils as vrdu
+import nesy4vrd_utils as vrdu
  
 
 #%% global variables
@@ -57,31 +57,34 @@ import vrd_utils as vrdu
 # (here we use that used in the NeSy4VRD VRD-World OWL ontology)
 url_base = "http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#"
 
+# set the prefix we can use in place of the url_base, depending on the 
+# graph store with which we interact
+prefix = 'vrd:'
 
 # Sequence numbers are used to generate unique names for all 
 # individuals (owl:NamedIndividuals, such as images, objects and
 # bounding boxes) pertaining to VRD image visual relationship 
 # annotations that are loaded into the ABox of the KG 
 
-start_seq_num = 10000
-
-image_seq_num = start_seq_num
-bbox_seq_num = start_seq_num
-
 image_seq_num_key = 'image_seq_num'
 object_seq_nums_key = 'object_seq_nums'
 bbox_seq_num_key = 'bbox_seq_num'
 
-seq_nums = {image_seq_num_key : image_seq_num,        
-            bbox_seq_num_key : bbox_seq_num}
-
+seq_nums = {}
+    
 
 #%% 
 
 def initialise_object_sequence_numbers(number_of_vrd_object_classes):
     
+    start_seq_num = 10000
+    
+    seq_nums[image_seq_num_key] = start_seq_num
+    
     object_seq_nums = [start_seq_num] * number_of_vrd_object_classes
     seq_nums[object_seq_nums_key] = object_seq_nums
+
+    seq_nums[bbox_seq_num_key] = start_seq_num
 
     return
 
@@ -160,7 +163,7 @@ def convert_NeSy4VRD_predicateNames_to_ontology_propertyNames(vrd_predicates):
 
 #%%
 
-def build_triples_for_image(imname):
+def build_triples_for_image(imname, graphStore='rdflib'):
     '''
     Construct and return the triples that will represent an individual
     VRD image within a KG.
@@ -178,6 +181,9 @@ def build_triples_for_image(imname):
     represents an essential supplementary 'return value' to be aware of.
     '''
     
+    if not graphStore in ['rdflib', 'graphdb']:
+        raise ValueError('graphStore not recognised')
+
     triples = []
  
     #
@@ -196,27 +202,38 @@ def build_triples_for_image(imname):
     
     # construct the triple
     image_id = class_name + str(seq_num)
-    image_uriref = URIRef(url_base + image_id)
-    triple = (image_uriref, RDF.type, OWL.NamedIndividual)
+    if graphStore == 'rdflib':
+        image_uriref = URIRef(url_base + image_id)
+        triple = (image_uriref, RDF.type, OWL.NamedIndividual)
+    else:
+        image_uriref = prefix + image_id
+        triple = image_uriref + ' rdf:type owl:NamedIndividual .'
     triples.append(triple)
      
     #
-    # example target triple: :ImageNNNNN rdf:type :Image
+    # example target triple: vrd:ImageNNNNN rdf:type vrd:Image
     #
 
     # construct the triple
-    class_uriref = URIRef(url_base + class_name)
-    triple = (image_uriref, RDF.type, class_uriref)
+    if graphStore == 'rdflib':
+        class_uriref = URIRef(url_base + class_name)
+        triple = (image_uriref, RDF.type, class_uriref)
+    else:
+        class_uriref = prefix + class_name
+        triple = image_uriref + ' rdf:type ' + class_uriref + ' .'     
     triples.append(triple)
 
     #
     # example target triple:
-    #   :ImageNNNNN rdfs:label '3493152457_8dde981cc9_b.jpg'^^xsd:string
+    #   vrd:ImageNNNNN rdfs:label '3493152457_8dde981cc9_b.jpg'^^xsd:string
     #
 
     # construct the triple
-    literal = Literal(imname, datatype=XSD.string)
-    triple = (image_uriref, RDFS.label, literal)
+    if graphStore == 'rdflib':
+        literal = Literal(imname, datatype=XSD.string)
+        triple = (image_uriref, RDFS.label, literal)
+    else:
+        triple = image_uriref + ' rdfs:label ' + '"' + imname + '"' + '^^xsd:string' + ' .'
     triples.append(triple)
     
     return image_id, image_uriref, triples
@@ -224,7 +241,8 @@ def build_triples_for_image(imname):
 
 #%%
 
-def build_triples_for_object(cls_idx, bbox, ontoClassNames, image_uriref):
+def build_triples_for_object(cls_idx, bbox, ontoClassNames, 
+                             image_uriref, graphStore='rdflib'):
     '''
     Construct and return the triples for representing a new, individual
     object of a VRD image within a KG.
@@ -251,10 +269,13 @@ def build_triples_for_object(cls_idx, bbox, ontoClassNames, image_uriref):
     just for the clarity that might come from specificity.
     '''
     
+    if not graphStore in ['rdflib', 'graphdb']:
+        raise ValueError('graphStore not recognised')
+    
     triples = []
     
     #
-    # example target triple: :PersonNNNNN rdf:type owl.NamedIndividual
+    # example target triple: vrd:PersonNNNNN rdf:type owl.NamedIndividual
     #
 
     # get the name of the VRD-World class that corresponds to the 
@@ -269,42 +290,58 @@ def build_triples_for_object(cls_idx, bbox, ontoClassNames, image_uriref):
 
     # construct the triple
     object_id = class_name + str(seq_num)
-    object_uriref = URIRef(url_base + object_id)
-    triple = (object_uriref, RDF.type, OWL.NamedIndividual)
+    if graphStore == 'rdflib':
+        object_uriref = URIRef(url_base + object_id)
+        triple = (object_uriref, RDF.type, OWL.NamedIndividual)
+    else:
+        object_uriref = prefix + object_id
+        triple = object_uriref + ' rdf:type owl:NamedIndividual .'
     triples.append(triple)
 
     #
-    # example target triple: :PersonNNNNN rdf:type :Person
+    # example target triple: vrd:PersonNNNNN rdf:type vrd:Person
     #
 
     # construct the triple
-    class_uri = URIRef(url_base + class_name)
-    triple = (object_uriref, RDF.type, class_uri)
+    if graphStore == 'rdflib':
+        class_uri = URIRef(url_base + class_name)
+        triple = (object_uriref, RDF.type, class_uri)
+    else:
+        class_uri = prefix + class_name
+        triple = object_uriref + ' rdf:type ' + class_uri + ' .'
     triples.append(triple)
 
 
     #
-    # example target triple: :ImageNNNNN :hasObject :PersonNNNNN
+    # example target triple: vrd:ImageNNNNN vrd:hasObject vrd:PersonNNNNN
     #
 
     # construct the triple
     property_name = 'hasObject'
-    property_uriref = URIRef(url_base + property_name)
-    triple = (image_uriref, property_uriref, object_uriref)
+    if graphStore == 'rdflib':
+        property_uriref = URIRef(url_base + property_name)
+        triple = (image_uriref, property_uriref, object_uriref)
+    else:
+        property_uriref = prefix + property_name
+        triple = image_uriref + ' ' + property_uriref + ' ' + object_uriref + ' .'
     triples.append(triple)
 
     #
-    # example target triple: :PersonNNNNN :sourceImage :ImageNNNNN
+    # example target triple: vrd:PersonNNNNN vrd:sourceImage vrd:ImageNNNNN
     #
 
     # construct the triple
     property_name = 'sourceImage'
-    property_uriref = URIRef(url_base + property_name)
-    triple = (object_uriref, property_uriref, image_uriref)
+    if graphStore == 'rdflib':
+        property_uriref = URIRef(url_base + property_name)
+        triple = (object_uriref, property_uriref, image_uriref)
+    else:
+        property_uriref = prefix + property_name
+        triple = object_uriref + ' ' + property_uriref + ' ' + image_uriref + ' .'       
     triples.append(triple)
 
     #
-    # example target triple: :BboxNNNNN rdf:type owl:NamedIndividual
+    # example target triple: vrd:BboxNNNNN rdf:type owl:NamedIndividual
     #
 
     # name of VRD-World class used for bounding boxes
@@ -318,71 +355,99 @@ def build_triples_for_object(cls_idx, bbox, ontoClassNames, image_uriref):
 
     # construct the triple
     object_bbox_id = class_name + str(seq_num)
-    object_bbox_uriref = URIRef(url_base + object_bbox_id)
-    triple = (object_bbox_uriref, RDF.type, OWL.NamedIndividual)
+    if graphStore == 'rdflib':
+        object_bbox_uriref = URIRef(url_base + object_bbox_id)
+        triple = (object_bbox_uriref, RDF.type, OWL.NamedIndividual)
+    else:
+        object_bbox_uriref = prefix + object_bbox_id
+        triple = object_bbox_uriref + ' rdf:type owl:NamedIndividual .'
     triples.append(triple)
 
     #
-    # example target triple: :BboxNNNNN rdf:type :Bbox
+    # example target triple: vrd:BboxNNNNN rdf:type vrd:Bbox
     #
 
     # construct the triple
-    class_uri = URIRef(url_base + class_name)
-    triple = (object_bbox_uriref, RDF.type, class_uri)
+    if graphStore == 'rdflib':
+        class_uri = URIRef(url_base + class_name)
+        triple = (object_bbox_uriref, RDF.type, class_uri)
+    else:
+        class_uri = prefix + class_name
+        triple = object_bbox_uriref + ' rdf:type ' + class_uri + ' .'
     triples.append(triple)
 
     #
-    # target triple: :BboxNNNNN :hasCoordinateYmin 'NNN'^^xsd:integer
+    # target triple: vrd:BboxNNNNN vrd:hasCoordinateYmin 'NNN'^^xsd:integer
     #
 
     # construct the triple
     property_name = 'hasCoordinateYmin'
-    property_uri = URIRef(url_base + property_name)    
-    literal = Literal(bbox[0], datatype=XSD.integer)
-    triple = (object_bbox_uriref, property_uri, literal)
+    if graphStore == 'rdflib':
+        property_uri = URIRef(url_base + property_name)    
+        literal = Literal(bbox[0], datatype=XSD.integer)
+        triple = (object_bbox_uriref, property_uri, literal)
+    else:
+        property_uri = prefix + property_name
+        triple = object_bbox_uriref + ' ' + property_uri + ' ' + '"' + str(bbox[0]) + '"' + '^^xsd:integer' + ' .'
     triples.append(triple)
 
     #
-    # example target triple: :BboxNNNNN :hasCoordinateYmax 'NNN'^^xsd:integer
+    # example target triple: vrd:BboxNNNNN vrd:hasCoordinateYmax 'NNN'^^xsd:integer
     #
 
     # construct the triple
     property_name = 'hasCoordinateYmax'
-    property_uri = URIRef(url_base + property_name)    
-    literal = Literal(bbox[1], datatype=XSD.integer)
-    triple = (object_bbox_uriref, property_uri, literal)
+    if graphStore == 'rdflib':
+        property_uri = URIRef(url_base + property_name)    
+        literal = Literal(bbox[1], datatype=XSD.integer)
+        triple = (object_bbox_uriref, property_uri, literal)
+    else:
+        property_uri = prefix + property_name
+        triple = object_bbox_uriref + ' ' + property_uri + ' ' + '"' + str(bbox[1]) + '"' + '^^xsd:integer' + ' .'
     triples.append(triple)
 
     #
-    # example target triple: :BboxNNNNN :hasCoordinateXmin 'NNN'^^xsd:integer
+    # example target triple: vrd:BboxNNNNN vrd:hasCoordinateXmin 'NNN'^^xsd:integer
     #
 
     # construct the triple
     property_name = 'hasCoordinateXmin'
-    property_uri = URIRef(url_base + property_name)    
-    literal = Literal(bbox[2], datatype=XSD.integer)
-    triple = (object_bbox_uriref, property_uri, literal)
+    if graphStore == 'rdflib':
+        property_uri = URIRef(url_base + property_name)    
+        literal = Literal(bbox[2], datatype=XSD.integer)
+        triple = (object_bbox_uriref, property_uri, literal)
+    else:
+        property_uri = prefix + property_name
+        triple = object_bbox_uriref + ' ' + property_uri + ' ' + '"' + str(bbox[2]) + '"' + '^^xsd:integer' + ' .'        
     triples.append(triple)
 
     #
-    # example target triple: :BboxNNNNN :hasCoordinateXmax 'NNN'^^xsd:integer
+    # example target triple: vrd:BboxNNNNN vrd:hasCoordinateXmax 'NNN'^^xsd:integer
     #
 
     # construct the triple
     property_name = 'hasCoordinateXmax'
-    property_uri = URIRef(url_base + property_name)    
-    literal = Literal(bbox[3], datatype=XSD.integer)
-    triple = (object_bbox_uriref, property_uri, literal)
+    if graphStore == 'rdflib':
+        property_uri = URIRef(url_base + property_name)    
+        literal = Literal(bbox[3], datatype=XSD.integer)
+        triple = (object_bbox_uriref, property_uri, literal)
+    else:
+        property_uri = prefix + property_name
+        triple = object_bbox_uriref + ' ' + property_uri + ' ' + '"' + str(bbox[3]) + '"' + '^^xsd:integer' + ' .'                
     triples.append(triple)
 
     #
-    # example target triple: :PersonNNNNN :hasBbox :BboxNNNNN
+    # example target triple: vrd:PersonNNNNN vrd:hasBbox vrd:BboxNNNNN
     #
 
     # construct the triple
     property_name = 'hasBbox'
-    property_uriref = URIRef(url_base + property_name)    
-    triple = (object_uriref, property_uriref, object_bbox_uriref)
+    if graphStore == 'rdflib':
+        property_uriref = URIRef(url_base + property_name)    
+        triple = (object_uriref, property_uriref, object_bbox_uriref)
+    else:
+        property_uriref = prefix + property_name
+        triple = object_uriref + ' ' + property_uriref + ' ' + object_bbox_uriref + ' .'
     triples.append(triple)
 
     return object_id, object_uriref, triples
@@ -393,7 +458,8 @@ def build_triples_for_object(cls_idx, bbox, ontoClassNames, image_uriref):
 def build_triple_linking_subject_to_object(subject_uriref,
                                            prop_idx,
                                            object_uriref,
-                                           ontoPropNames): 
+                                           ontoPropNames,
+                                           graphStore='rdflib'): 
     '''
     Construct and return the single triple that links a 'subject'
     individual object with an 'object' individual object.
@@ -417,19 +483,26 @@ def build_triple_linking_subject_to_object(subject_uriref,
                   RDFLib format used for representing triples to be 'added' 
                   to a KG
     '''
+
+    if not graphStore in ['rdflib', 'graphdb']:
+        raise ValueError('graphStore not recognised')
     
     triples = []
     
     #
     # example target triple:
-    #   :Person10021 :nextTo :Person10024
+    #   vrd:Person10021 vrd:nextTo vrd:Person10024
     #
     
     property_name = ontoPropNames[prop_idx]
 
     # construct the triple
-    property_uriref = URIRef(url_base + property_name)
-    triple = (subject_uriref, property_uriref, object_uriref)
+    if graphStore == 'rdflib':
+        property_uriref = URIRef(url_base + property_name)
+        triple = (subject_uriref, property_uriref, object_uriref)
+    else:
+        property_uriref = prefix + property_name
+        triple = subject_uriref + ' ' + property_uriref + ' ' + object_uriref + ' .'
     triples.append(triple)
 
     return triples
@@ -437,7 +510,7 @@ def build_triple_linking_subject_to_object(subject_uriref,
 
 #%% 
 
-def assemble_SPARQL_query(imname, image_id):
+def assemble_SPARQL_query_original(imname, image_id):
     '''
     Construct a SPARQL query customised for the particular VRD image.
     
@@ -481,21 +554,92 @@ def assemble_SPARQL_query(imname, image_id):
     
     query = "PREFIX vrd: <" + url_base + "> " \
           + "SELECT ?subObj ?property ?objObj " \
-          + "WHERE {" \
+          + "WHERE { " \
           + "?subObj ?property ?objObj . " \
           + img_uri + hasobject_prop_uri + "?subObj . " \
           + img_uri + hasobject_prop_uri + "?objObj . " \
           + img_uri + label_prop_uri + img_label_uri + " . " \
           + "FILTER ( ?subObj != ?objObj ) " \
-          + "}"
+          + " }"
     
     return query
 
 
+#%%
 
+def assemble_SPARQL_query(imname, image_id, graphStore='rdflib'):
+    '''
+    Construct a SPARQL query customised for the particular VRD image.
+    
+    The query is to be used for extracting from a KG all of the triples
+    that link pairs of objects associated with the image.
+    
+    Parameters
+    ----------
+    imname : string
+        The unique filename of a particular VRD dataset image.
+    image_id : string
+        The unique id used to represent the VRD image within the KG.
+        This id is a concatenation of the ontology class name 'Image' 
+        and a unique integer sequence number.
 
-
-
+    Returns
+    -------
+    query : string
+        A SPARQL query.
+    
+    Template for the target SPARQL query to be constructed
+    ------------------------------------------------------
+    query = "
+    PREFIX vrd: <http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#>
+    SELECT ?subObj ?property ?objObj
+    WHERE {
+        ?subObj ?property ?objObj .
+        :imageN :hasObject ?subObj .
+        :imageN :hasObject ?objObj .
+        :imageN rdfs:label :imgFilenameLiteral .
+        FILTER ( ?subObj != ?objObj ) 
+    }
+    "
+    '''
+    
+    if graphStore == 'rdflib':
+        
+        img_uri = "<" + url_base + image_id + "> "
+        hasobject_prop_uri = "<" + url_base + "hasObject> "
+        label_prop_uri = '<http://www.w3.org/2000/01/rdf-schema#label> '
+        img_label_uri = '"' + imname + '"' + \
+                        "^^<http://www.w3.org/2001/XMLSchema#string>"
+              
+        query = "PREFIX vrd: <" + url_base + "> " \
+              + "SELECT ?subObj ?property ?objObj " \
+              + "WHERE { " \
+              + "?subObj ?property ?objObj . " \
+              + img_uri + hasobject_prop_uri + "?subObj . " \
+              + img_uri + hasobject_prop_uri + "?objObj . " \
+              + img_uri + label_prop_uri + img_label_uri + " . " \
+              + "FILTER ( ?subObj != ?objObj ) " \
+              + " }"
+              
+    else:
+        
+        img_uri = prefix + image_id
+        hasobject_prop_uri = prefix + "hasObject"
+        label_prop_uri = '<http://www.w3.org/2000/01/rdf-schema#label> '
+        img_label_uri = '"' + imname + '"' + \
+                        "^^<http://www.w3.org/2001/XMLSchema#string>"
+        
+        query = "PREFIX vrd: <" + url_base + "> " \
+              + "SELECT ?subObj ?property ?objObj " \
+              + "WHERE { " \
+              + "?subObj ?property ?objObj . " \
+              + img_uri + ' ' + hasobject_prop_uri + ' ' + "?subObj . " \
+              + img_uri + ' ' + hasobject_prop_uri + ' ' + "?objObj . " \
+              + img_uri + ' ' + label_prop_uri + ' ' + img_label_uri + " . " \
+              + "FILTER ( ?subObj != ?objObj ) " \
+              + " }" 
+    
+    return query
 
 
 
