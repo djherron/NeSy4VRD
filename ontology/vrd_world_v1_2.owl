@@ -1,0 +1,3483 @@
+@prefix : <http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix vrd: <http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#> .
+
+<http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world> rdf:type owl:Ontology ;
+                                                            owl:versionIRI <http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world/1.2> ;
+                                                            dc:description """This ontology, VRD-World,  is a well-aligned companion to the NeSy4VRD dataset.
+
+The NeSy4VRD dataset consists of the images of the VRD dataset and their associated NeSy4VRD visual relationship annotations. The NeSy4VRD visual relationship annotations are a highly customised and quality-improved version of the original VRD visual relationship annotations. 
+
+This ontology, VRD-World, describes the domain of the NeSy4VRD dataset as reflected in the NeSy4VRD visual relationship annotations.  An annotated visual relationship is a 5-tuple, (subj_bbox, subj_class, predicate, obj_bbox, obj_class), where subj_bbox and subj_class are the bounding box and class of a 'subject' object, and obj_bbox and obj_class are the bounding box and class of an 'object' object. The predicate describes some relation between this ordered pair of objects. So an annotated visual relationship can, for simplicity, be thought of as being a 3-tuple: (subject, predicate, object).  Each instance of an annotated visual relationship is associated with one unique VRD image and describes a particular relation between a particular ordered pair of objects within that image. A bounding box is specified using 4 integers representing two opposing corners of the box: xmin, ymin, xmax, ymax. An example visual relationship for a particular image, described in 3-tuple form, is: (person, ride, horse).
+
+The VRD-World ontology is designed to capture all of the information contained in the NeSy4VRD visual relationship annotations. This includes representations of 1) the VRD images themselves, 2) all of the objects annotated for each image (including their assigned classes and their bounding boxes with their particular bounding box specifications), and 3) all of the predicates describing relations between particular objects.  Each object class referenced within the NeSy4VRD visual relationship annotations has a corresponding class within the VRD-World class hierarchy; each predicate referenced within the NeSy4VRD visual relationship annotations has a corresponding VRD-World object property.
+
+One can load the NeSy4VRD visual relationship annotations in their entirety  into a knowledge graph governed by the VRD-World ontology, extract them again, and reconstitute the NeSy4VRD visual relationship annotations completely, in their native format, without loss of information."""@en ;
+                                                            dc:title "vrd_world"@en ;
+                                                            dcterms:contributor "David Herron" ;
+                                                            dcterms:license "Creative Commons Attribution 4.0 (CC BY 4.0)" ;
+                                                            dcterms:provenance "v1.2"@en ;
+                                                            rdfs:comment """Version 1.2 extends version 1.1 and refines the domain and/or range restrictions defined for a few of the object properties. The extensions involve introducing many new classes into the class hierarchy, all of whose names are prefixed with NOT_.  These classes are 'complement' classes for use in class disjointness axioms, such as: vrd:Person owl:disjointWith vrd:Not_Person. Many such class disjointness axioms have been introduced as well.  These extensions permit VRD-World v1.2 to be used as a symbolic reasoning binary classifier of visual relationships.  Relationships deemed to be semantically invalid trigger logical inconsistencies.
+
+Version 1.1 is identical to version 1.0 except for the following single change:
+* object property 'attachedTo' is no longer declared to be 'symmetric'""" ;
+                                                            rdfs:label "vrd_world"@en ;
+                                                            owl:backwardCompatibleWith "v1.1" ;
+                                                            owl:priorVersion "v1.1" ;
+                                                            owl:versionInfo 1.2 .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/description
+dc:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/title
+dc:title rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/contributor
+dcterms:contributor rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+dcterms:license rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/provenance
+dcterms:provenance rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#above
+vrd:above rdf:type owl:ObjectProperty ;
+          owl:inverseOf vrd:below ;
+          rdf:type owl:TransitiveProperty ;
+          rdfs:comment "This property is a pure spatial relation.  We regard it as a 'directional' spatial relation because it expresses a sense of relative position with respect to an axis of a 3D frame of reference, in this case the vertical axis."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#acrossFrom
+vrd:acrossFrom rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf vrd:face ,
+                                  vrd:inFrontOf ;
+               rdf:type owl:SymmetricProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#adjacentTo
+vrd:adjacentTo rdf:type owl:ObjectProperty ;
+               owl:equivalentProperty vrd:beside ,
+                                      vrd:nextTo ;
+               rdf:type owl:SymmetricProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#against
+vrd:against rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf vrd:inFrontOf ;
+            rdfs:range vrd:AgainstableThing ;
+            rdfs:comment "The meaning/usage of property 'against' has been standardised to be consistent with the spatial relation notion of 'set against', where, if (A, against, B), then A is in the foreground with B as its background.  For example, (mountain, against, sky) or (tower, against, sky).  The 'object' of such triples is always 'sky'.  This meaning/usage also enables the relationship between 'against' and 'in the front of' to be declared."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#at
+vrd:at rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf vrd:nextTo ;
+       rdfs:domain vrd:AtCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#attachedTo
+vrd:attachedTo rdf:type owl:ObjectProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#behind
+vrd:behind rdf:type owl:ObjectProperty ,
+                    owl:TransitiveProperty ;
+           rdfs:comment "This property is a pure spatial relation.  We regard it as a 'directional' spatial relation because it expresses a sense of relative position with respect to an axis of a 3D frame of reference, in this case one of the two axes forming the 2D plane orthogonal to a notional vertical axis."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#below
+vrd:below rdf:type owl:ObjectProperty ,
+                   owl:TransitiveProperty ;
+          rdfs:comment "This property is a pure spatial relation.  We regard it as a 'directional' spatial relation because it expresses a sense of relative position with respect to an axis of a 3D frame of reference, in this case the vertical axis."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#beneath
+vrd:beneath rdf:type owl:ObjectProperty ;
+            owl:equivalentProperty vrd:under ;
+            owl:inverseOf vrd:over ;
+            rdf:type owl:TransitiveProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#beside
+vrd:beside rdf:type owl:ObjectProperty ;
+           owl:equivalentProperty vrd:nextTo ;
+           rdf:type owl:SymmetricProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#by
+vrd:by rdf:type owl:ObjectProperty ;
+       owl:equivalentProperty vrd:near ;
+       rdf:type owl:SymmetricProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#carry
+vrd:carry rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf vrd:has ;
+          rdfs:domain vrd:CarryCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#contain
+vrd:contain rdf:type owl:ObjectProperty ;
+            owl:inverseOf vrd:inside ;
+            rdf:type owl:TransitiveProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#cover
+vrd:cover rdf:type owl:ObjectProperty ;
+          rdfs:domain vrd:CoverCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#drive
+vrd:drive rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf vrd:use ;
+          rdfs:domain vrd:Person ;
+          rdfs:range vrd:DrivableMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#driveOn
+vrd:driveOn rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf vrd:on ;
+            rdfs:domain vrd:RoadMotorisedVehicle ;
+            rdfs:range vrd:Street .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#eat
+vrd:eat rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf vrd:has ;
+        rdfs:domain vrd:Mammal ;
+        rdfs:range vrd:EatableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#face
+vrd:face rdf:type owl:ObjectProperty ;
+         rdfs:comment """Property 'face' has a consistent meaning/usage with the VRD image annotations. It's used in the sense of 'face in the direction of'. So it's less of a verb and more like a spatial relation, except that it's expressing an attitude or orientation of the 'subject' relative to the 'object' rather than their relative positions in space.
+
+It has similarities with properties 'watch' and 'look at', as well as with 'across from'. But 'face' feels the most general of these properties, so the others are modelled as subproperties of 'face'.
+
+This property has little in the way of defining characteristics."""@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#feed
+vrd:feed rdf:type owl:ObjectProperty ;
+         rdfs:domain vrd:Person ;
+         rdfs:range vrd:Mammal ;
+         rdfs:comment "Property 'feed' is used solely in the sense of 'feeds something to': (A, feed, B) means (A, feeds something to, B).  The something is unknown."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#fly
+vrd:fly rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf vrd:playWith ;
+        rdfs:domain vrd:Person ;
+        rdfs:range vrd:Kite .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#flyIn
+vrd:flyIn rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf vrd:in ;
+          rdfs:domain vrd:FlyableThing ;
+          rdfs:range vrd:Sky .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#follow
+vrd:follow rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf vrd:behind ;
+           rdfs:domain vrd:MotionCapableThing ;
+           rdfs:range vrd:MotionCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#has
+vrd:has rdf:type owl:ObjectProperty ;
+        rdfs:comment """Property 'has' is one of the most common and most general purpose predicates in the visual relationship annotations of the VRD dataset. In the original VRD training set annotations it's used with 66 distinct 'subject' object classes and 81 distinct 'object' object classes.
+
+It has diverse meanings/usages:
+a) 'has' as a sort of inverse of a notional 'part of' relation, eg (tower, has, clock)
+b) 'has' as in 'wear', eg (person, has, shirt)
+c) 'has' as in hosts or supports, eg (table, has, plate)
+d) 'has' as in 'hold' or 'with' or 'carry', eg (person, has, bag)
+
+Predicate 'has' is used with so many VRD images we simply have to accept this diversity of meaning. A key consequence of this diversity, however, is that it's not feasible to restrict the domain/range of this property in any meaningful way, or to declare other defining characteristics (such as equivalence, inverses, symmetry, etc.).  There is, in effect, virtually nothing we can say about this general purpose property to describe or constrain its use."""@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#hasBbox
+vrd:hasBbox rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ,
+                     owl:InverseFunctionalProperty ;
+            rdfs:domain vrd:VRDWorldThing ;
+            rdfs:range vrd:Bbox ;
+            rdfs:comment "Property 'hasBbox' relates an individual VRD material world thing to its bounding box specification that describes where the individual object is located within its VRD image." .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#hasObject
+vrd:hasObject rdf:type owl:ObjectProperty ;
+              owl:inverseOf vrd:sourceImage ;
+              rdf:type owl:InverseFunctionalProperty ;
+              rdfs:domain vrd:Image ;
+              rdfs:range vrd:VRDWorldThing ;
+              rdfs:comment "A property to associate an image with the an individual object (VRD material world thing) identified (detected) within the image." .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#hit
+vrd:hit rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf vrd:playWith ;
+        rdfs:domain vrd:Person ;
+        rdfs:range vrd:Ball .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#hold
+vrd:hold rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf vrd:has ,
+                            vrd:touch ;
+         rdfs:domain vrd:HoldCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#in
+vrd:in rdf:type owl:ObjectProperty ;
+       rdfs:comment """Property 'in' has three very different primary meanings/usages:
+
+1) spatial relation, as in 'inside': eg (dog, in, basket)
+
+2) verb, as in 'wear': eg (person, in, shirt)
+
+3) 'surrounded by' or 'amongst' or 'in the midst of': eg (giraffe, in, grass) or (person, in, street)
+
+Due to its usage as a spatial relation, its domain and range cannot be restricted because, in general, anything can be  located 'on' anything else. And due to the multiple diverse meanings, it's not feasible to describe other defining characteristics either."""@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#inFrontOf
+vrd:inFrontOf rdf:type owl:ObjectProperty ,
+                       owl:TransitiveProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#inside
+vrd:inside rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf vrd:in ;
+           rdf:type owl:TransitiveProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#kick
+vrd:kick rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf vrd:playWith ;
+         rdfs:domain vrd:Person ;
+         rdfs:range vrd:Ball .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#leanOn
+vrd:leanOn rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf vrd:touch ;
+           rdfs:domain vrd:LeanOnCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#lookAt
+vrd:lookAt rdf:type owl:ObjectProperty ;
+           owl:equivalentProperty vrd:watch ;
+           rdfs:subPropertyOf vrd:face ;
+           rdfs:domain vrd:LookAtCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#lyingOn
+vrd:lyingOn rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf vrd:on ;
+            rdfs:domain vrd:LyingOnCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#near
+vrd:near rdf:type owl:ObjectProperty ,
+                  owl:SymmetricProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#nextTo
+vrd:nextTo rdf:type owl:ObjectProperty ,
+                    owl:SymmetricProperty ;
+           rdfs:comment """Property 'nextTo' is used consistently as a pure spatial relation. Like all pure spatial relations, anything can be said to be 'nextTo' anything else, so the domain and range of this property cannot be restricted in any meaningful way.
+
+It is conceivable that one might opt to model property 'nextTo' as being a more specialised version of a property such as 'near', using a subPropertyOf relationship.  If (A, nextTo, B), then it can be argued that (A, near, B), but not necessarily the other way round. But in this version of VRD-World we have chosen NOT to model such a subPropertyOf relation.  Others may well take a different view on such matters."""@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#on
+vrd:on rdf:type owl:ObjectProperty ;
+       rdfs:comment """Property 'on' has two very different primary meanings/usages:
+
+1) 'on' as in the spatial relation 'on the top of'; for example, (hat, on, person) or (cup, on, table)
+
+2) 'on' as in an inverse of the verb 'wear'; for example, (shirt, on, person), (glasses, on, person)
+
+Due to its usage as a spatial relation, its domain and range cannot be restricted because, in general, anything can be  located 'on' anything else. And due to the dual meanings/usages, it's not feasible to describe other defining characteristics either."""@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#onTheLeftOf
+vrd:onTheLeftOf rdf:type owl:ObjectProperty ;
+                owl:inverseOf vrd:onTheRightOf ;
+                rdf:type owl:TransitiveProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#onTheRightOf
+vrd:onTheRightOf rdf:type owl:ObjectProperty ,
+                          owl:TransitiveProperty .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#onTopOf
+vrd:onTopOf rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf vrd:on ,
+                               vrd:over .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#outsideOf
+vrd:outsideOf rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf vrd:by ;
+              rdfs:range vrd:OutsideOfCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#over
+vrd:over rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf vrd:above ;
+         owl:inverseOf vrd:under ;
+         rdf:type owl:TransitiveProperty ;
+         rdfs:comment "We treat property 'over' as a specialisation of (ie a subproperty of) property 'above', which is used as a pure spacial relation. If (A, over, B), then A is not only above B (as in 'higher than' B relative to some notional vertical axis), it is also 'directly above' B.  So 'over' is a specialisation because it means 'directly above'. That is, if (A, over, B) and we were to project objects A and B onto a 2D plane that's orthogonal to the notional vertical axis, A and B would occupy a common point in the 2D plane."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#parkBehind
+vrd:parkBehind rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf vrd:behind ;
+               rdf:type owl:TransitiveProperty ;
+               rdfs:domain vrd:MotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#parkNextTo
+vrd:parkNextTo rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf vrd:nextTo ;
+               rdfs:domain vrd:MotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#parkOn
+vrd:parkOn rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf vrd:on ;
+           rdfs:domain vrd:ParkableMotorisedVehicle ;
+           rdfs:range vrd:ParkableSurface .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#playWith
+vrd:playWith rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf vrd:use ;
+             rdfs:domain vrd:PlayWithCapableThing ;
+             rdfs:range vrd:PlayWithableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#pull
+vrd:pull rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf vrd:inFrontOf ;
+         rdfs:domain vrd:PullCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#restOn
+vrd:restOn rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf vrd:on ;
+           rdfs:domain vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ride
+vrd:ride rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf vrd:on ;
+         rdfs:domain vrd:RideCapableThing ;
+         rdfs:range vrd:RidableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#sitBehind
+vrd:sitBehind rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf vrd:behind ;
+              rdf:type owl:TransitiveProperty ;
+              rdfs:domain vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#sitNextTo
+vrd:sitNextTo rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf vrd:nextTo ;
+              rdfs:domain vrd:SitCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#sitOn
+vrd:sitOn rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf vrd:on ;
+          rdfs:domain vrd:SitCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#sitUnder
+vrd:sitUnder rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf vrd:under ;
+             rdf:type owl:TransitiveProperty ;
+             rdfs:domain vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#skateOn
+vrd:skateOn rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf vrd:on ;
+            rdfs:domain vrd:SkateOnCapableThing ;
+            rdfs:range vrd:SkateboardingRelatedThing ;
+            rdfs:comment "Property 'skateOn' has a consistent meaning/usage relating to skateboarding."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#sleepNextTo
+vrd:sleepNextTo rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf vrd:nextTo ;
+                rdfs:domain vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#sleepOn
+vrd:sleepOn rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf vrd:on ;
+            rdfs:domain vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#sourceImage
+vrd:sourceImage rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain vrd:VRDWorldThing ;
+                rdfs:range vrd:Image ;
+                rdfs:comment "A property to associate a VRD material world thing (an individual object) with the VRD image from whose visual relationship annotations the thing originated." .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#standBehind
+vrd:standBehind rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf vrd:behind ;
+                rdf:type owl:TransitiveProperty ;
+                rdfs:domain vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#standNextTo
+vrd:standNextTo rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf vrd:nextTo ;
+                rdfs:domain vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#standOn
+vrd:standOn rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf vrd:on ;
+            rdfs:domain vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#standUnder
+vrd:standUnder rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf vrd:under ;
+               rdf:type owl:TransitiveProperty ;
+               rdfs:domain vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#talk
+vrd:talk rdf:type owl:ObjectProperty ;
+         rdfs:domain vrd:Person ;
+         rdfs:range vrd:TalkToableThing ;
+         rdfs:comment """Property 'talk' has two different and equally frequent meanings/usages:
+1) 'talk' as in 'talk on', eg (person, talk, phone)
+2) 'talk' as in 'talk to', eg (person, talk, person)
+
+These two visual relationship instances are the only ones present in the annotations of the VRD training set (original and customised versions)."""@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#tallerThan
+vrd:tallerThan rdf:type owl:ObjectProperty ,
+                        owl:TransitiveProperty ;
+               rdfs:comment "This property is a 'comparative' spatial relation. It's the only such property used in the VRD image annotations. It means simply that the 'subject' is taller than the 'object'."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#touch
+vrd:touch rdf:type owl:ObjectProperty ;
+          rdfs:comment """Property 'touch' is used
+a) as a verb, where the subject is most often 'person'
+b) as in 'on'
+c) as in spatial relation 'next to', where the subject is usually NOT 'person'
+
+The mixture of meanings/usage makes it awkward to describe it with particular defining characteristics.
+
+Property 'touch' (much like 'hold' and 'lean on' and 'has') implies close proximity, which means we could choose to model 'touch' as a subproperty of spatial relation properties like 'next to' and 'beside'. But we choose not to do this.
+
+If 'touch' were used as a pure spatial relation (case (c)), we could model it as being 'symmetric'.  But its usage as a verb (case (a)) works against such symmetry. If A is in the act of touching B, it doesn't imply that B is in the act of touching A.  Or we could argue that if (A, touch, B) and the 'verb' usage applies in the forward direction then, at the very least, the spatial relation usage will still apply in the backward direction, meaning we could model 'touch' as being symmetric.  But we choose not to do this."""@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#under
+vrd:under rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf vrd:below ;
+          rdf:type owl:TransitiveProperty ;
+          rdfs:comment "We treat property 'under' as a more specialised version of property 'below', ie as a subproperty of 'below'. We take the view that if (A, under, B), not only is A lower than B (relative to some notional vertical axis), it is also *directly below* B. That is, if A and B were projected onto the same 2D plane that's orthogonal to the notional vertical axis, they would occupy a common point in that 2D plane."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#use
+vrd:use rdf:type owl:ObjectProperty ;
+        rdfs:domain vrd:UseCapableThing ;
+        rdfs:range vrd:UsableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#walk
+vrd:walk rdf:type owl:ObjectProperty ;
+         rdfs:domain vrd:Person ;
+         rdfs:range vrd:WalkableThing ;
+         rdfs:comment "This property is highly specific and used in (multiple instances of) only 1 distinct visual relationship: (person, walk, dog)."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#walkBeside
+vrd:walkBeside rdf:type owl:ObjectProperty ;
+               owl:equivalentProperty vrd:walkNextTo ;
+               rdfs:domain vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#walkNextTo
+vrd:walkNextTo rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf vrd:nextTo ;
+               rdfs:domain vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#walkOn
+vrd:walkOn rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf vrd:on ;
+           rdfs:domain vrd:Mammal ;
+           rdfs:range vrd:WalkOnableSurface .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#walkTo
+vrd:walkTo rdf:type owl:ObjectProperty ;
+           rdfs:domain vrd:Mammal ;
+           rdfs:label "walk towards"@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#watch
+vrd:watch rdf:type owl:ObjectProperty ;
+          rdfs:domain vrd:LookAtCapableThing ;
+          rdfs:comment """Property 'watch' has a consistent meaning/usage as a verb: to watch.
+
+We could model it explicitly as a subproperty of 'face', but we choose instead to do this implicitly via the equivalence with property 'look at', which is explicitly declared to be a subproperty of 'face'.  This strategy of relying on the equivalence with 'look at' to establish an implicit subproperty relationship with 'face' is designed to avoid the inference of unnecessary duplicate (:x, :face, :y) triples which would otherwise occur whenever an (:x, :watch, :y) or (:x, :lookAt, :y) triple is asserted, since either such assertion would lead to 2 duplicate (:x, :face, :y) triples being inferred.  We can think of this strategy as a rudimentary ontology design pattern.  We apply this same pattern elsewhere in the vrd_dh_custom ontology as well. For example, properties 'beneath' and 'under' are declared to be equivalent, but only 'under' is modelled explicitly as being a subproperty of 'below'."""@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#wear
+vrd:wear rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf vrd:has ;
+         rdfs:domain vrd:WearCapableThing ;
+         rdfs:range vrd:WearableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#with
+vrd:with rdf:type owl:ObjectProperty ,
+                  owl:SymmetricProperty ;
+         rdfs:comment """This property has multiple meanings/usages in the VRD image annotations.
+It's used:
+1) in the sense of 'near' and 'by', eg (person, with, person)
+2) in the sense of 'wear', eg (person, with, watch), (person, with, glasses)
+3) in the sense of 'carry' or 'has', eg (person, with, bag), (building, with, clock)
+4) in the sense of support or host or 'contain', eg (cabinet, with, drinking glass), (bench, with, person), (vase, with, plant)
+
+The multiple meanings/usages limits the defining characteristics we can use to describe this property.  For example, we can't make it a subproperty of, say, 'has' because then a triple such as (helmet, with, person) would lead to the inference of triple (helmet, has, person), which is unnatural language and unwanted.  Similarly, we can't make it a subproperty of 'next to'. If (helmet, with, person) and the person is actually wearing the helmet, then inferring triple (helmet, next to, person) would be unnatural language and unwanted.  The spatial relation meaning/usage, in (1), means we can't restrict the domain and range in a meaningful way."""@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#hasCoordinateXmax
+vrd:hasCoordinateXmax rdf:type owl:DatatypeProperty ,
+                               owl:FunctionalProperty ;
+                      rdfs:domain vrd:Bbox ;
+                      rdfs:range xsd:integer ;
+                      rdfs:comment "The 'xmax' integer coordinate of a bounding box specification." .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#hasCoordinateXmin
+vrd:hasCoordinateXmin rdf:type owl:DatatypeProperty ,
+                               owl:FunctionalProperty ;
+                      rdfs:domain vrd:Bbox ;
+                      rdfs:range xsd:integer ;
+                      rdfs:comment "The 'xmin' integer coordinate of a bounding box specification." .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#hasCoordinateYmax
+vrd:hasCoordinateYmax rdf:type owl:DatatypeProperty ,
+                               owl:FunctionalProperty ;
+                      rdfs:domain vrd:Bbox ;
+                      rdfs:range xsd:integer ;
+                      rdfs:comment "The 'ymax' integer coordinate of a bounding box specification." .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#hasCoordinateYmin
+vrd:hasCoordinateYmin rdf:type owl:DatatypeProperty ,
+                               owl:FunctionalProperty ;
+                      rdfs:domain vrd:Bbox ;
+                      rdfs:range xsd:integer ;
+                      rdfs:comment "The 'ymin' integer coordinate of a bounding box specification." .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#AccessoryFurniture
+vrd:AccessoryFurniture rdf:type owl:Class ;
+                       rdfs:subClassOf vrd:Furniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#AgainstableThing
+vrd:AgainstableThing rdf:type owl:Class ;
+                     owl:equivalentClass [ rdf:type owl:Class ;
+                                           owl:unionOf ( vrd:Person
+                                                         vrd:Sky
+                                                       )
+                                         ] ;
+                     rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                     owl:disjointWith vrd:Not_AgainstableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#AirMotorisedVehicle
+vrd:AirMotorisedVehicle rdf:type owl:Class ;
+                        rdfs:subClassOf vrd:MotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#AirMotorisedVehiclePart
+vrd:AirMotorisedVehiclePart rdf:type owl:Class ;
+                            rdfs:subClassOf vrd:MotorisedVehiclePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#AirSportingGood
+vrd:AirSportingGood rdf:type owl:Class ;
+                    rdfs:subClassOf vrd:SportingGood .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Airplane
+vrd:Airplane rdf:type owl:Class ;
+             rdfs:subClassOf vrd:AirMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Animal
+vrd:Animal rdf:type owl:Class ;
+           rdfs:subClassOf vrd:LivingEarthBoundThing ;
+           rdfs:comment "The animal kingdom."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#AnimalPart
+vrd:AnimalPart rdf:type owl:Class ;
+               rdfs:subClassOf vrd:LivingEarthBoundThingPart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Appliance
+vrd:Appliance rdf:type owl:Class ;
+              rdfs:subClassOf vrd:Device .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ArchitecturalStructure
+vrd:ArchitecturalStructure rdf:type owl:Class ;
+                           rdfs:subClassOf vrd:EngineeredEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ArchitecturalStructurePart
+vrd:ArchitecturalStructurePart rdf:type owl:Class ;
+                               rdfs:subClassOf vrd:EngineeredEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Artiodactyla
+vrd:Artiodactyla rdf:type owl:Class ;
+                 rdfs:subClassOf vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#AtCapableThing
+vrd:AtCapableThing rdf:type owl:Class ;
+                   owl:equivalentClass [ rdf:type owl:Class ;
+                                         owl:unionOf ( vrd:Bench
+                                                       vrd:Cat
+                                                       vrd:Chair
+                                                       vrd:Dog
+                                                       vrd:Hand
+                                                       vrd:Keyboard
+                                                       vrd:Person
+                                                       vrd:Phone
+                                                       vrd:TeddyBear
+                                                     )
+                                       ] ;
+                   rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                   owl:disjointWith vrd:Not_AtCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#AudioDevice
+vrd:AudioDevice rdf:type owl:Class ;
+                rdfs:subClassOf vrd:Device .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Bag
+vrd:Bag rdf:type owl:Class ;
+        rdfs:subClassOf vrd:GeneralContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Ball
+vrd:Ball rdf:type owl:Class ;
+         rdfs:subClassOf vrd:MixedSportingGood ;
+         owl:disjointWith vrd:Not_Ball .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#BaseballDiamondPart
+vrd:BaseballDiamondPart rdf:type owl:Class ;
+                        rdfs:subClassOf vrd:BaseballFieldPart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#BaseballFieldPart
+vrd:BaseballFieldPart rdf:type owl:Class ;
+                      rdfs:subClassOf vrd:SportsGroundPart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#BaseballPlate
+vrd:BaseballPlate rdf:type owl:Class ;
+                  rdfs:subClassOf vrd:BaseballDiamondPart ;
+                  rdfs:comment "This class primarily refers to 'home plate' in a baseball diamond, but there is one training image that labels a baseball 'base' as being a 'baseball plate'."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Basket
+vrd:Basket rdf:type owl:Class ;
+           rdfs:subClassOf vrd:GeneralContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Bbox
+vrd:Bbox rdf:type owl:Class ;
+         rdfs:subClassOf vrd:DomainModelInfrastructure ;
+         rdfs:comment """Class 'Bbox' represents the set of things that are bounding box specifications for individual objects identified in images of the VRD dataset and referred to in visual relationship annotations of VRD images.
+
+A bounding box specification consists of 4 integer coordinates: xmin, xmax, ymin and ymax.  The bbox format used within the visual relationship annotations of the VRD dataset is [ymin, ymax, xmin, xmax]."""@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Bear
+vrd:Bear rdf:type owl:Class ;
+         rdfs:subClassOf vrd:Carnivora .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Bed
+vrd:Bed rdf:type owl:Class ;
+        rdfs:subClassOf vrd:SleepingFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Bench
+vrd:Bench rdf:type owl:Class ;
+          rdfs:subClassOf vrd:SeatingFurniture ,
+                          vrd:StreetFurniture ;
+          owl:disjointWith vrd:Not_Bench .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Bike
+vrd:Bike rdf:type owl:Class ;
+         rdfs:subClassOf vrd:NonMotorisedVehicle ;
+         owl:disjointWith vrd:Not_Bike .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Boat
+vrd:Boat rdf:type owl:Class ;
+         rdfs:subClassOf vrd:WaterMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#BoatMotor
+vrd:BoatMotor rdf:type owl:Class ;
+              rdfs:subClassOf vrd:WaterMotorisedVehiclePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Bottle
+vrd:Bottle rdf:type owl:Class ;
+           rdfs:subClassOf vrd:DrinkContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Bowl
+vrd:Bowl rdf:type owl:Class ;
+         rdfs:subClassOf vrd:FoodContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Box
+vrd:Box rdf:type owl:Class ;
+        rdfs:subClassOf vrd:GeneralContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#BreadBasedProcessedFood
+vrd:BreadBasedProcessedFood rdf:type owl:Class ;
+                            rdfs:subClassOf vrd:ProcessedFood .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Building
+vrd:Building rdf:type owl:Class ;
+             rdfs:subClassOf vrd:EnclosingArchitecturalStructure .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Bus
+vrd:Bus rdf:type owl:Class ;
+        rdfs:subClassOf vrd:RoadMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Bush
+vrd:Bush rdf:type owl:Class ;
+         rdfs:subClassOf vrd:Plantae .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Cabinet
+vrd:Cabinet rdf:type owl:Class ;
+            rdfs:subClassOf vrd:StorageFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Camera
+vrd:Camera rdf:type owl:Class ;
+           rdfs:subClassOf vrd:ImageVideoCaptureDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Can
+vrd:Can rdf:type owl:Class ;
+        rdfs:subClassOf vrd:GeneralContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Canopy
+vrd:Canopy rdf:type owl:Class ;
+           rdfs:subClassOf vrd:NonEnclosingArchitecturalStructure .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Car
+vrd:Car rdf:type owl:Class ;
+        rdfs:subClassOf vrd:RoadMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Carnivora
+vrd:Carnivora rdf:type owl:Class ;
+              rdfs:subClassOf vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#CarryCapableMammal
+vrd:CarryCapableMammal rdf:type owl:Class ;
+                       owl:equivalentClass [ rdf:type owl:Class ;
+                                             owl:unionOf ( vrd:Dog
+                                                           vrd:Elephant
+                                                           vrd:Horse
+                                                           vrd:Person
+                                                         )
+                                           ] ;
+                       rdfs:subClassOf vrd:Mammal ;
+                       owl:disjointWith vrd:Not_CarryCapableMammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#CarryCapableThing
+vrd:CarryCapableThing rdf:type owl:Class ;
+                      owl:equivalentClass [ rdf:type owl:Class ;
+                                            owl:unionOf ( vrd:CarryCapableMammal
+                                                          vrd:Hand
+                                                          vrd:Surfboard
+                                                          vrd:TrainEngine
+                                                          vrd:Vehicle
+                                                        )
+                                          ] ;
+                      rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                      owl:disjointWith vrd:Not_CarryCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Cart
+vrd:Cart rdf:type owl:Class ;
+         rdfs:subClassOf vrd:NonMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Cat
+vrd:Cat rdf:type owl:Class ;
+        rdfs:subClassOf vrd:Carnivora ;
+        owl:disjointWith vrd:Not_Cat .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Chair
+vrd:Chair rdf:type owl:Class ;
+          rdfs:subClassOf vrd:SeatingFurniture ;
+          owl:disjointWith vrd:Not_Chair .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Clock
+vrd:Clock rdf:type owl:Class ;
+          rdfs:subClassOf vrd:TimeKeepingDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Clothing
+vrd:Clothing rdf:type owl:Class ;
+             rdfs:subClassOf vrd:WearableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#CommunicationsDevice
+vrd:CommunicationsDevice rdf:type owl:Class ;
+                         rdfs:subClassOf vrd:Device .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Computer
+vrd:Computer rdf:type owl:Class ;
+             rdfs:subClassOf vrd:ComputingDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ComputingDevice
+vrd:ComputingDevice rdf:type owl:Class ;
+                    rdfs:subClassOf vrd:Device .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Cone
+vrd:Cone rdf:type owl:Class ;
+         rdfs:subClassOf vrd:StreetFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Container
+vrd:Container rdf:type owl:Class ;
+              rdfs:subClassOf vrd:EngineeredEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ControlDevice
+vrd:ControlDevice rdf:type owl:Class ;
+                  rdfs:subClassOf vrd:Device .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#CookingPot
+vrd:CookingPot rdf:type owl:Class ;
+               rdfs:subClassOf vrd:FoodContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#CoolingAppliance
+vrd:CoolingAppliance rdf:type owl:Class ;
+                     rdfs:subClassOf vrd:Appliance .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Counter
+vrd:Counter rdf:type owl:Class ;
+            rdfs:subClassOf vrd:FlatSurfaceFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#CoverCapableThing
+vrd:CoverCapableThing rdf:type owl:Class ;
+                      owl:equivalentClass [ rdf:type owl:Class ;
+                                            owl:unionOf ( vrd:Canopy
+                                                          vrd:Grass
+                                                          vrd:Jacket
+                                                          vrd:Roof
+                                                          vrd:Shirt
+                                                          vrd:Sky
+                                                          vrd:Tree
+                                                          vrd:Trees
+                                                          vrd:Umbrella
+                                                        )
+                                          ] ;
+                      rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                      owl:disjointWith vrd:Not_CoverCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#CulturalEnvironmentThing
+vrd:CulturalEnvironmentThing rdf:type owl:Class ;
+                             rdfs:subClassOf vrd:VRDWorldThing ;
+                             owl:disjointWith vrd:Street ;
+                             rdfs:comment "This category of VRDMaterialWorldThing refers to human-made things that can be comfortably described as having been created as an expression of culture (as opposed to having been built or engineered)."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Cup
+vrd:Cup rdf:type owl:Class ;
+        rdfs:subClassOf vrd:DrinkContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Desk
+vrd:Desk rdf:type owl:Class ;
+         rdfs:subClassOf vrd:Table .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Device
+vrd:Device rdf:type owl:Class ;
+           rdfs:subClassOf vrd:EngineeredEnvironmentThing ;
+           owl:disjointWith vrd:Not_Device .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#DisplayDevice
+vrd:DisplayDevice rdf:type owl:Class ;
+                  rdfs:subClassOf vrd:Device .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Dog
+vrd:Dog rdf:type owl:Class ;
+        rdfs:subClassOf vrd:Carnivora ;
+        owl:disjointWith vrd:Not_Dog .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Doll
+vrd:Doll rdf:type owl:Class ;
+         rdfs:subClassOf vrd:Toy .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#DomainModelInfrastructure
+vrd:DomainModelInfrastructure rdf:type owl:Class ;
+                              owl:disjointWith vrd:VRDWorldThing ;
+                              rdfs:comment "A class of classes used as semantic infrastructure for modelling the VRD material world domain whose concepts are all defined under the top-level domain concept VRDMaterialWorldThing.  Semantic infrastructure can include any class whose members cannot be described as being instances of VRD material world 'things'."@en ;
+                              rdfs:label "Domain semantic infrastructure"@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#DrinkContainer
+vrd:DrinkContainer rdf:type owl:Class ;
+                   rdfs:subClassOf vrd:FluidContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#DrinkingGlass
+vrd:DrinkingGlass rdf:type owl:Class ;
+                  rdfs:subClassOf vrd:DrinkContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#DrivableMotorisedVehicle
+vrd:DrivableMotorisedVehicle rdf:type owl:Class ;
+                             owl:equivalentClass [ rdf:type owl:Class ;
+                                                   owl:unionOf ( vrd:RailMotorisedVehicle
+                                                                 vrd:RoadMotorisedVehicle
+                                                                 vrd:WaterMotorisedVehicle
+                                                               )
+                                                 ] ;
+                             rdfs:subClassOf vrd:MotorisedVehicle ;
+                             owl:disjointWith vrd:Not_DrivableMotorisedVehicle ;
+                             rdfs:comment "A class defined to act as the range for property 'drive'. This class is equivalent to class MotorisedVehicle excluding AirMotorisedVehicles, since we do not speak of 'driving' an airplane but rather of 'flying' an airplane."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#EatableThing
+vrd:EatableThing rdf:type owl:Class ;
+                 owl:equivalentClass [ rdf:type owl:Class ;
+                                       owl:unionOf ( vrd:Grass
+                                                     vrd:Pizza
+                                                     vrd:Tree
+                                                   )
+                                     ] ;
+                 rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                 owl:disjointWith vrd:Not_EatableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ElectronicCommunicationsDevice
+vrd:ElectronicCommunicationsDevice rdf:type owl:Class ;
+                                   rdfs:subClassOf vrd:CommunicationsDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Elephant
+vrd:Elephant rdf:type owl:Class ;
+             rdfs:subClassOf vrd:Proboscidea .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#EnclosingArchitecturalStructure
+vrd:EnclosingArchitecturalStructure rdf:type owl:Class ;
+                                    rdfs:subClassOf vrd:ArchitecturalStructure .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#EnclosingArchitecturalStructurePart
+vrd:EnclosingArchitecturalStructurePart rdf:type owl:Class ;
+                                        rdfs:subClassOf vrd:ArchitecturalStructurePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Engine
+vrd:Engine rdf:type owl:Class ;
+           rdfs:subClassOf vrd:AirMotorisedVehiclePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#EngineeredEnvironmentThing
+vrd:EngineeredEnvironmentThing rdf:type owl:Class ;
+                               rdfs:subClassOf vrd:VRDWorldThing ;
+                               rdfs:comment "This category of VRDMaterialWorldThing refers to human-made things that can be comfortably described as having been built or engineered."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Face
+vrd:Face rdf:type owl:Class ;
+         rdfs:subClassOf vrd:SapiensPart ;
+         rdfs:comment "A human face.  The face of a person."@en ;
+         rdfs:label "Face"@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Faucet
+vrd:Faucet rdf:type owl:Class ;
+           rdfs:subClassOf vrd:WaterFlowControlDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#FlatSurfaceFurniture
+vrd:FlatSurfaceFurniture rdf:type owl:Class ;
+                         rdfs:subClassOf vrd:Furniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#FluidContainer
+vrd:FluidContainer rdf:type owl:Class ;
+                   rdfs:subClassOf vrd:Container .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#FlyableThing
+vrd:FlyableThing rdf:type owl:Class ;
+                 owl:equivalentClass [ rdf:type owl:Class ;
+                                       owl:unionOf ( vrd:Airplane
+                                                     vrd:Kite
+                                                   )
+                                     ] ;
+                 rdfs:subClassOf vrd:EngineeredEnvironmentThing ;
+                 owl:disjointWith vrd:Not_FlyableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Food
+vrd:Food rdf:type owl:Class ;
+         rdfs:subClassOf vrd:CulturalEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#FoodContainer
+vrd:FoodContainer rdf:type owl:Class ;
+                  rdfs:subClassOf vrd:Container .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#FootClothing
+vrd:FootClothing rdf:type owl:Class ;
+                 rdfs:subClassOf vrd:LowerBodyClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Furniture
+vrd:Furniture rdf:type owl:Class ;
+              rdfs:subClassOf vrd:EngineeredEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#GeneralContainer
+vrd:GeneralContainer rdf:type owl:Class ;
+                     rdfs:subClassOf vrd:Container .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Giraffe
+vrd:Giraffe rdf:type owl:Class ;
+            rdfs:subClassOf vrd:Artiodactyla .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Glasses
+vrd:Glasses rdf:type owl:Class ;
+            rdfs:subClassOf vrd:PersonalAccessory ;
+            rdfs:comment "In the customised VRD dataset, object class name 'glasses' refers exclusively to examples of 'eyeglasses'. Class 'Glasses' therefore corresponds exclusively to 'eyeglasses'."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Grass
+vrd:Grass rdf:type owl:Class ;
+          rdfs:subClassOf vrd:Plantae .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Hand
+vrd:Hand rdf:type owl:Class ;
+         rdfs:subClassOf vrd:SapiensPart ;
+         owl:disjointWith vrd:Not_Hand ;
+         rdfs:comment "A human hand.  The hand of a person."@en ;
+         rdfs:label "Hand"@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Hat
+vrd:Hat rdf:type owl:Class ;
+        rdfs:subClassOf vrd:HeadClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#HeadClothing
+vrd:HeadClothing rdf:type owl:Class ;
+                 rdfs:subClassOf vrd:UpperBodyClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#HeatingAppliance
+vrd:HeatingAppliance rdf:type owl:Class ;
+                     rdfs:subClassOf vrd:Appliance .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Helmet
+vrd:Helmet rdf:type owl:Class ;
+           rdfs:subClassOf vrd:ProtectiveHeadClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#HelmetCase
+vrd:HelmetCase rdf:type owl:Class ;
+               rdfs:subClassOf vrd:MotorcyclePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#HoldCapableThing
+vrd:HoldCapableThing rdf:type owl:Class ;
+                     owl:equivalentClass [ rdf:type owl:Class ;
+                                           owl:unionOf ( vrd:Dog
+                                                         vrd:Elephant
+                                                         vrd:Hand
+                                                         vrd:Person
+                                                         vrd:Pot
+                                                         vrd:TeddyBear
+                                                       )
+                                         ] ;
+                     rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                     owl:disjointWith vrd:Not_HoldCapableThing ;
+                     rdfs:comment "A thing that is capable of holding something." .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Homo
+vrd:Homo rdf:type owl:Class ;
+         rdfs:subClassOf vrd:Primate .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#HomoPart
+vrd:HomoPart rdf:type owl:Class ;
+             rdfs:subClassOf vrd:PrimatePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Horse
+vrd:Horse rdf:type owl:Class ;
+          rdfs:subClassOf vrd:Perissodactyla ;
+          owl:disjointWith vrd:Not_Horse .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Hydrant
+vrd:Hydrant rdf:type owl:Class ;
+            rdfs:subClassOf vrd:StreetFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Image
+vrd:Image rdf:type owl:Class ;
+          rdfs:subClassOf vrd:DomainModelInfrastructure ;
+          rdfs:comment "Class 'Image' represents the set of VRD dataset training images."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ImageVideoCaptureDevice
+vrd:ImageVideoCaptureDevice rdf:type owl:Class ;
+                            rdfs:subClassOf vrd:Device .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#IndoorWasteContainer
+vrd:IndoorWasteContainer rdf:type owl:Class ;
+                         rdfs:subClassOf vrd:WasteContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Jacket
+vrd:Jacket rdf:type owl:Class ;
+           rdfs:subClassOf vrd:TorsoArmsClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Jeans
+vrd:Jeans rdf:type owl:Class ;
+          rdfs:subClassOf vrd:LegClothing ;
+          owl:disjointWith vrd:Not_Jeans .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Keyboard
+vrd:Keyboard rdf:type owl:Class ;
+             rdfs:subClassOf vrd:ComputingDevice ;
+             owl:disjointWith vrd:Not_Keyboard .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Kite
+vrd:Kite rdf:type owl:Class ;
+         rdfs:subClassOf vrd:AirSportingGood ;
+         owl:disjointWith vrd:Not_Kite .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Lamp
+vrd:Lamp rdf:type owl:Class ;
+         rdfs:subClassOf vrd:LightingFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#LandSportingGood
+vrd:LandSportingGood rdf:type owl:Class ;
+                     rdfs:subClassOf vrd:SportingGood .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Landform
+vrd:Landform rdf:type owl:Class ;
+             rdfs:subClassOf vrd:NaturalLandscapeFeature .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Laptop
+vrd:Laptop rdf:type owl:Class ;
+           rdfs:subClassOf vrd:ComputingDevice ;
+           owl:disjointWith vrd:Not_Laptop .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#LeanOnCapableThing
+vrd:LeanOnCapableThing rdf:type owl:Class ;
+                       owl:equivalentClass [ rdf:type owl:Class ;
+                                             owl:unionOf ( vrd:Bike
+                                                           vrd:Person
+                                                           vrd:TeddyBear
+                                                         )
+                                           ] ;
+                       rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                       owl:disjointWith vrd:Not_LeanOnCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#LegClothing
+vrd:LegClothing rdf:type owl:Class ;
+                rdfs:subClassOf vrd:LowerBodyClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#LicensePlate
+vrd:LicensePlate rdf:type owl:Class ;
+                 rdfs:subClassOf vrd:MotorisedVehiclePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#LightingFurniture
+vrd:LightingFurniture rdf:type owl:Class ;
+                      rdfs:subClassOf vrd:Furniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#LivingEarthBoundThing
+vrd:LivingEarthBoundThing rdf:type owl:Class ;
+                          rdfs:subClassOf vrd:NaturalEnvironmentEarthBoundThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#LivingEarthBoundThingPart
+vrd:LivingEarthBoundThingPart rdf:type owl:Class ;
+                              rdfs:subClassOf vrd:NaturalEnvironmentEarthBoundThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#LookAtCapableThing
+vrd:LookAtCapableThing rdf:type owl:Class ;
+                       owl:equivalentClass [ rdf:type owl:Class ;
+                                             owl:unionOf ( vrd:Face
+                                                           vrd:Mammal
+                                                         )
+                                           ] ;
+                       rdfs:subClassOf vrd:NaturalEnvironmentEarthBoundThing ;
+                       owl:disjointWith vrd:Not_LookAtCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#LowerBodyClothing
+vrd:LowerBodyClothing rdf:type owl:Class ;
+                      rdfs:subClassOf vrd:Clothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Luggage
+vrd:Luggage rdf:type owl:Class ;
+            rdfs:subClassOf vrd:TravelContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#LyingOnCapableThing
+vrd:LyingOnCapableThing rdf:type owl:Class ;
+                        owl:equivalentClass [ rdf:type owl:Class ;
+                                              owl:unionOf ( vrd:Bike
+                                                            vrd:Jeans
+                                                            vrd:Mammal
+                                                            vrd:Paper
+                                                          )
+                                            ] ;
+                        rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                        owl:disjointWith vrd:Not_LyingOnCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Mammal
+vrd:Mammal rdf:type owl:Class ;
+           rdfs:subClassOf vrd:Animal ;
+           owl:disjointWith vrd:Not_Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#MammalPart
+vrd:MammalPart rdf:type owl:Class ;
+               rdfs:subClassOf vrd:AnimalPart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#MixedEnvironmentThing
+vrd:MixedEnvironmentThing rdf:type owl:Class ;
+                          rdfs:subClassOf vrd:VRDWorldThing ;
+                          rdfs:comment """This category of VRDMaterialWorldThing refers to either 1) things that don't sit comfortably within one of the other 3 categories (Natural, Engineered or Cultural things), or 2) classes used in property domain/range restrictions that contain mixtures of things that span the othe 3 categories (Natural, Engineered or Cultural) of things.
+
+This category was originally conceived as a home for a single class, Street, whose members (example objects in VRD images) spanned the natural and human-made environments. It soon, however, became a natural home for many other classes defined from the union of other arbitrary classes spanning the natural and human-made environments."""@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#MixedGroundSurface
+vrd:MixedGroundSurface rdf:type owl:Class ;
+                       rdfs:subClassOf vrd:MixedEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#MixedSportingGood
+vrd:MixedSportingGood rdf:type owl:Class ;
+                      rdfs:subClassOf vrd:SportingGood .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Monitor
+vrd:Monitor rdf:type owl:Class ;
+            rdfs:subClassOf vrd:DisplayDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#MotionCapableThing
+vrd:MotionCapableThing rdf:type owl:Class ;
+                       owl:equivalentClass [ rdf:type owl:Class ;
+                                             owl:unionOf ( vrd:Mammal
+                                                           vrd:Vehicle
+                                                         )
+                                           ] ;
+                       rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                       owl:disjointWith vrd:Not_MotionCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Motorcycle
+vrd:Motorcycle rdf:type owl:Class ;
+               rdfs:subClassOf vrd:RoadMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#MotorcyclePart
+vrd:MotorcyclePart rdf:type owl:Class ;
+                   rdfs:subClassOf vrd:RoadMotorisedVehiclePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#MotorisedVehicle
+vrd:MotorisedVehicle rdf:type owl:Class ;
+                     rdfs:subClassOf vrd:Vehicle ;
+                     owl:disjointWith vrd:Not_MotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#MotorisedVehiclePart
+vrd:MotorisedVehiclePart rdf:type owl:Class ;
+                         rdfs:subClassOf vrd:VehiclePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Mountain
+vrd:Mountain rdf:type owl:Class ;
+             rdfs:subClassOf vrd:Landform .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Mouse
+vrd:Mouse rdf:type owl:Class ;
+          rdfs:subClassOf vrd:ComputingDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#NaturalEnvironmentEarthBoundThing
+vrd:NaturalEnvironmentEarthBoundThing rdf:type owl:Class ;
+                                      rdfs:subClassOf vrd:NaturalEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#NaturalEnvironmentNonEarthBoundThing
+vrd:NaturalEnvironmentNonEarthBoundThing rdf:type owl:Class ;
+                                         rdfs:subClassOf vrd:NaturalEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#NaturalEnvironmentThing
+vrd:NaturalEnvironmentThing rdf:type owl:Class ;
+                            rdfs:subClassOf vrd:VRDWorldThing ;
+                            rdfs:comment "This category of VRDMaterialWorldThing refers to naturally occurring things (ie things considered to belong to the natural environment or nature)."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#NaturalLandscapeFeature
+vrd:NaturalLandscapeFeature rdf:type owl:Class ;
+                            rdfs:subClassOf vrd:NonLivingEarthBoundThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#NonElectronicCommunicationsDevice
+vrd:NonElectronicCommunicationsDevice rdf:type owl:Class ;
+                                      rdfs:subClassOf vrd:CommunicationsDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#NonEnclosingArchitecturalStructure
+vrd:NonEnclosingArchitecturalStructure rdf:type owl:Class ;
+                                       rdfs:subClassOf vrd:ArchitecturalStructure .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#NonLivingEarthBoundThing
+vrd:NonLivingEarthBoundThing rdf:type owl:Class ;
+                             rdfs:subClassOf vrd:NaturalEnvironmentEarthBoundThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#NonMotorisedVehicle
+vrd:NonMotorisedVehicle rdf:type owl:Class ;
+                        rdfs:subClassOf vrd:Vehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#NotThing
+vrd:NotThing rdf:type owl:Class ;
+             rdfs:subClassOf vrd:VRDWorldThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_AgainstableThing
+vrd:Not_AgainstableThing rdf:type owl:Class ;
+                         owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Person
+                                                                    vrd:Not_Sky
+                                                                  ) ;
+                                               rdf:type owl:Class
+                                             ] ;
+                         rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_AtCapableThing
+vrd:Not_AtCapableThing rdf:type owl:Class ;
+                       owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Bench
+                                                                  vrd:Not_Cat
+                                                                  vrd:Not_Chair
+                                                                  vrd:Not_Dog
+                                                                  vrd:Not_Hand
+                                                                  vrd:Not_Keyboard
+                                                                  vrd:Not_Person
+                                                                  vrd:Not_Phone
+                                                                  vrd:Not_TeddyBear
+                                                                ) ;
+                                             rdf:type owl:Class
+                                           ] ;
+                       rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Ball
+vrd:Not_Ball rdf:type owl:Class ;
+             owl:equivalentClass [ rdf:type owl:Class ;
+                                   owl:unionOf ( vrd:AirSportingGood
+                                                 vrd:ArchitecturalStructure
+                                                 vrd:ArchitecturalStructurePart
+                                                 vrd:Container
+                                                 vrd:CulturalEnvironmentThing
+                                                 vrd:Device
+                                                 vrd:Furniture
+                                                 vrd:LandSportingGood
+                                                 vrd:MixedGroundSurface
+                                                 vrd:NaturalEnvironmentThing
+                                                 vrd:Skis
+                                                 vrd:SportsGroundPart
+                                                 vrd:Toy
+                                                 vrd:Vehicle
+                                                 vrd:VehiclePart
+                                                 vrd:WaterSportingGood
+                                                 vrd:WearableThing
+                                               )
+                                 ] ;
+             rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Bench
+vrd:Not_Bench rdf:type owl:Class ;
+              owl:equivalentClass [ rdf:type owl:Class ;
+                                    owl:unionOf ( vrd:AccessoryFurniture
+                                                  vrd:ArchitecturalStructure
+                                                  vrd:ArchitecturalStructurePart
+                                                  vrd:Chair
+                                                  vrd:Cone
+                                                  vrd:Container
+                                                  vrd:CulturalEnvironmentThing
+                                                  vrd:Device
+                                                  vrd:FlatSurfaceFurniture
+                                                  vrd:Hydrant
+                                                  vrd:LightingFurniture
+                                                  vrd:MixedGroundSurface
+                                                  vrd:NaturalEnvironmentThing
+                                                  vrd:Post
+                                                  vrd:SleepingFurniture
+                                                  vrd:Sofa
+                                                  vrd:SportingGood
+                                                  vrd:SportsGroundPart
+                                                  vrd:StorageFurniture
+                                                  vrd:Toy
+                                                  vrd:TrafficLight
+                                                  vrd:Vehicle
+                                                  vrd:VehiclePart
+                                                  vrd:WearableThing
+                                                )
+                                  ] ;
+              rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Bike
+vrd:Not_Bike rdf:type owl:Class ;
+             owl:equivalentClass [ rdf:type owl:Class ;
+                                   owl:unionOf ( vrd:ArchitecturalStructure
+                                                 vrd:ArchitecturalStructurePart
+                                                 vrd:Cart
+                                                 vrd:Container
+                                                 vrd:CulturalEnvironmentThing
+                                                 vrd:Device
+                                                 vrd:Furniture
+                                                 vrd:MixedGroundSurface
+                                                 vrd:MotorisedVehicle
+                                                 vrd:NaturalEnvironmentThing
+                                                 vrd:SportingGood
+                                                 vrd:SportsGroundPart
+                                                 vrd:Toy
+                                                 vrd:VehiclePart
+                                                 vrd:WearableThing
+                                               )
+                                 ] ;
+             rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Canopy_Roof_Jacket_Shirt
+vrd:Not_Canopy_Roof_Jacket_Shirt rdf:type owl:Class ;
+                                 owl:equivalentClass [ rdf:type owl:Class ;
+                                                       owl:unionOf ( vrd:Container
+                                                                     vrd:CulturalEnvironmentThing
+                                                                     vrd:Device
+                                                                     vrd:EnclosingArchitecturalStructure
+                                                                     vrd:Furniture
+                                                                     vrd:HeadClothing
+                                                                     vrd:LowerBodyClothing
+                                                                     vrd:MixedGroundSurface
+                                                                     vrd:NaturalEnvironmentThing
+                                                                     vrd:PersonalAccessory
+                                                                     vrd:Ramp
+                                                                     vrd:SportingGood
+                                                                     vrd:SportsGroundPart
+                                                                     vrd:Tie
+                                                                     vrd:Toy
+                                                                     vrd:Vehicle
+                                                                     vrd:VehiclePart
+                                                                   )
+                                                     ] ;
+                                 rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_CarryCapableMammal
+vrd:Not_CarryCapableMammal rdf:type owl:Class ;
+                           owl:equivalentClass [ rdf:type owl:Class ;
+                                                 owl:unionOf ( vrd:Artiodactyla
+                                                               vrd:Bear
+                                                               vrd:Cat
+                                                               vrd:CulturalEnvironmentThing
+                                                               vrd:EngineeredEnvironmentThing
+                                                               vrd:LivingEarthBoundThingPart
+                                                               vrd:MixedGroundSurface
+                                                               vrd:NaturalEnvironmentNonEarthBoundThing
+                                                               vrd:NonLivingEarthBoundThing
+                                                               vrd:Plantae
+                                                             )
+                                               ] ;
+                           rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_CarryCapableThing
+vrd:Not_CarryCapableThing rdf:type owl:Class ;
+                          owl:equivalentClass [ owl:intersectionOf ( vrd:Not_CarryCapableMammal
+                                                                     vrd:Not_Hand
+                                                                     vrd:Not_Surfboard
+                                                                     vrd:Not_TrainEngine
+                                                                     vrd:Not_Vehicle
+                                                                   ) ;
+                                                rdf:type owl:Class
+                                              ] ;
+                          rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Cat
+vrd:Not_Cat rdf:type owl:Class ;
+            owl:equivalentClass [ rdf:type owl:Class ;
+                                  owl:unionOf ( vrd:Artiodactyla
+                                                vrd:Bear
+                                                vrd:CulturalEnvironmentThing
+                                                vrd:Dog
+                                                vrd:EngineeredEnvironmentThing
+                                                vrd:LivingEarthBoundThingPart
+                                                vrd:MixedGroundSurface
+                                                vrd:NaturalEnvironmentNonEarthBoundThing
+                                                vrd:NonLivingEarthBoundThing
+                                                vrd:Perissodactyla
+                                                vrd:Plantae
+                                                vrd:Primate
+                                                vrd:Proboscidea
+                                              )
+                                ] ;
+            rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Chair
+vrd:Not_Chair rdf:type owl:Class ;
+              owl:equivalentClass [ rdf:type owl:Class ;
+                                    owl:unionOf ( vrd:AccessoryFurniture
+                                                  vrd:ArchitecturalStructure
+                                                  vrd:ArchitecturalStructurePart
+                                                  vrd:Container
+                                                  vrd:CulturalEnvironmentThing
+                                                  vrd:Device
+                                                  vrd:FlatSurfaceFurniture
+                                                  vrd:LightingFurniture
+                                                  vrd:MixedGroundSurface
+                                                  vrd:NaturalEnvironmentThing
+                                                  vrd:SleepingFurniture
+                                                  vrd:Sofa
+                                                  vrd:SportingGood
+                                                  vrd:SportsGroundPart
+                                                  vrd:StorageFurniture
+                                                  vrd:StreetFurniture
+                                                  vrd:Toy
+                                                  vrd:Vehicle
+                                                  vrd:VehiclePart
+                                                  vrd:WearableThing
+                                                )
+                                  ] ;
+              rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_CoverCapableThing
+vrd:Not_CoverCapableThing rdf:type owl:Class ;
+                          owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Canopy_Roof_Jacket_Shirt
+                                                                     vrd:Not_Grass
+                                                                     vrd:Not_Sky_Tree_Trees_Umbrella
+                                                                   ) ;
+                                                rdf:type owl:Class
+                                              ] ;
+                          rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Device
+vrd:Not_Device rdf:type owl:Class ;
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:unionOf ( vrd:ArchitecturalStructure
+                                                   vrd:ArchitecturalStructurePart
+                                                   vrd:Clothing
+                                                   vrd:Container
+                                                   vrd:CulturalEnvironmentThing
+                                                   vrd:Furniture
+                                                   vrd:Glasses
+                                                   vrd:MixedGroundSurface
+                                                   vrd:NaturalEnvironmentThing
+                                                   vrd:SportingGood
+                                                   vrd:SportsGroundPart
+                                                   vrd:Toy
+                                                   vrd:Vehicle
+                                                   vrd:VehiclePart
+                                                 )
+                                   ] ;
+               rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Dog
+vrd:Not_Dog rdf:type owl:Class ;
+            owl:equivalentClass [ rdf:type owl:Class ;
+                                  owl:unionOf ( vrd:Artiodactyla
+                                                vrd:Bear
+                                                vrd:Cat
+                                                vrd:CulturalEnvironmentThing
+                                                vrd:EngineeredEnvironmentThing
+                                                vrd:LivingEarthBoundThingPart
+                                                vrd:MixedGroundSurface
+                                                vrd:NaturalEnvironmentNonEarthBoundThing
+                                                vrd:NonLivingEarthBoundThing
+                                                vrd:Perissodactyla
+                                                vrd:Plantae
+                                                vrd:Primate
+                                                vrd:Proboscidea
+                                              )
+                                ] ;
+            rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_DrivableMotorisedVehicle
+vrd:Not_DrivableMotorisedVehicle rdf:type owl:Class ;
+                                 owl:equivalentClass [ rdf:type owl:Class ;
+                                                       owl:unionOf ( vrd:AirMotorisedVehicle
+                                                                     vrd:ArchitecturalStructure
+                                                                     vrd:ArchitecturalStructurePart
+                                                                     vrd:Container
+                                                                     vrd:CulturalEnvironmentThing
+                                                                     vrd:Device
+                                                                     vrd:Furniture
+                                                                     vrd:MixedGroundSurface
+                                                                     vrd:NaturalEnvironmentThing
+                                                                     vrd:NonMotorisedVehicle
+                                                                     vrd:SportingGood
+                                                                     vrd:SportsGroundPart
+                                                                     vrd:Toy
+                                                                     vrd:VehiclePart
+                                                                     vrd:WearableThing
+                                                                   )
+                                                     ] ;
+                                 rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_EatableThing
+vrd:Not_EatableThing rdf:type owl:Class ;
+                     owl:equivalentClass [ rdf:type owl:Class ;
+                                           owl:unionOf ( vrd:Animal
+                                                         vrd:Bush
+                                                         vrd:EngineeredEnvironmentThing
+                                                         vrd:LivingEarthBoundThingPart
+                                                         vrd:MixedGroundSurface
+                                                         vrd:NaturalEnvironmentNonEarthBoundThing
+                                                         vrd:NonLivingEarthBoundThing
+                                                         vrd:Plant
+                                                         vrd:Trees
+                                                       )
+                                         ] ;
+                     rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_FlyableThing
+vrd:Not_FlyableThing rdf:type owl:Class ;
+                     owl:equivalentClass [ rdf:type owl:Class ;
+                                           owl:unionOf ( vrd:ArchitecturalStructure
+                                                         vrd:ArchitecturalStructurePart
+                                                         vrd:Container
+                                                         vrd:CulturalEnvironmentThing
+                                                         vrd:Device
+                                                         vrd:Furniture
+                                                         vrd:LandSportingGood
+                                                         vrd:MixedGroundSurface
+                                                         vrd:MixedSportingGood
+                                                         vrd:NaturalEnvironmentThing
+                                                         vrd:NonMotorisedVehicle
+                                                         vrd:RailMotorisedVehicle
+                                                         vrd:RoadMotorisedVehicle
+                                                         vrd:SportsGroundPart
+                                                         vrd:Toy
+                                                         vrd:VehiclePart
+                                                         vrd:WaterMotorisedVehicle
+                                                         vrd:WaterSportingGood
+                                                         vrd:WearableThing
+                                                       )
+                                         ] ;
+                     rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Grass
+vrd:Not_Grass rdf:type owl:Class ;
+              owl:equivalentClass [ rdf:type owl:Class ;
+                                    owl:unionOf ( vrd:Animal
+                                                  vrd:Bush
+                                                  vrd:CulturalEnvironmentThing
+                                                  vrd:EngineeredEnvironmentThing
+                                                  vrd:LivingEarthBoundThingPart
+                                                  vrd:MixedGroundSurface
+                                                  vrd:NonLivingEarthBoundThing
+                                                  vrd:Plant
+                                                  vrd:Tree
+                                                  vrd:Trees
+                                                )
+                                  ] ;
+              rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Hand
+vrd:Not_Hand rdf:type owl:Class ;
+             owl:equivalentClass [ rdf:type owl:Class ;
+                                   owl:unionOf ( vrd:CulturalEnvironmentThing
+                                                 vrd:EngineeredEnvironmentThing
+                                                 vrd:Face
+                                                 vrd:LivingEarthBoundThing
+                                                 vrd:MixedGroundSurface
+                                                 vrd:NaturalEnvironmentNonEarthBoundThing
+                                                 vrd:NonLivingEarthBoundThing
+                                               )
+                                 ] ;
+             rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_HoldCapableThing
+vrd:Not_HoldCapableThing rdf:type owl:Class ;
+                         owl:equivalentClass [ rdf:type owl:Class ;
+                                               owl:unionOf ( vrd:ArchitecturalStructure
+                                                             vrd:ArchitecturalStructurePart
+                                                             vrd:Artiodactyla
+                                                             vrd:Bear
+                                                             vrd:Cat
+                                                             vrd:CulturalEnvironmentThing
+                                                             vrd:Device
+                                                             vrd:Face
+                                                             vrd:FluidContainer
+                                                             vrd:FoodContainer
+                                                             vrd:Furniture
+                                                             vrd:GeneralContainer
+                                                             vrd:MixedGroundSurface
+                                                             vrd:NaturalEnvironmentNonEarthBoundThing
+                                                             vrd:NonLivingEarthBoundThing
+                                                             vrd:Perissodactyla
+                                                             vrd:Plantae
+                                                             vrd:SportingGood
+                                                             vrd:SportsGroundPart
+                                                             vrd:TravelContainer
+                                                             vrd:Vase
+                                                             vrd:Vehicle
+                                                             vrd:VehiclePart
+                                                             vrd:WasteContainer
+                                                             vrd:WearableThing
+                                                           )
+                                             ] ;
+                         rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Horse
+vrd:Not_Horse rdf:type owl:Class ;
+              owl:equivalentClass [ rdf:type owl:Class ;
+                                    owl:unionOf ( vrd:Artiodactyla
+                                                  vrd:Carnivora
+                                                  vrd:CulturalEnvironmentThing
+                                                  vrd:EngineeredEnvironmentThing
+                                                  vrd:LivingEarthBoundThingPart
+                                                  vrd:MixedGroundSurface
+                                                  vrd:NaturalEnvironmentNonEarthBoundThing
+                                                  vrd:NonLivingEarthBoundThing
+                                                  vrd:Plantae
+                                                  vrd:Primate
+                                                  vrd:Proboscidea
+                                                )
+                                  ] ;
+              rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Jeans
+vrd:Not_Jeans rdf:type owl:Class ;
+              owl:equivalentClass [ rdf:type owl:Class ;
+                                    owl:unionOf ( vrd:ArchitecturalStructure
+                                                  vrd:ArchitecturalStructurePart
+                                                  vrd:Container
+                                                  vrd:CulturalEnvironmentThing
+                                                  vrd:Device
+                                                  vrd:FootClothing
+                                                  vrd:Furniture
+                                                  vrd:MixedGroundSurface
+                                                  vrd:NaturalEnvironmentThing
+                                                  vrd:Pants
+                                                  vrd:PersonalAccessory
+                                                  vrd:Shorts
+                                                  vrd:SportingGood
+                                                  vrd:SportsGroundPart
+                                                  vrd:Toy
+                                                  vrd:UpperBodyClothing
+                                                  vrd:Vehicle
+                                                  vrd:VehiclePart
+                                                )
+                                  ] ;
+              rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Keyboard
+vrd:Not_Keyboard rdf:type owl:Class ;
+                 owl:equivalentClass [ rdf:type owl:Class ;
+                                       owl:unionOf ( vrd:Appliance
+                                                     vrd:ArchitecturalStructure
+                                                     vrd:ArchitecturalStructurePart
+                                                     vrd:AudioDevice
+                                                     vrd:CommunicationsDevice
+                                                     vrd:Computer
+                                                     vrd:Container
+                                                     vrd:ControlDevice
+                                                     vrd:CulturalEnvironmentThing
+                                                     vrd:DisplayDevice
+                                                     vrd:Furniture
+                                                     vrd:ImageVideoCaptureDevice
+                                                     vrd:Laptop
+                                                     vrd:MixedGroundSurface
+                                                     vrd:Mouse
+                                                     vrd:NaturalEnvironmentThing
+                                                     vrd:ProtectiveDevice
+                                                     vrd:SportingGood
+                                                     vrd:SportsGroundPart
+                                                     vrd:TimeKeepingDevice
+                                                     vrd:Toy
+                                                     vrd:Vehicle
+                                                     vrd:VehiclePart
+                                                     vrd:WearableThing
+                                                   )
+                                     ] ;
+                 rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Kite
+vrd:Not_Kite rdf:type owl:Class ;
+             owl:equivalentClass [ rdf:type owl:Class ;
+                                   owl:unionOf ( vrd:ArchitecturalStructure
+                                                 vrd:ArchitecturalStructurePart
+                                                 vrd:Container
+                                                 vrd:CulturalEnvironmentThing
+                                                 vrd:Device
+                                                 vrd:Furniture
+                                                 vrd:LandSportingGood
+                                                 vrd:MixedGroundSurface
+                                                 vrd:MixedSportingGood
+                                                 vrd:NaturalEnvironmentThing
+                                                 vrd:SportsGroundPart
+                                                 vrd:Toy
+                                                 vrd:Vehicle
+                                                 vrd:VehiclePart
+                                                 vrd:WaterSportingGood
+                                                 vrd:WearableThing
+                                               )
+                                 ] ;
+             rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Laptop
+vrd:Not_Laptop rdf:type owl:Class ;
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:unionOf ( vrd:Appliance
+                                                   vrd:ArchitecturalStructure
+                                                   vrd:ArchitecturalStructurePart
+                                                   vrd:AudioDevice
+                                                   vrd:CommunicationsDevice
+                                                   vrd:Computer
+                                                   vrd:Container
+                                                   vrd:ControlDevice
+                                                   vrd:CulturalEnvironmentThing
+                                                   vrd:DisplayDevice
+                                                   vrd:Furniture
+                                                   vrd:ImageVideoCaptureDevice
+                                                   vrd:Keyboard
+                                                   vrd:MixedGroundSurface
+                                                   vrd:Mouse
+                                                   vrd:NaturalEnvironmentThing
+                                                   vrd:ProtectiveDevice
+                                                   vrd:SportingGood
+                                                   vrd:SportsGroundPart
+                                                   vrd:TimeKeepingDevice
+                                                   vrd:Toy
+                                                   vrd:Vehicle
+                                                   vrd:VehiclePart
+                                                   vrd:WearableThing
+                                                 )
+                                   ] ;
+               rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_LeanOnCapableThing
+vrd:Not_LeanOnCapableThing rdf:type owl:Class ;
+                           owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Bike
+                                                                      vrd:Not_Person
+                                                                      vrd:Not_TeddyBear
+                                                                    ) ;
+                                                 rdf:type owl:Class
+                                               ] ;
+                           rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_LookAtCapableThing
+vrd:Not_LookAtCapableThing rdf:type owl:Class ;
+                           owl:equivalentClass [ rdf:type owl:Class ;
+                                                 owl:unionOf ( vrd:CulturalEnvironmentThing
+                                                               vrd:EngineeredEnvironmentThing
+                                                               vrd:Hand
+                                                               vrd:MixedGroundSurface
+                                                               vrd:NaturalEnvironmentNonEarthBoundThing
+                                                               vrd:NonLivingEarthBoundThing
+                                                               vrd:Plantae
+                                                             )
+                                               ] ;
+                           rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_LyingOnCapableThing
+vrd:Not_LyingOnCapableThing rdf:type owl:Class ;
+                            owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Bike
+                                                                       vrd:Not_Jeans
+                                                                       vrd:Not_Mammal
+                                                                       vrd:Not_Paper
+                                                                     ) ;
+                                                  rdf:type owl:Class
+                                                ] ;
+                            rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Mammal
+vrd:Not_Mammal rdf:type owl:Class ;
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:unionOf ( vrd:CulturalEnvironmentThing
+                                                   vrd:EngineeredEnvironmentThing
+                                                   vrd:LivingEarthBoundThingPart
+                                                   vrd:MixedGroundSurface
+                                                   vrd:NaturalEnvironmentNonEarthBoundThing
+                                                   vrd:NonLivingEarthBoundThing
+                                                   vrd:Plantae
+                                                 )
+                                   ] ;
+               rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_MotionCapableThing
+vrd:Not_MotionCapableThing rdf:type owl:Class ;
+                           owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Mammal
+                                                                      vrd:Not_Vehicle
+                                                                    ) ;
+                                                 rdf:type owl:Class
+                                               ] ;
+                           rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_MotorisedVehicle
+vrd:Not_MotorisedVehicle rdf:type owl:Class ;
+                         owl:equivalentClass [ rdf:type owl:Class ;
+                                               owl:unionOf ( vrd:ArchitecturalStructure
+                                                             vrd:ArchitecturalStructurePart
+                                                             vrd:Container
+                                                             vrd:CulturalEnvironmentThing
+                                                             vrd:Device
+                                                             vrd:Furniture
+                                                             vrd:MixedGroundSurface
+                                                             vrd:NaturalEnvironmentThing
+                                                             vrd:NonMotorisedVehicle
+                                                             vrd:SportingGood
+                                                             vrd:SportsGroundPart
+                                                             vrd:Toy
+                                                             vrd:VehiclePart
+                                                             vrd:WearableThing
+                                                           )
+                                             ] ;
+                         rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_OutsideOfCapableThing
+vrd:Not_OutsideOfCapableThing rdf:type owl:Class ;
+                              owl:equivalentClass [ rdf:type owl:Class ;
+                                                    owl:unionOf ( vrd:ArchitecturalStructurePart
+                                                                  vrd:Container
+                                                                  vrd:CulturalEnvironmentThing
+                                                                  vrd:Device
+                                                                  vrd:Furniture
+                                                                  vrd:MixedGroundSurface
+                                                                  vrd:NaturalEnvironmentThing
+                                                                  vrd:NonEnclosingArchitecturalStructure
+                                                                  vrd:NonMotorisedVehicle
+                                                                  vrd:RoadMotorisedVehicle
+                                                                  vrd:SportingGood
+                                                                  vrd:SportsGroundPart
+                                                                  vrd:Toy
+                                                                  vrd:TrainEngine
+                                                                  vrd:VehiclePart
+                                                                  vrd:WaterMotorisedVehicle
+                                                                  vrd:WearableThing
+                                                                )
+                                                  ] ;
+                              rdfs:subClassOf vrd:NotThing ;
+                              owl:disjointWith vrd:OutsideOfCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Paper
+vrd:Not_Paper rdf:type owl:Class ;
+              owl:equivalentClass [ rdf:type owl:Class ;
+                                    owl:unionOf ( vrd:Appliance
+                                                  vrd:ArchitecturalStructure
+                                                  vrd:ArchitecturalStructurePart
+                                                  vrd:AudioDevice
+                                                  vrd:ComputingDevice
+                                                  vrd:Container
+                                                  vrd:ControlDevice
+                                                  vrd:CulturalEnvironmentThing
+                                                  vrd:DisplayDevice
+                                                  vrd:ElectronicCommunicationsDevice
+                                                  vrd:Furniture
+                                                  vrd:ImageVideoCaptureDevice
+                                                  vrd:MixedGroundSurface
+                                                  vrd:NaturalEnvironmentThing
+                                                  vrd:ProtectiveDevice
+                                                  vrd:SportingGood
+                                                  vrd:SportsGroundPart
+                                                  vrd:TimeKeepingDevice
+                                                  vrd:Toy
+                                                  vrd:Vehicle
+                                                  vrd:VehiclePart
+                                                  vrd:WearableThing
+                                                )
+                                  ] ;
+              rdfs:subClassOf vrd:NotThing ;
+              owl:disjointWith vrd:Paper .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_ParkableMotorisedVehicle
+vrd:Not_ParkableMotorisedVehicle rdf:type owl:Class ;
+                                 owl:equivalentClass [ rdf:type owl:Class ;
+                                                       owl:unionOf ( vrd:ArchitecturalStructure
+                                                                     vrd:ArchitecturalStructurePart
+                                                                     vrd:Container
+                                                                     vrd:CulturalEnvironmentThing
+                                                                     vrd:Device
+                                                                     vrd:Furniture
+                                                                     vrd:MixedGroundSurface
+                                                                     vrd:NaturalEnvironmentThing
+                                                                     vrd:NonMotorisedVehicle
+                                                                     vrd:RailMotorisedVehicle
+                                                                     vrd:SportingGood
+                                                                     vrd:SportsGroundPart
+                                                                     vrd:Toy
+                                                                     vrd:VehiclePart
+                                                                     vrd:WaterMotorisedVehicle
+                                                                     vrd:WearableThing
+                                                                   )
+                                                     ] ;
+                                 rdfs:subClassOf vrd:NotThing ;
+                                 owl:disjointWith vrd:ParkableMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_ParkableSurface
+vrd:Not_ParkableSurface rdf:type owl:Class ;
+                        owl:equivalentClass [ rdf:type owl:Class ;
+                                              owl:unionOf ( vrd:Animal
+                                                            vrd:Bush
+                                                            vrd:CulturalEnvironmentThing
+                                                            vrd:EngineeredEnvironmentThing
+                                                            vrd:Landform
+                                                            vrd:LivingEarthBoundThingPart
+                                                            vrd:NaturalEnvironmentNonEarthBoundThing
+                                                            vrd:Plant
+                                                            vrd:Tree
+                                                            vrd:Trees
+                                                          )
+                                            ] ;
+                        rdfs:subClassOf vrd:NotThing ;
+                        owl:disjointWith vrd:ParkableSurface .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Person
+vrd:Not_Person rdf:type owl:Class ;
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:unionOf ( vrd:Artiodactyla
+                                                   vrd:Carnivora
+                                                   vrd:CulturalEnvironmentThing
+                                                   vrd:EngineeredEnvironmentThing
+                                                   vrd:LivingEarthBoundThingPart
+                                                   vrd:MixedGroundSurface
+                                                   vrd:NaturalEnvironmentNonEarthBoundThing
+                                                   vrd:NonLivingEarthBoundThing
+                                                   vrd:Perissodactyla
+                                                   vrd:Plantae
+                                                   vrd:Proboscidea
+                                                 )
+                                   ] ;
+               rdfs:subClassOf vrd:NotThing ;
+               owl:disjointWith vrd:Person .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Person_and_Not_Horse
+vrd:Not_Person_and_Not_Horse rdf:type owl:Class ;
+                             owl:equivalentClass [ rdf:type owl:Class ;
+                                                   owl:unionOf ( vrd:Artiodactyla
+                                                                 vrd:Carnivora
+                                                                 vrd:CulturalEnvironmentThing
+                                                                 vrd:EngineeredEnvironmentThing
+                                                                 vrd:LivingEarthBoundThingPart
+                                                                 vrd:MixedGroundSurface
+                                                                 vrd:NaturalEnvironmentNonEarthBoundThing
+                                                                 vrd:NonLivingEarthBoundThing
+                                                                 vrd:Plantae
+                                                                 vrd:Proboscidea
+                                                               )
+                                                 ] ;
+                             rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Phone
+vrd:Not_Phone rdf:type owl:Class ;
+              owl:equivalentClass [ rdf:type owl:Class ;
+                                    owl:unionOf ( vrd:Appliance
+                                                  vrd:ArchitecturalStructure
+                                                  vrd:ArchitecturalStructurePart
+                                                  vrd:AudioDevice
+                                                  vrd:ComputingDevice
+                                                  vrd:Container
+                                                  vrd:ControlDevice
+                                                  vrd:CulturalEnvironmentThing
+                                                  vrd:DisplayDevice
+                                                  vrd:Furniture
+                                                  vrd:ImageVideoCaptureDevice
+                                                  vrd:MixedGroundSurface
+                                                  vrd:NaturalEnvironmentThing
+                                                  vrd:NonElectronicCommunicationsDevice
+                                                  vrd:ProtectiveDevice
+                                                  vrd:SportingGood
+                                                  vrd:SportsGroundPart
+                                                  vrd:TimeKeepingDevice
+                                                  vrd:Toy
+                                                  vrd:Vehicle
+                                                  vrd:VehiclePart
+                                                  vrd:WearableThing
+                                                )
+                                  ] ;
+              rdfs:subClassOf vrd:NotThing ;
+              owl:disjointWith vrd:Phone .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_PlayWithCapableThing
+vrd:Not_PlayWithCapableThing rdf:type owl:Class ;
+                             owl:equivalentClass vrd:Not_UseCapableThing ,
+                                                 [ rdf:type owl:Class ;
+                                                   owl:unionOf ( vrd:Artiodactyla
+                                                                 vrd:Cat
+                                                                 vrd:CulturalEnvironmentThing
+                                                                 vrd:Dog
+                                                                 vrd:EngineeredEnvironmentThing
+                                                                 vrd:LivingEarthBoundThingPart
+                                                                 vrd:MixedGroundSurface
+                                                                 vrd:NaturalEnvironmentNonEarthBoundThing
+                                                                 vrd:NonLivingEarthBoundThing
+                                                                 vrd:Perissodactyla
+                                                                 vrd:Plantae
+                                                               )
+                                                 ] ;
+                             rdfs:subClassOf vrd:NotThing ;
+                             owl:disjointWith vrd:PlayWithCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_PlayWithableThing
+vrd:Not_PlayWithableThing rdf:type owl:Class ;
+                          owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Ball
+                                                                     vrd:Not_Kite
+                                                                     vrd:Not_Laptop
+                                                                     vrd:Not_Person
+                                                                     vrd:Not_Phone
+                                                                     vrd:Not_Skateboard
+                                                                   ) ;
+                                                rdf:type owl:Class
+                                              ] ;
+                          rdfs:subClassOf vrd:NotThing ;
+                          owl:disjointWith vrd:PlayWithableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_PullCapableThing
+vrd:Not_PullCapableThing rdf:type owl:Class ;
+                         owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Person_and_Not_Horse
+                                                                    vrd:Not_Truck_and_Not_TrainEngine
+                                                                  ) ;
+                                               rdf:type owl:Class
+                                             ] ;
+                         rdfs:subClassOf vrd:NotThing ;
+                         owl:disjointWith vrd:PullCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_RidableMammal
+vrd:Not_RidableMammal rdf:type owl:Class ;
+                      owl:equivalentClass [ rdf:type owl:Class ;
+                                            owl:unionOf ( vrd:Artiodactyla
+                                                          vrd:Carnivora
+                                                          vrd:CulturalEnvironmentThing
+                                                          vrd:EngineeredEnvironmentThing
+                                                          vrd:LivingEarthBoundThingPart
+                                                          vrd:MixedGroundSurface
+                                                          vrd:NaturalEnvironmentNonEarthBoundThing
+                                                          vrd:NonLivingEarthBoundThing
+                                                          vrd:Plantae
+                                                          vrd:Primate
+                                                        )
+                                          ] ;
+                      rdfs:subClassOf vrd:NotThing ;
+                      owl:disjointWith vrd:RidableMammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_RidableSportingGood
+vrd:Not_RidableSportingGood rdf:type owl:Class ;
+                            owl:equivalentClass [ rdf:type owl:Class ;
+                                                  owl:unionOf ( vrd:AirSportingGood
+                                                                vrd:ArchitecturalStructure
+                                                                vrd:ArchitecturalStructurePart
+                                                                vrd:Ball
+                                                                vrd:Bike
+                                                                vrd:Cart
+                                                                vrd:Clothing
+                                                                vrd:Container
+                                                                vrd:CulturalEnvironmentThing
+                                                                vrd:Device
+                                                                vrd:Furniture
+                                                                vrd:MixedGroundSurface
+                                                                vrd:MotorisedVehicle
+                                                                vrd:NaturalEnvironmentThing
+                                                                vrd:PersonalAccessory
+                                                                vrd:SportsGroundPart
+                                                                vrd:Toy
+                                                                vrd:VehiclePart
+                                                              )
+                                                ] ;
+                            rdfs:subClassOf vrd:NotThing ;
+                            owl:disjointWith vrd:RidableSportingGood .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_RidableThing
+vrd:Not_RidableThing rdf:type owl:Class ;
+                     owl:equivalentClass [ owl:intersectionOf ( vrd:Not_RidableMammal
+                                                                vrd:Not_RidableSportingGood
+                                                                vrd:Not_Vehicle
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ] ;
+                     rdfs:subClassOf vrd:NotThing ;
+                     owl:disjointWith vrd:RidableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_RideCapableThing
+vrd:Not_RideCapableThing rdf:type owl:Class ;
+                         owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Dog
+                                                                    vrd:Not_Person
+                                                                  ) ;
+                                               rdf:type owl:Class
+                                             ] ;
+                         rdfs:subClassOf vrd:NotThing ;
+                         owl:disjointWith vrd:RideCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_RoadMotorisedVehicle
+vrd:Not_RoadMotorisedVehicle rdf:type owl:Class ;
+                             owl:equivalentClass [ rdf:type owl:Class ;
+                                                   owl:unionOf ( vrd:AirMotorisedVehicle
+                                                                 vrd:ArchitecturalStructure
+                                                                 vrd:ArchitecturalStructurePart
+                                                                 vrd:Container
+                                                                 vrd:CulturalEnvironmentThing
+                                                                 vrd:Device
+                                                                 vrd:Furniture
+                                                                 vrd:MixedGroundSurface
+                                                                 vrd:NaturalEnvironmentThing
+                                                                 vrd:NonMotorisedVehicle
+                                                                 vrd:RailMotorisedVehicle
+                                                                 vrd:SportingGood
+                                                                 vrd:SportsGroundPart
+                                                                 vrd:Toy
+                                                                 vrd:VehiclePart
+                                                                 vrd:WaterMotorisedVehicle
+                                                                 vrd:WearableThing
+                                                               )
+                                                 ] ;
+                             rdfs:subClassOf vrd:NotThing ;
+                             owl:disjointWith vrd:RoadMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_SitCapableThing
+vrd:Not_SitCapableThing rdf:type owl:Class ;
+                        owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Mammal
+                                                                   vrd:Not_TeddyBear
+                                                                 ) ;
+                                              rdf:type owl:Class
+                                            ] ;
+                        rdfs:subClassOf vrd:NotThing ;
+                        owl:disjointWith vrd:SitCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_SkateOnCapableThing
+vrd:Not_SkateOnCapableThing rdf:type owl:Class ;
+                            owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Person
+                                                                       vrd:Not_Skateboard
+                                                                     ) ;
+                                                  rdf:type owl:Class
+                                                ] ;
+                            rdfs:subClassOf vrd:NotThing ;
+                            owl:disjointWith vrd:SkateOnCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Skateboard
+vrd:Not_Skateboard rdf:type owl:Class ;
+                   owl:equivalentClass [ rdf:type owl:Class ;
+                                         owl:unionOf ( vrd:AirSportingGood
+                                                       vrd:ArchitecturalStructure
+                                                       vrd:ArchitecturalStructurePart
+                                                       vrd:Bike
+                                                       vrd:Cart
+                                                       vrd:Container
+                                                       vrd:CulturalEnvironmentThing
+                                                       vrd:Device
+                                                       vrd:Furniture
+                                                       vrd:MixedGroundSurface
+                                                       vrd:MixedSportingGood
+                                                       vrd:MotorisedVehicle
+                                                       vrd:NaturalEnvironmentThing
+                                                       vrd:SnowSportingGood
+                                                       vrd:SportsGroundPart
+                                                       vrd:Toy
+                                                       vrd:VehiclePart
+                                                       vrd:WaterSportingGood
+                                                       vrd:WearableThing
+                                                     )
+                                       ] ;
+                   rdfs:subClassOf vrd:NotThing ;
+                   owl:disjointWith vrd:Skateboard .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_SkateboardingRelatedThing
+vrd:Not_SkateboardingRelatedThing rdf:type owl:Class ;
+                                  owl:equivalentClass [ rdf:type owl:Class ;
+                                                        owl:unionOf ( vrd:AirSportingGood
+                                                                      vrd:ArchitecturalStructurePart
+                                                                      vrd:Bike
+                                                                      vrd:Canopy
+                                                                      vrd:Cart
+                                                                      vrd:Container
+                                                                      vrd:CulturalEnvironmentThing
+                                                                      vrd:Device
+                                                                      vrd:EnclosingArchitecturalStructure
+                                                                      vrd:Furniture
+                                                                      vrd:MixedSportingGood
+                                                                      vrd:MotorisedVehicle
+                                                                      vrd:NaturalEnvironmentThing
+                                                                      vrd:SnowSportingGood
+                                                                      vrd:SportsGroundPart
+                                                                      vrd:Toy
+                                                                      vrd:VehiclePart
+                                                                      vrd:WaterSportingGood
+                                                                      vrd:WearableThing
+                                                                    )
+                                                      ] ;
+                                  rdfs:subClassOf vrd:NotThing ;
+                                  owl:disjointWith vrd:SkateboardingRelatedThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Sky
+vrd:Not_Sky rdf:type owl:Class ;
+            owl:equivalentClass [ rdf:type owl:Class ;
+                                  owl:unionOf ( vrd:CulturalEnvironmentThing
+                                                vrd:EngineeredEnvironmentThing
+                                                vrd:MixedGroundSurface
+                                                vrd:NaturalEnvironmentEarthBoundThing
+                                              )
+                                ] ;
+            rdfs:subClassOf vrd:NotThing ;
+            owl:disjointWith vrd:Sky .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Sky_Tree_Trees_Umbrella
+vrd:Not_Sky_Tree_Trees_Umbrella rdf:type owl:Class ;
+                                owl:equivalentClass [ rdf:type owl:Class ;
+                                                      owl:unionOf ( vrd:Animal
+                                                                    vrd:Appliance
+                                                                    vrd:ArchitecturalStructure
+                                                                    vrd:ArchitecturalStructurePart
+                                                                    vrd:AudioDevice
+                                                                    vrd:Bush
+                                                                    vrd:CommunicationsDevice
+                                                                    vrd:ComputingDevice
+                                                                    vrd:Container
+                                                                    vrd:ControlDevice
+                                                                    vrd:CulturalEnvironmentThing
+                                                                    vrd:DisplayDevice
+                                                                    vrd:Furniture
+                                                                    vrd:Grass
+                                                                    vrd:ImageVideoCaptureDevice
+                                                                    vrd:LivingEarthBoundThingPart
+                                                                    vrd:MixedGroundSurface
+                                                                    vrd:NonLivingEarthBoundThing
+                                                                    vrd:Plant
+                                                                    vrd:SportingGood
+                                                                    vrd:SportsGroundPart
+                                                                    vrd:TimeKeepingDevice
+                                                                    vrd:Toy
+                                                                    vrd:Vehicle
+                                                                    vrd:VehiclePart
+                                                                    vrd:WearableThing
+                                                                  )
+                                                    ] ;
+                                rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Street
+vrd:Not_Street rdf:type owl:Class ;
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:unionOf ( vrd:CulturalEnvironmentThing
+                                                   vrd:EngineeredEnvironmentThing
+                                                   vrd:NaturalEnvironmentThing
+                                                 )
+                                   ] ;
+               rdfs:subClassOf vrd:NotThing ;
+               owl:disjointWith vrd:Street .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Surfboard
+vrd:Not_Surfboard rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Class ;
+                                        owl:unionOf ( vrd:AirSportingGood
+                                                      vrd:ArchitecturalStructure
+                                                      vrd:ArchitecturalStructurePart
+                                                      vrd:Container
+                                                      vrd:CulturalEnvironmentThing
+                                                      vrd:Device
+                                                      vrd:Furniture
+                                                      vrd:LandSportingGood
+                                                      vrd:MixedGroundSurface
+                                                      vrd:MixedSportingGood
+                                                      vrd:NaturalEnvironmentThing
+                                                      vrd:SportsGroundPart
+                                                      vrd:Toy
+                                                      vrd:Vehicle
+                                                      vrd:VehiclePart
+                                                      vrd:WearableThing
+                                                    )
+                                      ] ;
+                  rdfs:subClassOf vrd:NotThing ;
+                  owl:disjointWith vrd:Surfboard .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_TalkToableThing
+vrd:Not_TalkToableThing rdf:type owl:Class ;
+                        owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Person
+                                                                   vrd:Not_Phone
+                                                                 ) ;
+                                              rdf:type owl:Class
+                                            ] ;
+                        rdfs:subClassOf vrd:NotThing ;
+                        owl:disjointWith vrd:TalkToableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_TeddyBear
+vrd:Not_TeddyBear rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Class ;
+                                        owl:unionOf ( vrd:ArchitecturalStructure
+                                                      vrd:ArchitecturalStructurePart
+                                                      vrd:Container
+                                                      vrd:CulturalEnvironmentThing
+                                                      vrd:Device
+                                                      vrd:Furniture
+                                                      vrd:MixedGroundSurface
+                                                      vrd:NaturalEnvironmentThing
+                                                      vrd:SportingGood
+                                                      vrd:SportsGroundPart
+                                                      vrd:Vehicle
+                                                      vrd:VehiclePart
+                                                      vrd:WearableThing
+                                                    )
+                                      ] ;
+                  rdfs:subClassOf vrd:NotThing ;
+                  owl:disjointWith vrd:TeddyBear .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_TrainEngine
+vrd:Not_TrainEngine rdf:type owl:Class ;
+                    owl:equivalentClass [ rdf:type owl:Class ;
+                                          owl:unionOf ( vrd:AirMotorisedVehicle
+                                                        vrd:ArchitecturalStructure
+                                                        vrd:ArchitecturalStructurePart
+                                                        vrd:Container
+                                                        vrd:CulturalEnvironmentThing
+                                                        vrd:Device
+                                                        vrd:Furniture
+                                                        vrd:MixedGroundSurface
+                                                        vrd:NaturalEnvironmentThing
+                                                        vrd:NonMotorisedVehicle
+                                                        vrd:RoadMotorisedVehicle
+                                                        vrd:SportingGood
+                                                        vrd:SportsGroundPart
+                                                        vrd:Toy
+                                                        vrd:Train
+                                                        vrd:VehiclePart
+                                                        vrd:WaterMotorisedVehicle
+                                                        vrd:WearableThing
+                                                      )
+                                        ] ;
+                    rdfs:subClassOf vrd:NotThing ;
+                    owl:disjointWith vrd:TrainEngine .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Truck_and_Not_TrainEngine
+vrd:Not_Truck_and_Not_TrainEngine rdf:type owl:Class ;
+                                  owl:equivalentClass [ rdf:type owl:Class ;
+                                                        owl:unionOf ( vrd:AirMotorisedVehicle
+                                                                      vrd:ArchitecturalStructure
+                                                                      vrd:ArchitecturalStructurePart
+                                                                      vrd:Bus
+                                                                      vrd:Car
+                                                                      vrd:Container
+                                                                      vrd:CulturalEnvironmentThing
+                                                                      vrd:Device
+                                                                      vrd:Furniture
+                                                                      vrd:MixedGroundSurface
+                                                                      vrd:Motorcycle
+                                                                      vrd:NaturalEnvironmentThing
+                                                                      vrd:NonMotorisedVehicle
+                                                                      vrd:SportingGood
+                                                                      vrd:SportsGroundPart
+                                                                      vrd:Toy
+                                                                      vrd:Train
+                                                                      vrd:Van
+                                                                      vrd:VehiclePart
+                                                                      vrd:WaterMotorisedVehicle
+                                                                      vrd:WearableThing
+                                                                    )
+                                                      ] ;
+                                  rdfs:subClassOf vrd:NotThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_UsableThing
+vrd:Not_UsableThing rdf:type owl:Class ;
+                    owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Device
+                                                               vrd:Not_DrivableMotorisedVehicle
+                                                               vrd:Not_PlayWithableThing
+                                                             ) ;
+                                          rdf:type owl:Class
+                                        ] ;
+                    rdfs:subClassOf vrd:NotThing ;
+                    owl:disjointWith vrd:UsableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_UseCapableThing
+vrd:Not_UseCapableThing rdf:type owl:Class ;
+                        rdfs:subClassOf vrd:NotThing ;
+                        owl:disjointWith vrd:UseCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_Vehicle
+vrd:Not_Vehicle rdf:type owl:Class ;
+                owl:equivalentClass [ rdf:type owl:Class ;
+                                      owl:unionOf ( vrd:AirSportingGood
+                                                    vrd:ArchitecturalStructure
+                                                    vrd:ArchitecturalStructurePart
+                                                    vrd:Container
+                                                    vrd:CulturalEnvironmentThing
+                                                    vrd:Device
+                                                    vrd:Furniture
+                                                    vrd:MixedGroundSurface
+                                                    vrd:MixedSportingGood
+                                                    vrd:NaturalEnvironmentThing
+                                                    vrd:SnowSportingGood
+                                                    vrd:SportsGroundPart
+                                                    vrd:Toy
+                                                    vrd:VehiclePart
+                                                    vrd:WaterSportingGood
+                                                    vrd:WearableThing
+                                                  )
+                                    ] ;
+                rdfs:subClassOf vrd:NotThing ;
+                owl:disjointWith vrd:Vehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_WalkOnableSurface
+vrd:Not_WalkOnableSurface rdf:type owl:Class ;
+                          owl:equivalentClass [ rdf:type owl:Class ;
+                                                owl:unionOf ( vrd:Animal
+                                                              vrd:Bush
+                                                              vrd:CulturalEnvironmentThing
+                                                              vrd:EngineeredEnvironmentThing
+                                                              vrd:Landform
+                                                              vrd:LivingEarthBoundThingPart
+                                                              vrd:NaturalEnvironmentNonEarthBoundThing
+                                                              vrd:Plant
+                                                              vrd:Tree
+                                                              vrd:Trees
+                                                            )
+                                              ] ;
+                          rdfs:subClassOf vrd:NotThing ;
+                          owl:disjointWith vrd:WalkOnableSurface .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_WalkableThing
+vrd:Not_WalkableThing rdf:type owl:Class ;
+                      owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Dog
+                                                                 vrd:Not_Horse
+                                                               ) ;
+                                            rdf:type owl:Class
+                                          ] ;
+                      rdfs:subClassOf vrd:NotThing ;
+                      owl:disjointWith vrd:WalkableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_WearCapableThing
+vrd:Not_WearCapableThing rdf:type owl:Class ;
+                         owl:equivalentClass [ owl:intersectionOf ( vrd:Not_Dog
+                                                                    vrd:Not_Person_and_Not_Horse
+                                                                    vrd:Not_TeddyBear
+                                                                  ) ;
+                                               rdf:type owl:Class
+                                             ] ;
+                         rdfs:subClassOf vrd:NotThing ;
+                         owl:disjointWith vrd:WearCapableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Not_WearableThing
+vrd:Not_WearableThing rdf:type owl:Class ;
+                      owl:equivalentClass [ rdf:type owl:Class ;
+                                            owl:unionOf ( vrd:AirSportingGood
+                                                          vrd:Appliance
+                                                          vrd:ArchitecturalStructure
+                                                          vrd:ArchitecturalStructurePart
+                                                          vrd:AudioDevice
+                                                          vrd:Ball
+                                                          vrd:Clock
+                                                          vrd:CommunicationsDevice
+                                                          vrd:ComputingDevice
+                                                          vrd:Container
+                                                          vrd:ControlDevice
+                                                          vrd:CulturalEnvironmentThing
+                                                          vrd:DisplayDevice
+                                                          vrd:Furniture
+                                                          vrd:ImageVideoCaptureDevice
+                                                          vrd:MixedGroundSurface
+                                                          vrd:NaturalEnvironmentThing
+                                                          vrd:ProtectiveDevice
+                                                          vrd:Skateboard
+                                                          vrd:SportsGroundPart
+                                                          vrd:Toy
+                                                          vrd:Vehicle
+                                                          vrd:VehiclePart
+                                                          vrd:WaterSportingGood
+                                                        )
+                                          ] ;
+                      rdfs:subClassOf vrd:NotThing ;
+                      owl:disjointWith vrd:WearableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#OutsideOfCapableThing
+vrd:OutsideOfCapableThing rdf:type owl:Class ;
+                          owl:equivalentClass [ rdf:type owl:Class ;
+                                                owl:unionOf ( vrd:Airplane
+                                                              vrd:Building
+                                                              vrd:Tower
+                                                              vrd:Train
+                                                            )
+                                              ] ;
+                          rdfs:subClassOf vrd:EngineeredEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Oven
+vrd:Oven rdf:type owl:Class ;
+         rdfs:subClassOf vrd:HeatingAppliance .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Pants
+vrd:Pants rdf:type owl:Class ;
+          rdfs:subClassOf vrd:LegClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Paper
+vrd:Paper rdf:type owl:Class ;
+          rdfs:subClassOf vrd:NonElectronicCommunicationsDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ParkableMotorisedVehicle
+vrd:ParkableMotorisedVehicle rdf:type owl:Class ;
+                             owl:equivalentClass [ rdf:type owl:Class ;
+                                                   owl:unionOf ( vrd:AirMotorisedVehicle
+                                                                 vrd:RoadMotorisedVehicle
+                                                               )
+                                                 ] ;
+                             rdfs:subClassOf vrd:MotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ParkableSurface
+vrd:ParkableSurface rdf:type owl:Class ;
+                    owl:equivalentClass [ rdf:type owl:Class ;
+                                          owl:unionOf ( vrd:Grass
+                                                        vrd:Sand
+                                                        vrd:Street
+                                                      )
+                                        ] ;
+                    rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                    rdfs:comment "Something upon which an appropriate other object (e.g. a motorised vehicle) can be said to 'park'. Created to serve as a range restriction for object property 'parkOn'." .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Perissodactyla
+vrd:Perissodactyla rdf:type owl:Class ;
+                   rdfs:subClassOf vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Person
+vrd:Person rdf:type owl:Class ;
+           rdfs:subClassOf vrd:Sapiens ;
+           rdfs:comment "A human.  A person."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#PersonalAccessory
+vrd:PersonalAccessory rdf:type owl:Class ;
+                      rdfs:subClassOf vrd:WearableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Phone
+vrd:Phone rdf:type owl:Class ;
+          rdfs:subClassOf vrd:ElectronicCommunicationsDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Pillow
+vrd:Pillow rdf:type owl:Class ;
+           rdfs:subClassOf vrd:AccessoryFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Pizza
+vrd:Pizza rdf:type owl:Class ;
+          rdfs:subClassOf vrd:BreadBasedProcessedFood .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Plant
+vrd:Plant rdf:type owl:Class ;
+          rdfs:subClassOf vrd:Plantae .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#PlantContainer
+vrd:PlantContainer rdf:type owl:Class ;
+                   rdfs:subClassOf vrd:Container .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Plantae
+vrd:Plantae rdf:type owl:Class ;
+            rdfs:subClassOf vrd:LivingEarthBoundThing ;
+            rdfs:comment "The plant kingdom."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Plate
+vrd:Plate rdf:type owl:Class ;
+          rdfs:subClassOf vrd:FoodContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#PlayWithCapableThing
+vrd:PlayWithCapableThing rdf:type owl:Class ;
+                         owl:equivalentClass vrd:UseCapableThing ,
+                                             [ rdf:type owl:Class ;
+                                               owl:unionOf ( vrd:Bear
+                                                             vrd:Elephant
+                                                             vrd:Person
+                                                           )
+                                             ] ;
+                         rdfs:subClassOf vrd:MixedEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#PlayWithableThing
+vrd:PlayWithableThing rdf:type owl:Class ;
+                      owl:equivalentClass [ rdf:type owl:Class ;
+                                            owl:unionOf ( vrd:Ball
+                                                          vrd:Kite
+                                                          vrd:Laptop
+                                                          vrd:Person
+                                                          vrd:Phone
+                                                          vrd:Skateboard
+                                                        )
+                                          ] ;
+                      rdfs:subClassOf vrd:MixedEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Post
+vrd:Post rdf:type owl:Class ;
+         rdfs:subClassOf vrd:StreetFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Pot
+vrd:Pot rdf:type owl:Class ;
+        rdfs:subClassOf vrd:PlantContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Primate
+vrd:Primate rdf:type owl:Class ;
+            rdfs:subClassOf vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#PrimatePart
+vrd:PrimatePart rdf:type owl:Class ;
+                rdfs:subClassOf vrd:MammalPart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Proboscidea
+vrd:Proboscidea rdf:type owl:Class ;
+                rdfs:subClassOf vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ProcessedFood
+vrd:ProcessedFood rdf:type owl:Class ;
+                  rdfs:subClassOf vrd:Food .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ProtectiveDevice
+vrd:ProtectiveDevice rdf:type owl:Class ;
+                     rdfs:subClassOf vrd:Device .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#ProtectiveHeadClothing
+vrd:ProtectiveHeadClothing rdf:type owl:Class ;
+                           rdfs:subClassOf vrd:HeadClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#PullCapableThing
+vrd:PullCapableThing rdf:type owl:Class ;
+                     owl:equivalentClass [ rdf:type owl:Class ;
+                                           owl:unionOf ( vrd:Horse
+                                                         vrd:Person
+                                                         vrd:TrainEngine
+                                                         vrd:Truck
+                                                       )
+                                         ] ;
+                     rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                     rdfs:comment "Something that is capable of pulling something. Something that can be said to 'pull' something else. Defined to serve as a domain restriction for object property 'pull'."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#RailMotorisedVehicle
+vrd:RailMotorisedVehicle rdf:type owl:Class ;
+                         rdfs:subClassOf vrd:MotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Ramp
+vrd:Ramp rdf:type owl:Class ;
+         rdfs:subClassOf vrd:NonEnclosingArchitecturalStructure .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Refrigerator
+vrd:Refrigerator rdf:type owl:Class ;
+                 rdfs:subClassOf vrd:CoolingAppliance .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#RegionOfSpace
+vrd:RegionOfSpace rdf:type owl:Class ;
+                  rdfs:subClassOf vrd:NaturalEnvironmentNonEarthBoundThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#RidableMammal
+vrd:RidableMammal rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Class ;
+                                        owl:unionOf ( vrd:Elephant
+                                                      vrd:Horse
+                                                    )
+                                      ] ;
+                  rdfs:subClassOf vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#RidableSportingGood
+vrd:RidableSportingGood rdf:type owl:Class ;
+                        owl:equivalentClass [ rdf:type owl:Class ;
+                                              owl:unionOf ( vrd:Skateboard
+                                                            vrd:Skis
+                                                            vrd:Snowboard
+                                                            vrd:Surfboard
+                                                          )
+                                            ] ;
+                        rdfs:subClassOf vrd:SportingGood .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#RidableThing
+vrd:RidableThing rdf:type owl:Class ;
+                 owl:equivalentClass [ rdf:type owl:Class ;
+                                       owl:unionOf ( vrd:RidableMammal
+                                                     vrd:RidableSportingGood
+                                                     vrd:Vehicle
+                                                   )
+                                     ] ;
+                 rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                 rdfs:comment "Something which is capable of being ridden.  Something which an appropriate object (e.g. a person) can be said to 'ride'.  Created to serve as range restriction for object property 'ride'." .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#RideCapableThing
+vrd:RideCapableThing rdf:type owl:Class ;
+                     owl:equivalentClass [ rdf:type owl:Class ;
+                                           owl:unionOf ( vrd:Dog
+                                                         vrd:Person
+                                                       )
+                                         ] ;
+                     rdfs:subClassOf vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#RoadMotorisedVehicle
+vrd:RoadMotorisedVehicle rdf:type owl:Class ;
+                         rdfs:subClassOf vrd:MotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#RoadMotorisedVehiclePart
+vrd:RoadMotorisedVehiclePart rdf:type owl:Class ;
+                             rdfs:subClassOf vrd:MotorisedVehiclePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Roof
+vrd:Roof rdf:type owl:Class ;
+         rdfs:subClassOf vrd:EnclosingArchitecturalStructurePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Sand
+vrd:Sand rdf:type owl:Class ;
+         rdfs:subClassOf vrd:Soil .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Sapiens
+vrd:Sapiens rdf:type owl:Class ;
+            rdfs:subClassOf vrd:Homo .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#SapiensPart
+vrd:SapiensPart rdf:type owl:Class ;
+                rdfs:subClassOf vrd:HomoPart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#SeatingFurniture
+vrd:SeatingFurniture rdf:type owl:Class ;
+                     rdfs:subClassOf vrd:Furniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Shelf
+vrd:Shelf rdf:type owl:Class ;
+          rdfs:subClassOf vrd:FlatSurfaceFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Shirt
+vrd:Shirt rdf:type owl:Class ;
+          rdfs:subClassOf vrd:TorsoArmsClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Shoe
+vrd:Shoe rdf:type owl:Class ;
+         rdfs:subClassOf vrd:FootClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Shoes
+vrd:Shoes rdf:type owl:Class ;
+          rdfs:subClassOf vrd:FootClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Shorts
+vrd:Shorts rdf:type owl:Class ;
+           rdfs:subClassOf vrd:LegClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Sink
+vrd:Sink rdf:type owl:Class ;
+         rdfs:subClassOf vrd:WashingContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#SitCapableThing
+vrd:SitCapableThing rdf:type owl:Class ;
+                    owl:equivalentClass [ rdf:type owl:Class ;
+                                          owl:unionOf ( vrd:Mammal
+                                                        vrd:TeddyBear
+                                                      )
+                                        ] ;
+                    rdfs:subClassOf vrd:MixedEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#SkateOnCapableThing
+vrd:SkateOnCapableThing rdf:type owl:Class ;
+                        owl:equivalentClass [ rdf:type owl:Class ;
+                                              owl:unionOf ( vrd:Person
+                                                            vrd:Skateboard
+                                                          )
+                                            ] ;
+                        rdfs:subClassOf vrd:MixedEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Skateboard
+vrd:Skateboard rdf:type owl:Class ;
+               rdfs:subClassOf vrd:LandSportingGood ,
+                               vrd:NonMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#SkateboardingRelatedThing
+vrd:SkateboardingRelatedThing rdf:type owl:Class ;
+                              owl:equivalentClass [ rdf:type owl:Class ;
+                                                    owl:unionOf ( vrd:Ramp
+                                                                  vrd:Skateboard
+                                                                  vrd:Street
+                                                                )
+                                                  ] ;
+                              rdfs:subClassOf vrd:MixedEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Skis
+vrd:Skis rdf:type owl:Class ;
+         rdfs:subClassOf vrd:MixedSportingGood ;
+         rdfs:comment "Skis are primarily snow skis, but there is also at least one instance of water skis in the VRD images. Hence we can't classify Skis as being either a land sporting good or a water sporting good."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Sky
+vrd:Sky rdf:type owl:Class ;
+        rdfs:subClassOf vrd:RegionOfSpace ;
+        rdfs:comment "The expanse of space above and visible from a given point on the earth's surface."@en ;
+        rdfs:label "Sky"@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#SleepingFurniture
+vrd:SleepingFurniture rdf:type owl:Class ;
+                      rdfs:subClassOf vrd:Furniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#SnowSportingGood
+vrd:SnowSportingGood rdf:type owl:Class ;
+                     rdfs:subClassOf vrd:LandSportingGood .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Snowboard
+vrd:Snowboard rdf:type owl:Class ;
+              rdfs:subClassOf vrd:SnowSportingGood .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Sofa
+vrd:Sofa rdf:type owl:Class ;
+         rdfs:subClassOf vrd:SeatingFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Soil
+vrd:Soil rdf:type owl:Class ;
+         rdfs:subClassOf vrd:NaturalLandscapeFeature .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Speaker
+vrd:Speaker rdf:type owl:Class ;
+            rdfs:subClassOf vrd:AudioDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#SportingGood
+vrd:SportingGood rdf:type owl:Class ;
+                 rdfs:subClassOf vrd:EngineeredEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#SportsGroundPart
+vrd:SportsGroundPart rdf:type owl:Class ;
+                     rdfs:subClassOf vrd:EngineeredEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#StorageFurniture
+vrd:StorageFurniture rdf:type owl:Class ;
+                     rdfs:subClassOf vrd:Furniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Stove
+vrd:Stove rdf:type owl:Class ;
+          rdfs:subClassOf vrd:HeatingAppliance .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#StoveTop
+vrd:StoveTop rdf:type owl:Class ;
+             rdfs:subClassOf vrd:HeatingAppliance .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Street
+vrd:Street rdf:type owl:Class ;
+           rdfs:subClassOf vrd:MixedGroundSurface ;
+           rdfs:comment """Within the VRD image annotations, the object class label 'street' has dramatically diverse  meanings/usages. These meanings/usages span the following types of things:
+* city street (roadway and sidewalk)
+* city sidewalk (excluding roadway)
+* road (dirt road, country lane)
+* floor (in a room or building)
+* ground (dirt)
+* tennis court surfaces
+* snow (eg snow covered ground at a ski resort)
+* airfield (at an airport)
+* airport concourse floor surface
+* grass
+
+Basically, the object class 'street' seems to have been used as a catch-all for 'the ground' or 'the surface of the earth', whatever its form. It's a reference to the surface upon which the other earth-bound objects in the image are all ultimately sitting; a kind of opposite to 'the sky'.
+
+The number of images whose annotations refer to 'street' is so large (775 in the original training set), and the diversity of meanings/usages so wide, that cleaning the situation to bring precision to the matter was too daunting a task to undertake.   Some customisations have been applied, however.  For example, many (perhaps most) instances where 'street' was used to refer to a city sidewalk have been customised away in favour of a bounding box that includes both the roadway and sidewalk as the object labelled 'street'.
+
+A consequence of this wide diversity of meaning/usage is that our ontology class 'Street' was awkward to place within the ontology class hierarchy. For example, instances of 'street' include both engineered things (like city streets and tennis courts) and natural things (like grass, dirt and snow).  Needing a home for class 'Street' is what initially led to the creation of the category 'MixedEnvironmentThing' in the ontology class hierarchy.
+
+Be aware that the VRD image annotations also recognise an object class of 'road'.  Upon inspection, the examples of 'road' were indistinguishable from those of 'street'.  If anything, the examples of 'road' referred more consistently to 'city street' objects than do the examples of 'street'.  The examples of 'road' and 'street' were clearly drawn from the same distribution and there was no basis for distinguishing between them, even for a human.  The decision was taken to merge all instances of object class 'road' into object class 'street'.  So there is no class 'Road' in this ontology."""@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#StreetFurniture
+vrd:StreetFurniture rdf:type owl:Class ;
+                    rdfs:subClassOf vrd:Furniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#StreetWasteContainer
+vrd:StreetWasteContainer rdf:type owl:Class ;
+                         rdfs:subClassOf vrd:WasteContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Suitcase
+vrd:Suitcase rdf:type owl:Class ;
+             rdfs:subClassOf vrd:TravelContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Sunglasses
+vrd:Sunglasses rdf:type owl:Class ;
+               rdfs:subClassOf vrd:Glasses .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Surfboard
+vrd:Surfboard rdf:type owl:Class ;
+              rdfs:subClassOf vrd:WaterSportingGood .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Table
+vrd:Table rdf:type owl:Class ;
+          rdfs:subClassOf vrd:FlatSurfaceFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#TalkToableThing
+vrd:TalkToableThing rdf:type owl:Class ;
+                    owl:equivalentClass [ rdf:type owl:Class ;
+                                          owl:unionOf ( vrd:Person
+                                                        vrd:Phone
+                                                      )
+                                        ] ;
+                    rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                    rdfs:comment "Something to which one may talk. This class was created to act as a range restriction for property 'talk'."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#TeddyBear
+vrd:TeddyBear rdf:type owl:Class ;
+              rdfs:subClassOf vrd:Doll .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Tie
+vrd:Tie rdf:type owl:Class ;
+        rdfs:subClassOf vrd:TorsoArmsClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#TimeKeepingDevice
+vrd:TimeKeepingDevice rdf:type owl:Class ;
+                      rdfs:subClassOf vrd:Device .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#TorsoArmsClothing
+vrd:TorsoArmsClothing rdf:type owl:Class ;
+                      rdfs:subClassOf vrd:UpperBodyClothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Tower
+vrd:Tower rdf:type owl:Class ;
+          rdfs:subClassOf vrd:EnclosingArchitecturalStructure .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Toy
+vrd:Toy rdf:type owl:Class ;
+        rdfs:subClassOf vrd:EngineeredEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#TrafficLight
+vrd:TrafficLight rdf:type owl:Class ;
+                 rdfs:subClassOf vrd:StreetFurniture .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Train
+vrd:Train rdf:type owl:Class ;
+          rdfs:subClassOf vrd:RailMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#TrainEngine
+vrd:TrainEngine rdf:type owl:Class ;
+                rdfs:subClassOf vrd:RailMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#TrashCan
+vrd:TrashCan rdf:type owl:Class ;
+             rdfs:subClassOf vrd:StreetFurniture ,
+                             vrd:StreetWasteContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#TravelContainer
+vrd:TravelContainer rdf:type owl:Class ;
+                    rdfs:subClassOf vrd:Container .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Tree
+vrd:Tree rdf:type owl:Class ;
+         rdfs:subClassOf vrd:Plantae ;
+         rdfs:comment "An individual tree."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Trees
+vrd:Trees rdf:type owl:Class ;
+          rdfs:subClassOf vrd:Plantae ;
+          rdfs:comment "A collection of multiple trees or a dense mass of trees."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Truck
+vrd:Truck rdf:type owl:Class ;
+          rdfs:subClassOf vrd:RoadMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Umbrella
+vrd:Umbrella rdf:type owl:Class ;
+             rdfs:subClassOf vrd:ProtectiveDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#UpperBodyClothing
+vrd:UpperBodyClothing rdf:type owl:Class ;
+                      rdfs:subClassOf vrd:Clothing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#UsableThing
+vrd:UsableThing rdf:type owl:Class ;
+                owl:equivalentClass [ rdf:type owl:Class ;
+                                      owl:unionOf ( vrd:Device
+                                                    vrd:DrivableMotorisedVehicle
+                                                    vrd:PlayWithableThing
+                                                  )
+                                    ] ;
+                rdfs:subClassOf vrd:MixedEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#UseCapableThing
+vrd:UseCapableThing rdf:type owl:Class ;
+                    rdfs:subClassOf vrd:MixedEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#VRDWorldThing
+vrd:VRDWorldThing rdf:type owl:Class ;
+                  rdfs:comment """The domain modelled by this ontology is the domain of object classes and predicates recognised in (a customised version of) the annotations of the images of the VRD dataset. This domain equates (roughly, and sparsely) to the material world.  We refer to this domain as the 'VRD material world', that is, the material world as represented by the object classes and predicates of the image annotations of the VRD dataset.
+
+We think of the VRD material world as consisting of a finite number of types (classes) of 'thing'. Class VRDMaterialWorldThing is the top-level (most general) concept (thing) in the model of the VRD material world domain."""@en ;
+                  rdfs:label "VRD domain thing"@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Van
+vrd:Van rdf:type owl:Class ;
+        rdfs:subClassOf vrd:RoadMotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Vase
+vrd:Vase rdf:type owl:Class ;
+         rdfs:subClassOf vrd:PlantContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Vehicle
+vrd:Vehicle rdf:type owl:Class ;
+            rdfs:subClassOf vrd:EngineeredEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#VehiclePart
+vrd:VehiclePart rdf:type owl:Class ;
+                rdfs:subClassOf vrd:EngineeredEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WalkOnableSurface
+vrd:WalkOnableSurface rdf:type owl:Class ;
+                      owl:equivalentClass [ rdf:type owl:Class ;
+                                            owl:unionOf ( vrd:Grass
+                                                          vrd:Sand
+                                                          vrd:Street
+                                                        )
+                                          ] ;
+                      rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                      rdfs:comment "A surface upon which an appropriate object (e.g. a person or other mammal) can be said to walk. Created to serve as a range restriction for object property 'walkOn'." .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WalkableThing
+vrd:WalkableThing rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Class ;
+                                        owl:unionOf ( vrd:Dog
+                                                      vrd:Horse
+                                                    )
+                                      ] ;
+                  rdfs:subClassOf vrd:Mammal .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WashingContainer
+vrd:WashingContainer rdf:type owl:Class ;
+                     rdfs:subClassOf vrd:FluidContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WasteBin
+vrd:WasteBin rdf:type owl:Class ;
+             rdfs:subClassOf vrd:IndoorWasteContainer .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WasteContainer
+vrd:WasteContainer rdf:type owl:Class ;
+                   rdfs:subClassOf vrd:Container .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Watch
+vrd:Watch rdf:type owl:Class ;
+          rdfs:subClassOf vrd:PersonalAccessory ,
+                          vrd:TimeKeepingDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WaterFlowControlDevice
+vrd:WaterFlowControlDevice rdf:type owl:Class ;
+                           rdfs:subClassOf vrd:ControlDevice .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WaterMotorisedVehicle
+vrd:WaterMotorisedVehicle rdf:type owl:Class ;
+                          rdfs:subClassOf vrd:MotorisedVehicle .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WaterMotorisedVehiclePart
+vrd:WaterMotorisedVehiclePart rdf:type owl:Class ;
+                              rdfs:subClassOf vrd:MotorisedVehiclePart .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WaterSportingGood
+vrd:WaterSportingGood rdf:type owl:Class ;
+                      rdfs:subClassOf vrd:SportingGood .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WearCapableThing
+vrd:WearCapableThing rdf:type owl:Class ;
+                     owl:equivalentClass [ rdf:type owl:Class ;
+                                           owl:unionOf ( vrd:Dog
+                                                         vrd:Horse
+                                                         vrd:Person
+                                                         vrd:TeddyBear
+                                                       )
+                                         ] ;
+                     rdfs:subClassOf vrd:MixedEnvironmentThing ;
+                     rdfs:comment "Something that is capable of being said to 'wear' something."@en .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WearableSportingGood
+vrd:WearableSportingGood rdf:type owl:Class ;
+                         owl:equivalentClass [ rdf:type owl:Class ;
+                                               owl:unionOf ( vrd:Skis
+                                                             vrd:Snowboard
+                                                           )
+                                             ] ;
+                         rdfs:subClassOf vrd:SportingGood ,
+                                         vrd:WearableThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#WearableThing
+vrd:WearableThing rdf:type owl:Class ;
+                  rdfs:subClassOf vrd:EngineeredEnvironmentThing .
+
+
+###  http://www.semanticweb.org/nesy4vrd/ontologies/vrd_world#Wheel
+vrd:Wheel rdf:type owl:Class ;
+          rdfs:subClassOf vrd:VehiclePart .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
